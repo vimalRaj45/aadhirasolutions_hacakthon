@@ -28,6 +28,7 @@
     }
   </script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
 <body class="bg-gradient-animate min-h-screen text-slate-700 antialiased flex flex-col scroll-smooth justify-between">
 
@@ -71,13 +72,13 @@
       <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(59,130,246,0.04)_0,transparent_50%)]"></div>
 
       <!-- Pure CSS Exploding Checkmark -->
-      <div class="flex items-center justify-center mx-auto mb-2">
-        <div class="w-24 h-24 bg-green-50 rounded-full flex items-center justify-center border border-green-100 shadow-inner relative">
+      <div class="flex items-center justify-center mx-auto mb-6">
+        <div class="w-40 h-40 bg-green-50 rounded-full flex items-center justify-center border border-green-100 shadow-inner relative">
           <!-- Pulse rings -->
-          <span class="absolute inset-0 rounded-full border-2 border-green-400 animate-ping opacity-25"></span>
-          <span class="absolute inset-2 rounded-full border border-green-300 animate-pulse opacity-40"></span>
+          <span class="absolute inset-0 rounded-full border-4 border-green-400 animate-ping opacity-25"></span>
+          <span class="absolute inset-2 rounded-full border-2 border-green-300 animate-pulse opacity-40"></span>
           <!-- Success Check SVG -->
-          <i class="bi bi-check-lg text-green-600 animate-bounce relative z-10"></i>
+          <i class="bi bi-check-lg text-green-600 animate-bounce relative z-10" style="font-size: 5rem;"></i>
         </div>
       </div>
 
@@ -135,12 +136,12 @@
 
       <!-- Action buttons -->
       <div id="actionButtons" class="flex flex-col sm:flex-row items-center justify-center gap-4">
-        <a href="index.html" class="w-full sm:w-auto px-6 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-semibold text-sm transition-all border border-slate-200 text-center block">
+        <button type="button" onclick="window.location.href='index.html';" class="w-full sm:w-auto px-6 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-semibold text-sm transition-all border border-slate-200 text-center block">
           Register Another Team
-        </a>
-        <button onclick="window.print();" class="w-full sm:w-auto px-6 py-2.5 bg-gradient-to-r from-brand-600 to-brand-700 hover:from-brand-700 hover:to-brand-800 text-white rounded-lg font-bold text-sm transition-all shadow-md shadow-brand-500/10 flex items-center justify-center space-x-1.5">
-          <i class="bi bi-printer text-base"></i>
-          <span>Print Receipt</span>
+        </button>
+        <button type="button" onclick="downloadPdf();" class="w-full sm:w-auto px-6 py-2.5 bg-gradient-to-r from-brand-600 to-brand-700 hover:from-brand-700 hover:to-brand-800 text-white rounded-lg font-bold text-sm transition-all shadow-md shadow-brand-500/10 flex items-center justify-center space-x-1.5">
+          <i class="bi bi-download text-base"></i>
+          <span>Download PDF</span>
         </button>
       </div>
 
@@ -214,6 +215,27 @@
             <div class="text-red-500 text-sm font-semibold">Failed to fetch registration status from server.</div>
           `;
         });
+    }
+
+    function downloadPdf() {
+      const element = document.getElementById('summaryCard');
+      // Hide border/shadows for a clean PDF
+      element.classList.remove('border-slate-200', 'bg-slate-50');
+      element.classList.add('bg-white');
+
+      var opt = {
+        margin:       1,
+        filename:     'Registration_Receipt_' + regId + '.pdf',
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2 },
+        jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+      };
+
+      html2pdf().set(opt).from(element).save().then(() => {
+         // Restore classes
+         element.classList.add('border-slate-200', 'bg-slate-50');
+         element.classList.remove('bg-white');
+      });
     }
   </script>
 
