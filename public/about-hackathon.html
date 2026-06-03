@@ -32,23 +32,23 @@
 <body class="bg-gradient-animate min-h-screen text-slate-700 antialiased selection:bg-brand-500 selection:text-white scroll-smooth flex flex-col justify-between">
 
   <!-- Navigation Bar -->
-  <nav class="sticky top-0 z-50 bg-white border-b border-slate-200/80 px-6 py-4 flex items-center justify-between rounded-xl shadow-sm">
+  <nav class="sticky top-0 z-50 bg-white border-b border-slate-200/80 px-4 sm:px-6 py-2 flex items-center justify-between rounded-xl shadow-sm">
     <div class="flex items-center space-x-3">
-      <img src="logo.png" alt="Aadhira Solutions Logo" class="h-10 w-auto object-contain">
+      <img src="logo.png" alt="Aadhira Solutions Logo" class="h-8 w-auto object-contain">
       <div class="flex flex-col">
-        <span class="text-lg font-bold tracking-wider text-brand-900">Aadhira Solutions</span>
-        <span class="text-xs text-brand-600 uppercase tracking-widest font-semibold">Hackathon Portal</span>
+        <span class="text-base font-bold tracking-wider text-brand-900">Aadhira Solutions</span>
+        <span class="text-[10px] text-brand-600 uppercase tracking-widest font-semibold">Hackathon Portal</span>
       </div>
     </div>
     
     <!-- Desktop Navigation Links -->
-    <div class="hidden lg:flex items-center space-x-6 text-sm font-semibold">
-      <a href="about-hackathon.html" class="text-brand-600 transition-all">About Hackathon</a>
-      <a href="problems.html" class="text-slate-500 hover:text-brand-600 transition-all">Problems</a>
-      <a href="prizes.html" class="text-slate-500 hover:text-brand-600 transition-all">Prize Details</a>
-      <a href="about-us.html" class="text-slate-500 hover:text-brand-600 transition-all">About Us</a>
-      <a href="help.html" class="text-slate-500 hover:text-brand-600 transition-all">Help Desk</a>
-      <a href="register.html" class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-lg transition-all text-xs font-bold shadow-sm shadow-brand-500/10">Register Now</a>
+    <div class="hidden lg:flex items-center space-x-2 text-sm font-semibold">
+      <a href="about-hackathon.html" class="bg-brand-50 text-brand-600 px-3 py-1.5 rounded-lg transition-all">About Hackathon</a>
+      <a href="problems.html" class="text-slate-500 hover:text-brand-600 hover:bg-slate-50 px-3 py-1.5 rounded-lg transition-all">Problems</a>
+      <a href="prizes.html" class="text-slate-500 hover:text-brand-600 hover:bg-slate-50 px-3 py-1.5 rounded-lg transition-all">Prize Details</a>
+      <a href="about-us.html" class="text-slate-500 hover:text-brand-600 hover:bg-slate-50 px-3 py-1.5 rounded-lg transition-all">About Us</a>
+      <a href="help.html" class="text-slate-500 hover:text-brand-600 hover:bg-slate-50 px-3 py-1.5 rounded-lg transition-all">Help Desk</a>
+      <a href="register.html" class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-1.5 rounded-lg transition-all text-xs font-bold shadow-sm shadow-brand-500/10 ml-2">Register Now</a>
     </div>
 
     <!-- Mobile Hamburger Button -->
@@ -215,25 +215,30 @@
         });
     </script>  <!-- Mobile Bottom Sticky Navigation Bar -->
   <div class="fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-t border-slate-200/80 px-4 py-2 flex items-center justify-around lg:hidden shadow-lg safe-bottom">
-    <a href="index.html" class="flex flex-col items-center space-y-1 text-slate-500 hover:text-brand-600 transition-all">
+    <a href="index.html" class="flex flex-col items-center space-y-0.5 text-slate-500 hover:text-brand-600 transition-all">
       <i class="bi bi-house-door text-lg"></i>
-      <span class="text-[10px] font-bold tracking-wider">Home</span>
+      <span class="text-[10px] font-semibold tracking-wider">Home</span>
+      <span class="w-1.5 h-1.5 rounded-full bg-transparent"></span>
     </a>
-    <a href="problems.html" class="flex flex-col items-center space-y-1 text-slate-500 hover:text-brand-600 transition-all">
+    <a href="problems.html" class="flex flex-col items-center space-y-0.5 text-slate-500 hover:text-brand-600 transition-all">
       <i class="bi bi-lightbulb text-lg"></i>
-      <span class="text-[10px] font-bold tracking-wider">Problems</span>
+      <span class="text-[10px] font-semibold tracking-wider">Problems</span>
+      <span class="w-1.5 h-1.5 rounded-full bg-transparent"></span>
     </a>
-    <a href="register.html" class="flex flex-col items-center space-y-1 bg-brand-600 text-white px-3 py-1.5 rounded-xl shadow-md shadow-brand-500/20 transform -translate-y-2 hover:scale-105 transition-all">
-      <i class="bi bi-pencil-square text-base"></i>
-      <span class="text-[9px] font-bold uppercase tracking-wider">Register</span>
+    <a href="register.html" class="flex flex-col items-center space-y-0.5 text-slate-500 hover:text-brand-600 transition-all">
+      <i class="bi bi-pencil-square text-lg"></i>
+      <span class="text-[10px] font-semibold tracking-wider">Register</span>
+      <span class="w-1.5 h-1.5 rounded-full bg-transparent"></span>
     </a>
-    <a href="prizes.html" class="flex flex-col items-center space-y-1 text-slate-500 hover:text-brand-600 transition-all">
+    <a href="prizes.html" class="flex flex-col items-center space-y-0.5 text-slate-500 hover:text-brand-600 transition-all">
       <i class="bi bi-trophy text-lg"></i>
-      <span class="text-[10px] font-bold tracking-wider">Prizes</span>
+      <span class="text-[10px] font-semibold tracking-wider">Prizes</span>
+      <span class="w-1.5 h-1.5 rounded-full bg-transparent"></span>
     </a>
-    <a href="help.html" class="flex flex-col items-center space-y-1 text-slate-500 hover:text-brand-600 transition-all">
+    <a href="help.html" class="flex flex-col items-center space-y-0.5 text-slate-500 hover:text-brand-600 transition-all">
       <i class="bi bi-question-circle text-lg"></i>
-      <span class="text-[10px] font-bold tracking-wider">Help</span>
+      <span class="text-[10px] font-semibold tracking-wider">Help</span>
+      <span class="w-1.5 h-1.5 rounded-full bg-transparent"></span>
     </a>
   </div>
 
