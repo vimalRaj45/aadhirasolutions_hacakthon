@@ -931,73 +931,10 @@
         updateWizard(false); // Initial render
       }
     });
-
-    // Floating Share Button Logic
-    window.addEventListener('DOMContentLoaded', () => {
-      const shareBtn = document.getElementById('floatingShareBtn');
-      const shareToast = document.getElementById('shareToast');
-      
-      if (shareBtn) {
-        shareBtn.addEventListener('click', async () => {
-          const shareData = {
-            title: 'Aadhira Solutions Hackathon 2026',
-            text: 'Join the Aadhira Solutions Hackathon 2026! Register your team and choose your challenge statement.',
-            url: window.location.origin
-          };
-
-          if (navigator.share) {
-            try {
-              await navigator.share(shareData);
-            } catch (err) {
-              console.log('Share canceled or failed', err);
-            }
-          } else {
-            // Fallback: Copy URL to clipboard
-            try {
-              await navigator.clipboard.writeText(window.location.origin);
-              showShareToast();
-            } catch (err) {
-              console.error('Failed to copy text', err);
-            }
-          }
-        });
-      }
-
-      function showShareToast() {
-        if (!shareToast) return;
-        shareToast.classList.remove('hidden');
-        // Trigger animation
-        setTimeout(() => {
-          shareToast.classList.remove('translate-y-2', 'opacity-0');
-        }, 50);
-
-        // Hide after 3 seconds
-        setTimeout(() => {
-          shareToast.classList.add('translate-y-2', 'opacity-0');
-          setTimeout(() => {
-            shareToast.classList.add('hidden');
-          }, 300);
-        }, 3000);
-      }
-    });
   </script>
 
-  <!-- Floating Share Button HTML -->
-  <div class="fixed bottom-20 lg:bottom-6 right-6 z-40 flex flex-col items-end">
-    <!-- Share Toast Notification -->
-    <div id="shareToast" class="hidden mb-3 bg-slate-900 text-white text-xs font-semibold px-4 py-2.5 rounded-2xl shadow-lg flex items-center space-x-2 transition-all duration-300 transform translate-y-2 opacity-0">
-      <i class="bi bi-check-circle text-green-400 text-base"></i>
-      <span>Event link copied to clipboard!</span>
-    </div>
-    
-    <button id="floatingShareBtn" class="bg-gradient-to-r from-brand-600 to-brand-700 hover:from-brand-700 hover:to-brand-800 text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 group focus:outline-none pulse-soft ring-4 ring-brand-500/20">
-      <i class="bi bi-share transition-transform duration-300 group-hover:rotate-12 text-xl"></i>
-    </button>
-  </div>
-
-
-<script>
-        document.addEventListener('DOMContentLoaded', () => {
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
             const btn = document.getElementById('mobileMenuBtn');
             const menu = document.getElementById('mobileMenu');
             const overlay = document.getElementById('mobileMenuOverlay');
