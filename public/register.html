@@ -401,31 +401,23 @@
 
             <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
               
-              <!-- Payment Instructions (5 cols) -->
-              <div class="md:col-span-5 bg-slate-50 p-4 rounded-xl border border-slate-200 text-center space-y-3">
-                <span class="text-xs text-brand-600 font-bold uppercase tracking-wider block">Scan to Pay ₹400</span>
-                
-                <!-- UPI QR Code -->
-                <div class="flex flex-col items-center justify-center bg-white p-3 rounded-2xl max-w-[150px] mx-auto border border-slate-100 shadow-sm">
-                  <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&amp;color=1e3a8a&amp;bgcolor=ffffff&amp;data=upi://pay?pa=vimalraj5207@okaxis%26pn=Aadhira%20Solutions%26am=400%26cu=INR" alt="UPI Payment QR Code" class="w-full h-auto">
-                </div>
-
-                <div class="space-y-1.5 text-xs text-left">
-                  <div class="flex justify-between">
-                    <span class="text-slate-400">UPI ID:</span>
-                    <span class="font-mono text-brand-700 font-bold select-all">vimalraj5207@okaxis</span>
-                  </div>
-                  <div class="flex justify-between border-t border-slate-200/60 pt-1.5 text-xs">
-                    <span class="text-slate-500 font-bold">Fee Total:</span>
-                    <span class="text-brand-600 font-bold">₹400.00</span>
-                  </div>
-                </div>
+              <!-- UPI Payment Widget (5 cols) -->
+              <div class="md:col-span-5 flex flex-col items-center justify-center">
+                <!-- UPI Payment Widget -->
+                <iframe 
+                  src="https://upi2qr.in/pay?name=Aadhira+Solutions+Hackathon&upiId=rohini.sarthakindia-1%40okicici&amount=400&description=via_hackathan_2026"
+                  width="400"
+                  height="600"
+                  style="border: 1px solid #E5E7EB; border-radius: 8px; max-width: 100%;"
+                  title="UPI Payment - Aadhira Solutions Hackathon"
+                  loading="lazy"
+                ></iframe>
               </div>
 
               <!-- Upload Proof Area (7 cols) -->
               <div class="md:col-span-7 space-y-3">
                 <span class="text-xs text-slate-500 block leading-relaxed">
-                  Scan the UPI code or use the ID to pay ₹400, then upload a screenshot of your payment receipt below. UTR / Transaction ID must be visible.
+                  Use the payment widget to pay ₹400, then upload a screenshot of your payment receipt below. UTR / Transaction ID must be visible.
                 </span>
                 
                 <div id="dropZone" class="border-2 border-dashed border-slate-300 hover:border-brand-500 hover:bg-brand-50/30 rounded-xl p-4 text-center custom-file-upload relative transition-all bg-slate-50/50">
