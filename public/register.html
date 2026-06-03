@@ -672,7 +672,7 @@
     const submitBtn = document.getElementById('submitBtn');
     const progressBar = document.getElementById('progressBar');
 
-    function updateWizard() {
+    function updateWizard(shouldScroll = true) {
       // Hide all step sections
       for (let i = 1; i <= totalSteps; i++) {
         document.getElementById(`stepSection${i}`).classList.add('hidden');
@@ -715,8 +715,10 @@
       }
       
       // Scroll smoothly to form container
-      const container = document.getElementById('registrationForm');
-      container.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      if (shouldScroll) {
+        const container = document.getElementById('registrationForm');
+        container.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
     }
 
     function populateReview() {
@@ -923,10 +925,10 @@
           radioBtns[selProblemIdx - 1].checked = true;
           // Set to step 3 directly
           currentStep = 3;
-          updateWizard();
+          updateWizard(false);
         }
       } else {
-        updateWizard(); // Initial render
+        updateWizard(false); // Initial render
       }
     });
 
