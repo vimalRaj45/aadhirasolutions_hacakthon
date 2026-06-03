@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registration Confirmed | Aadhira Solutions</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- AOS (Animate on Scroll) -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="style.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              800: '#1e40af',
+              950: '#172554'
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-gradient-animate min-h-screen text-slate-700 antialiased flex flex-col scroll-smooth justify-between">
+
+  <!-- Navigation Bar -->
+  <nav class="sticky top-0 z-50 glass-panel border-b border-slate-200/80 px-6 py-4 flex items-center justify-between bg-white">
+    <div class="flex items-center space-x-3">
+      <img src="logo.png" alt="Aadhira Solutions Logo" class="h-10 w-auto object-contain">
+      <div class="flex flex-col">
+        <span class="text-lg font-bold tracking-wider text-brand-950 font-bold">Aadhira Solutions</span>
+        <span class="text-xs text-brand-600 uppercase tracking-widest font-semibold">Hackathon Portal</span>
+      </div>
+    </div>
+    
+    <!-- Desktop Navigation Links -->
+    <div class="hidden lg:flex items-center space-x-6 text-sm font-semibold">
+      <a href="about-hackathon.html" class="text-slate-500 hover:text-brand-600 transition-all">About Hackathon</a>
+      <a href="problems.html" class="text-slate-500 hover:text-brand-600 transition-all">Problems</a>
+      <a href="prizes.html" class="text-slate-500 hover:text-brand-600 transition-all">Prize Details</a>
+      <a href="about-us.html" class="text-slate-500 hover:text-brand-600 transition-all">About Us</a>
+      <a href="help.html" class="text-slate-500 hover:text-brand-600 transition-all">Help Desk</a>
+      <a href="index.html" class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-lg transition-all text-xs font-bold shadow-sm shadow-brand-500/10">Register Now</a>
+    </div>
+
+    <!-- Mobile Hamburger Button -->
+    <button id="mobileMenuBtn" class="lg:hidden text-slate-500 hover:text-brand-600 focus:outline-none">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+    </button>
+  </nav>
+
+  <!-- Mobile Menu Dropdown -->
+  <div id="mobileMenu" class="hidden lg:hidden sticky top-[73px] z-40 glass-panel border-b border-slate-200 px-6 py-4 flex flex-col space-y-3 text-sm bg-white font-semibold shadow-inner">
+    <a href="about-hackathon.html" class="text-slate-500 hover:text-brand-600 transition-all py-1">About Hackathon</a>
+    <a href="problems.html" class="text-slate-500 hover:text-brand-600 transition-all py-1">Problems Selection</a>
+    <a href="prizes.html" class="text-slate-500 hover:text-brand-600 transition-all py-1">Prize Details</a>
+    <a href="about-us.html" class="text-slate-500 hover:text-brand-600 transition-all py-1">About Us</a>
+    <a href="help.html" class="text-slate-500 hover:text-brand-600 transition-all py-1">Help Desk</a>
+    <a href="index.html" class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-lg transition-all text-xs font-bold shadow-sm shadow-brand-500/10 text-center">Register Now</a>
+  </div>
+
+  <!-- Success Content -->
+  <main class="flex-grow flex items-center justify-center px-6 py-12">
+    <div class="max-w-2xl w-full glass-panel rounded-3xl p-8 md:p-10 shadow-lg relative overflow-hidden text-center bg-white" data-aos="zoom-in">
+      <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(59,130,246,0.04)_0,transparent_50%)]"></div>
+
+      <!-- Pure CSS Exploding Checkmark -->
+      <div class="flex items-center justify-center mx-auto mb-6">
+        <div class="w-24 h-24 bg-green-50 rounded-full flex items-center justify-center border border-green-100 shadow-inner relative">
+          <!-- Pulse rings -->
+          <span class="absolute inset-0 rounded-full border-2 border-green-400 animate-ping opacity-25"></span>
+          <span class="absolute inset-2 rounded-full border border-green-300 animate-pulse opacity-40"></span>
+          <!-- Success Check SVG -->
+          <svg class="w-12 h-12 text-green-600 animate-bounce relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+          </svg>
+        </div>
+      </div>
+
+      <h1 class="text-2xl sm:text-3xl font-extrabold text-brand-950 mb-2">Registration Submitted!</h1>
+      <p class="text-slate-500 text-sm mb-6 max-w-md mx-auto">
+        Your team registration and problem statement selection has been recorded successfully.
+      </p>
+
+      <!-- Alert Box: Notification Policy -->
+      <div class="bg-blue-50/50 border border-blue-200 rounded-xl p-4 mb-8 text-left flex items-start space-x-3">
+        <svg class="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        <div>
+          <h4 class="text-sm font-semibold text-brand-950">Verification Processing</h4>
+          <p class="text-xs text-slate-500 leading-relaxed mt-0.5">
+            You will get notified via email after your payment is verified <strong>within 12 hours</strong>. If approved, your entry ticket and official QR Code will be dispatched to the Team Leader's email.
+          </p>
+        </div>
+      </div>
+
+      <!-- Registration Summary Card -->
+      <div id="loading" class="py-12 flex flex-col items-center justify-center space-y-3">
+        <div class="w-8 h-8 border-4 border-brand-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
+        <p class="text-xs text-slate-400 font-mono">Fetching registration summary...</p>
+      </div>
+
+      <div id="summaryCard" class="hidden text-left bg-slate-50 border border-slate-200 rounded-2xl p-6 mb-8 space-y-4">
+        <h3 class="text-sm sm:text-base font-bold text-brand-950 border-b border-slate-200 pb-2.5 flex justify-between items-center font-bold">
+          <span>Registration Receipt</span>
+          <span class="text-xs font-mono font-normal text-slate-400">ID: #<span id="summaryId"></span></span>
+        </h3>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+          <div>
+            <span class="text-slate-400 block text-xs">College/Institution</span>
+            <span id="summaryCollege" class="text-slate-700 font-semibold"></span>
+          </div>
+          <div>
+            <span class="text-slate-400 block text-xs">Team Leader</span>
+            <span id="summaryLeader" class="text-slate-700 font-semibold"></span>
+          </div>
+          <div class="md:col-span-2">
+            <span class="text-slate-400 block text-xs">Selected Problem Statement</span>
+            <span id="summaryProblem" class="text-slate-700 font-semibold text-xs leading-relaxed block mt-0.5"></span>
+          </div>
+          <div>
+            <span class="text-slate-400 block text-xs">Verification Status</span>
+            <span id="summaryStatus" class="inline-block px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500/10 text-amber-600 border border-amber-500/20 mt-1">Pending Approval</span>
+          </div>
+          <div>
+            <span class="text-slate-400 block text-xs">Submitted Time</span>
+            <span id="summaryTime" class="text-slate-600 font-mono mt-1 block"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action buttons -->
+      <div id="actionButtons" class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="index.html" class="w-full sm:w-auto px-6 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-semibold text-sm transition-all border border-slate-200 text-center block">
+          Register Another Team
+        </a>
+        <button onclick="window.print();" class="w-full sm:w-auto px-6 py-2.5 bg-gradient-to-r from-brand-600 to-brand-700 hover:from-brand-700 hover:to-brand-800 text-white rounded-lg font-bold text-sm transition-all shadow-md shadow-brand-500/10 flex items-center justify-center space-x-1.5">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+          <span>Print Receipt</span>
+        </button>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="glass-panel border-t border-slate-200 py-6 text-center text-xs text-slate-400 bg-white">
+    <p>Aadhira Solutions &copy; 2026. All rights reserved.</p>
+  </footer>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({
+      duration: 800,
+      easing: 'ease-in-out',
+      once: true
+    });
+
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    // Extract ID from URL query parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const regId = urlParams.get('id');
+
+    if (!regId) {
+      document.getElementById('loading').innerHTML = `
+        <div class="text-red-500 text-sm font-semibold">Error: No Registration ID provided in URL!</div>
+        <p class="text-xs text-slate-400">Please register via the homepage.</p>
+      `;
+    } else {
+      fetch(`/api/registration/${regId}`)
+        .then(res => res.json())
+        .then(data => {
+          document.getElementById('loading').classList.add('hidden');
+          if (data.success) {
+            const reg = data.registration;
+            
+            document.getElementById('summaryId').textContent = reg.id;
+            document.getElementById('summaryCollege').textContent = reg.college_name;
+            document.getElementById('summaryLeader').textContent = reg.leader_name;
+            document.getElementById('summaryProblem').textContent = reg.problem_statement;
+            
+            const timeObj = new Date(reg.created_at);
+            document.getElementById('summaryTime').textContent = timeObj.toLocaleString();
+
+            const statusEl = document.getElementById('summaryStatus');
+            statusEl.textContent = reg.status;
+            if (reg.status === 'Approved') {
+              statusEl.className = "inline-block px-2.5 py-0.5 rounded-full text-xs font-bold bg-green-500/10 text-green-600 border border-green-500/20 mt-1";
+            } else if (reg.status === 'Rejected') {
+              statusEl.className = "inline-block px-2.5 py-0.5 rounded-full text-xs font-bold bg-red-500/10 text-red-600 border border-red-500/20 mt-1";
+            } else {
+              statusEl.className = "inline-block px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500/10 text-amber-600 border border-amber-500/20 mt-1";
+            }
+
+            document.getElementById('summaryCard').classList.remove('hidden');
+          } else {
+            document.getElementById('loading').innerHTML = `
+              <div class="text-red-500 text-sm font-semibold">Error: ${data.error || 'Registration details not found'}</div>
+            `;
+          }
+        })
+        .catch(err => {
+          console.error(err);
+          document.getElementById('loading').innerHTML = `
+            <div class="text-red-500 text-sm font-semibold">Failed to fetch registration status from server.</div>
+          `;
+        });
+    }
+  </script>
+</body>
+</html>

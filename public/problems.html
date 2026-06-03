@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Problem Statements | Aadhira Solutions</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- AOS (Animate on Scroll) -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="style.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              800: '#1e40af',
+              900: '#1e3a8a',
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-gradient-animate min-h-screen text-slate-700 antialiased selection:bg-brand-500 selection:text-white scroll-smooth flex flex-col justify-between">
+
+  <!-- Navigation Bar -->
+  <nav class="sticky top-0 z-50 glass-panel border-b border-slate-200/80 px-6 py-4 flex items-center justify-between bg-white">
+    <div class="flex items-center space-x-3">
+      <img src="logo.png" alt="Aadhira Solutions Logo" class="h-10 w-auto object-contain">
+      <div class="flex flex-col">
+        <span class="text-lg font-bold tracking-wider text-brand-900">Aadhira Solutions</span>
+        <span class="text-xs text-brand-600 uppercase tracking-widest font-semibold">Hackathon Portal</span>
+      </div>
+    </div>
+    
+    <!-- Desktop Navigation Links -->
+    <div class="hidden lg:flex items-center space-x-6 text-sm font-semibold">
+      <a href="about-hackathon.html" class="text-slate-500 hover:text-brand-600 transition-all">About Hackathon</a>
+      <a href="problems.html" class="text-brand-600 transition-all">Problems</a>
+      <a href="prizes.html" class="text-slate-500 hover:text-brand-600 transition-all">Prize Details</a>
+      <a href="about-us.html" class="text-slate-500 hover:text-brand-600 transition-all">About Us</a>
+      <a href="help.html" class="text-slate-500 hover:text-brand-600 transition-all">Help Desk</a>
+      <a href="index.html" class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-lg transition-all text-xs font-bold shadow-sm shadow-brand-500/10">Register Now</a>
+    </div>
+
+    <!-- Mobile Hamburger Button -->
+    <button id="mobileMenuBtn" class="lg:hidden text-slate-500 hover:text-brand-600 focus:outline-none">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+    </button>
+  </nav>
+
+  <!-- Mobile Menu Dropdown -->
+  <div id="mobileMenu" class="hidden lg:hidden sticky top-[73px] z-40 glass-panel border-b border-slate-200 px-6 py-4 flex flex-col space-y-3 text-sm bg-white font-semibold shadow-inner">
+    <a href="about-hackathon.html" class="text-slate-500 hover:text-brand-600 transition-all py-1">About Hackathon</a>
+    <a href="problems.html" class="text-brand-600 transition-all py-1">Problems Selection</a>
+    <a href="prizes.html" class="text-slate-500 hover:text-brand-600 transition-all py-1">Prize Details</a>
+    <a href="about-us.html" class="text-slate-500 hover:text-brand-600 transition-all py-1">About Us</a>
+    <a href="help.html" class="text-slate-500 hover:text-brand-600 transition-all py-1">Help Desk</a>
+    <a href="index.html" class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-lg transition-all text-xs font-bold shadow-sm shadow-brand-500/10 text-center">Register Now</a>
+  </div>
+
+  <!-- Main Content -->
+  <main class="max-w-6xl mx-auto px-6 py-12 flex-grow w-full">
+    <div class="glass-panel rounded-3xl p-8 md:p-12 bg-white shadow-md space-y-10 relative overflow-hidden" data-aos="fade-up">
+      <div class="absolute top-0 right-0 w-48 h-48 bg-brand-500/5 rounded-full blur-3xl"></div>
+
+      <div class="border-b border-slate-100 pb-6 text-center">
+        <span class="text-xs text-brand-600 font-bold uppercase tracking-widest bg-brand-50 px-3 py-1 rounded-full border border-brand-100">Official Selections</span>
+        <h1 class="text-3xl md:text-4xl font-extrabold text-brand-900 tracking-tight mt-3">Problem Statements</h1>
+        <p class="text-slate-500 text-sm mt-1">Review the 8 challenges, select one, and register your team.</p>
+      </div>
+
+      <!-- Problem Statements Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        
+        <!-- PS 1 -->
+        <div class="glass-panel p-6 rounded-2xl border border-slate-200 bg-white hover:border-brand-500/40 transition-all flex flex-col justify-between space-y-4 shadow-sm" data-aos="fade-up">
+          <div class="space-y-2">
+            <span class="text-[10px] text-brand-600 font-bold uppercase tracking-widest bg-brand-50 px-2 py-0.5 rounded border border-brand-100">Problem Statement 1</span>
+            <h3 class="font-extrabold text-slate-800 text-base leading-tight">Smart Training & Learning Management Platform</h3>
+            <p class="text-slate-500 text-xs leading-relaxed">
+              Training institutions often use multiple disjointed tools to manage courses, assignments, attendance, assessments, and student progress. Develop a centralized, user-friendly Learning Management System (LMS) that enables students, trainers, and administrators to track learning outcomes, submit assignments, and generate certifications securely from a single ecosystem.
+            </p>
+          </div>
+          <a href="index.html?selectProblem=1" class="w-full text-center py-2 bg-brand-50 hover:bg-brand-600 text-brand-600 hover:text-white rounded-lg font-bold text-xs transition-all border border-brand-100 hover:border-brand-600">Choose & Register Team</a>
+        </div>
+
+        <!-- PS 2 -->
+        <div class="glass-panel p-6 rounded-2xl border border-slate-200 bg-white hover:border-brand-500/40 transition-all flex flex-col justify-between space-y-4 shadow-sm" data-aos="fade-up">
+          <div class="space-y-2">
+            <span class="text-[10px] text-brand-600 font-bold uppercase tracking-widest bg-brand-50 px-2 py-0.5 rounded border border-brand-100">Problem Statement 2</span>
+            <h3 class="font-extrabold text-slate-800 text-base leading-tight">AI-Powered Internship Management System</h3>
+            <p class="text-slate-500 text-xs leading-relaxed">
+              Managing internship workflows, applications, project feedback, and certificate issuance manually is inefficient and error-prone. Design an intelligent Internship Management Platform that automates student-mentor communication, provides live progress updates, tracks tasks, and simplifies documentation workflows.
+            </p>
+          </div>
+          <a href="index.html?selectProblem=2" class="w-full text-center py-2 bg-brand-50 hover:bg-brand-600 text-brand-600 hover:text-white rounded-lg font-bold text-xs transition-all border border-brand-100 hover:border-brand-600">Choose & Register Team</a>
+        </div>
+
+        <!-- PS 3 -->
+        <div class="glass-panel p-6 rounded-2xl border border-slate-200 bg-white hover:border-brand-500/40 transition-all flex flex-col justify-between space-y-4 shadow-sm" data-aos="fade-up">
+          <div class="space-y-2">
+            <span class="text-[10px] text-brand-600 font-bold uppercase tracking-widest bg-brand-50 px-2 py-0.5 rounded border border-brand-100">Problem Statement 3</span>
+            <h3 class="font-extrabold text-slate-800 text-base leading-tight">Digital Placement & Career Development Portal</h3>
+            <p class="text-slate-500 text-xs leading-relaxed">
+              Many students struggle to find relevant placements and prepare for corporate screening evaluations. Create a Career Development Portal offering centralized placement job boards, instant resume building, aptitude evaluation trackers, and direct recruiter feedback channels in a single web interface.
+            </p>
+          </div>
+          <a href="index.html?selectProblem=3" class="w-full text-center py-2 bg-brand-50 hover:bg-brand-600 text-brand-600 hover:text-white rounded-lg font-bold text-xs transition-all border border-brand-100 hover:border-brand-600">Choose & Register Team</a>
+        </div>
+
+        <!-- PS 4 -->
+        <div class="glass-panel p-6 rounded-2xl border border-slate-200 bg-white hover:border-brand-500/40 transition-all flex flex-col justify-between space-y-4 shadow-sm" data-aos="fade-up">
+          <div class="space-y-2">
+            <span class="text-[10px] text-brand-600 font-bold uppercase tracking-widest bg-brand-50 px-2 py-0.5 rounded border border-brand-100">Problem Statement 4</span>
+            <h3 class="font-extrabold text-slate-800 text-base leading-tight">Website-to-App Transformation Challenge</h3>
+            <p class="text-slate-500 text-xs leading-relaxed">
+              Desktop websites often have low mobile engagement. Design and prototype a high-performance progressive mobile application that replaces standard training portals, adding mobile-native push alerts, smooth navigation, and a lightweight code layout.
+            </p>
+          </div>
+          <a href="index.html?selectProblem=4" class="w-full text-center py-2 bg-brand-50 hover:bg-brand-600 text-brand-600 hover:text-white rounded-lg font-bold text-xs transition-all border border-brand-100 hover:border-brand-600">Choose & Register Team</a>
+        </div>
+
+        <!-- PS 5 -->
+        <div class="glass-panel p-6 rounded-2xl border border-slate-200 bg-white hover:border-brand-500/40 transition-all flex flex-col justify-between space-y-4 shadow-sm" data-aos="fade-up">
+          <div class="space-y-2">
+            <span class="text-[10px] text-brand-600 font-bold uppercase tracking-widest bg-brand-50 px-2 py-0.5 rounded border border-brand-100">Problem Statement 5</span>
+            <h3 class="font-extrabold text-slate-800 text-base leading-tight">Smart Certificate Generation & Verification System</h3>
+            <p class="text-slate-500 text-xs leading-relaxed">
+              Academic certificate forge prevention is crucial for recruiter validation. Build a cryptographically secure digital certificate system that supports dynamic PDF certificate rendering, QR-code validation signatures, and instantaneous check-ins.
+            </p>
+          </div>
+          <a href="index.html?selectProblem=5" class="w-full text-center py-2 bg-brand-50 hover:bg-brand-600 text-brand-600 hover:text-white rounded-lg font-bold text-xs transition-all border border-brand-100 hover:border-brand-600">Choose & Register Team</a>
+        </div>
+
+        <!-- PS 6 -->
+        <div class="glass-panel p-6 rounded-2xl border border-slate-200 bg-white hover:border-brand-500/40 transition-all flex flex-col justify-between space-y-4 shadow-sm" data-aos="fade-up">
+          <div class="space-y-2">
+            <span class="text-[10px] text-brand-600 font-bold uppercase tracking-widest bg-brand-50 px-2 py-0.5 rounded border border-brand-100">Problem Statement 6</span>
+            <h3 class="font-extrabold text-slate-800 text-base leading-tight">AI Career Guidance and Skill Recommendation Platform</h3>
+            <p class="text-slate-500 text-xs leading-relaxed">
+              Students require guidance on picking appropriate career frameworks and internships. Develop a recommendation platform that evaluates user profiles, academic courses, and test metrics to suggest customized technical career milestones.
+            </p>
+          </div>
+          <a href="index.html?selectProblem=6" class="w-full text-center py-2 bg-brand-50 hover:bg-brand-600 text-brand-600 hover:text-white rounded-lg font-bold text-xs transition-all border border-brand-100 hover:border-brand-600">Choose & Register Team</a>
+        </div>
+
+        <!-- PS 7 -->
+        <div class="glass-panel p-6 rounded-2xl border border-slate-200 bg-white hover:border-brand-500/40 transition-all flex flex-col justify-between space-y-4 shadow-sm" data-aos="fade-up">
+          <div class="space-y-2">
+            <span class="text-[10px] text-brand-600 font-bold uppercase tracking-widest bg-brand-50 px-2 py-0.5 rounded border border-brand-100">Problem Statement 7</span>
+            <h3 class="font-extrabold text-slate-800 text-base leading-tight">Student Performance Analytics Dashboard</h3>
+            <p class="text-slate-500 text-xs leading-relaxed">
+              Administrators need visual insights into cohort progression, placement statistics, and internship status. Create an advanced data dashboard displaying progress analytics, placement metrics, and filter tools for college coordinators.
+            </p>
+          </div>
+          <a href="index.html?selectProblem=7" class="w-full text-center py-2 bg-brand-50 hover:bg-brand-600 text-brand-600 hover:text-white rounded-lg font-bold text-xs transition-all border border-brand-100 hover:border-brand-600">Choose & Register Team</a>
+        </div>
+
+        <!-- PS 8 -->
+        <div class="glass-panel p-6 rounded-2xl border border-slate-200 bg-white hover:border-brand-500/40 transition-all flex flex-col justify-between space-y-4 shadow-sm" data-aos="fade-up">
+          <div class="space-y-2">
+            <span class="text-[10px] text-brand-600 font-bold uppercase tracking-widest bg-brand-50 px-2 py-0.5 rounded border border-brand-100">Problem Statement 8</span>
+            <h3 class="font-extrabold text-slate-800 text-base leading-tight">Unified Student Training, Internship & Placement Ecosystem</h3>
+            <p class="text-slate-500 text-xs leading-relaxed">
+              Student data is often split across separate systems. Design a unified portal that combines internship progress, course credits, certification credentials, and recruiter listings into one seamless dashboard layout.
+            </p>
+          </div>
+          <a href="index.html?selectProblem=8" class="w-full text-center py-2 bg-brand-50 hover:bg-brand-600 text-brand-600 hover:text-white rounded-lg font-bold text-xs transition-all border border-brand-100 hover:border-brand-600">Choose & Register Team</a>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="glass-panel border-t border-slate-200 py-6 text-center text-xs text-slate-400 bg-white">
+    <p>Aadhira Solutions &copy; 2026. All rights reserved.</p>
+  </footer>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({
+      duration: 800,
+      easing: 'ease-in-out',
+      once: true
+    });
+
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+  </script>
+</body>
+</html>

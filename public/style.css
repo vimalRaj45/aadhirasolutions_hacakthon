@@ -1,0 +1,112 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+/* Apply font globally with light theme defaults */
+body {
+  font-family: 'Outfit', sans-serif;
+  background-color: #f8fafc;
+  color: #1e293b;
+  overflow-x: hidden;
+}
+
+/* Custom Scrollbar for Light Theme */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3b82f6;
+}
+
+/* Light animated gradient background */
+.bg-gradient-animate {
+  background: linear-gradient(-45deg, #f8fafc, #eff6ff, #e0f2fe, #dbeafe);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+}
+
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Premium Card Panels */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  box-shadow: 0 4px 20px -2px rgba(148, 163, 184, 0.08);
+}
+
+.glass-panel-heavy {
+  background: #ffffff;
+  border: 1px solid rgba(203, 213, 225, 0.7);
+  box-shadow: 0 10px 30px -5px rgba(148, 163, 184, 0.15);
+}
+
+/* Accent glowing effects */
+.glow-blue {
+  box-shadow: 0 4px 14px 0 rgba(37, 99, 235, 0.2);
+}
+
+.glow-blue-hover:hover {
+  box-shadow: 0 6px 20px 0 rgba(37, 99, 235, 0.35);
+  transform: translateY(-1px);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Custom animations */
+.pulse-soft {
+  animation: softPulse 2s infinite;
+}
+
+@keyframes softPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.02); opacity: 0.97; }
+}
+
+/* Problem statement radio card (Light Theme) */
+.problem-card {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.problem-card:hover {
+  transform: translateY(-1px);
+  border-color: rgba(37, 99, 235, 0.4);
+}
+
+input[type="radio"]:checked + .problem-card {
+  background: rgba(239, 246, 255, 0.8);
+  border-color: #2563eb;
+  box-shadow: 0 0 12px rgba(37, 99, 235, 0.1);
+}
+
+/* Print styles for clean receipt printouts */
+@media print {
+  nav, footer, #actionButtons, button, a {
+    display: none !important;
+  }
+  body {
+    background: none !important;
+    background-color: white !important;
+    color: #000000 !important;
+  }
+  main {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  .glass-panel {
+    background: white !important;
+    border: none !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+  }
+}

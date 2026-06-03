@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Hackathon | Aadhira Solutions</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- AOS (Animate on Scroll) -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="style.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              800: '#1e40af',
+              900: '#1e3a8a',
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-gradient-animate min-h-screen text-slate-700 antialiased selection:bg-brand-500 selection:text-white scroll-smooth flex flex-col justify-between">
+
+  <!-- Navigation Bar -->
+  <nav class="sticky top-0 z-50 glass-panel border-b border-slate-200/80 px-6 py-4 flex items-center justify-between bg-white">
+    <div class="flex items-center space-x-3">
+      <img src="logo.png" alt="Aadhira Solutions Logo" class="h-10 w-auto object-contain">
+      <div class="flex flex-col">
+        <span class="text-lg font-bold tracking-wider text-brand-900">Aadhira Solutions</span>
+        <span class="text-xs text-brand-600 uppercase tracking-widest font-semibold">Hackathon Portal</span>
+      </div>
+    </div>
+    
+    <!-- Desktop Navigation Links -->
+    <div class="hidden lg:flex items-center space-x-6 text-sm font-semibold">
+      <a href="about-hackathon.html" class="text-brand-600 transition-all">About Hackathon</a>
+      <a href="problems.html" class="text-slate-500 hover:text-brand-600 transition-all">Problems</a>
+      <a href="prizes.html" class="text-slate-500 hover:text-brand-600 transition-all">Prize Details</a>
+      <a href="about-us.html" class="text-slate-500 hover:text-brand-600 transition-all">About Us</a>
+      <a href="help.html" class="text-slate-500 hover:text-brand-600 transition-all">Help Desk</a>
+      <a href="index.html" class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-lg transition-all text-xs font-bold shadow-sm shadow-brand-500/10">Register Now</a>
+    </div>
+
+    <!-- Mobile Hamburger Button -->
+    <button id="mobileMenuBtn" class="lg:hidden text-slate-500 hover:text-brand-600 focus:outline-none">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+    </button>
+  </nav>
+
+  <!-- Mobile Menu Dropdown -->
+  <div id="mobileMenu" class="hidden lg:hidden sticky top-[73px] z-40 glass-panel border-b border-slate-200 px-6 py-4 flex flex-col space-y-3 text-sm bg-white font-semibold shadow-inner">
+    <a href="about-hackathon.html" class="text-brand-600 transition-all py-1">About Hackathon</a>
+    <a href="problems.html" class="text-slate-500 hover:text-brand-600 transition-all py-1">Problems Selection</a>
+    <a href="prizes.html" class="text-slate-500 hover:text-brand-600 transition-all py-1">Prize Details</a>
+    <a href="about-us.html" class="text-slate-500 hover:text-brand-600 transition-all py-1">About Us</a>
+    <a href="help.html" class="text-slate-500 hover:text-brand-600 transition-all py-1">Help Desk</a>
+    <a href="index.html" class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-lg transition-all text-xs font-bold shadow-sm shadow-brand-500/10 text-center">Register Now</a>
+  </div>
+
+  <!-- Main Content -->
+  <main class="max-w-4xl mx-auto px-6 py-12 flex-grow w-full">
+    <div class="glass-panel rounded-3xl p-8 md:p-12 bg-white shadow-md space-y-10 relative overflow-hidden" data-aos="fade-up">
+      <div class="absolute top-0 right-0 w-48 h-48 bg-brand-500/5 rounded-full blur-3xl"></div>
+
+      <div class="border-b border-slate-100 pb-6">
+        <span class="text-xs text-brand-600 font-bold uppercase tracking-widest bg-brand-50 px-3 py-1 rounded-full border border-brand-100">Event Guide</span>
+        <h1 class="text-3xl md:text-4xl font-extrabold text-brand-900 tracking-tight mt-3">Aadhira Solutions Hackathon 2026</h1>
+        <p class="text-slate-500 text-sm mt-1">Full briefing, schedule guidelines, and team rules.</p>
+      </div>
+
+      <!-- Schedule Timeline -->
+      <div class="space-y-6">
+        <h2 class="text-xl font-bold text-brand-900 flex items-center">
+          <svg class="w-5 h-5 mr-2 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+          Event Schedule
+        </h2>
+        
+        <div class="relative border-l border-slate-200 ml-3.5 space-y-8 pl-6 text-xs sm:text-sm">
+          <!-- Item 1 -->
+          <div class="relative">
+            <span class="absolute -left-9 top-0.5 bg-brand-600 text-white w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold ring-4 ring-white">1</span>
+            <div class="space-y-1">
+              <span class="text-brand-600 font-bold">June 10, 2026</span>
+              <h3 class="font-bold text-slate-800 text-base">Registrations End</h3>
+              <p class="text-slate-500 text-xs">All teams must complete their 5-stage registration and payment proof upload before 11:59 PM.</p>
+            </div>
+          </div>
+          <!-- Item 2 -->
+          <div class="relative">
+            <span class="absolute -left-9 top-0.5 bg-brand-600 text-white w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold ring-4 ring-white">2</span>
+            <div class="space-y-1">
+              <span class="text-brand-600 font-bold">June 15, 2026 (09:00 AM)</span>
+              <h3 class="font-bold text-slate-800 text-base">Briefing & Hackathon Launch</h3>
+              <p class="text-slate-500 text-xs">Physical briefing at the college auditorium. Online portals open. Core hacking begins!</p>
+            </div>
+          </div>
+          <!-- Item 3 -->
+          <div class="relative">
+            <span class="absolute -left-9 top-0.5 bg-brand-600 text-white w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold ring-4 ring-white">3</span>
+            <div class="space-y-1">
+              <span class="text-brand-600 font-bold">June 16, 2026 (06:00 PM)</span>
+              <h3 class="font-bold text-slate-800 text-base">Project Submissions</h3>
+              <p class="text-slate-500 text-xs">Completed working builds and code repositories must be submitted on skopick.org for review.</p>
+            </div>
+          </div>
+          <!-- Item 4 -->
+          <div class="relative">
+            <span class="absolute -left-9 top-0.5 bg-brand-600 text-white w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold ring-4 ring-white">4</span>
+            <div class="space-y-1">
+              <span class="text-brand-600 font-bold">June 18, 2026</span>
+              <h3 class="font-bold text-slate-800 text-base">Winners Ceremony</h3>
+              <p class="text-slate-500 text-xs">Project prototype displays, judge evaluations, and prize dispatch ceremony.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Guidelines -->
+      <div class="space-y-4 pt-4 border-t border-slate-100 text-sm">
+        <h2 class="text-xl font-bold text-brand-900 flex items-center">
+          <svg class="w-5 h-5 mr-2 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+          General Rules & Guidelines
+        </h2>
+        
+        <ul class="space-y-3.5 pl-5 list-disc text-slate-500 text-xs sm:text-sm">
+          <li><strong>Team Size:</strong> Teams must have exactly 4 members. Only 1 member acts as Team Leader and represents the team.</li>
+          <li><strong>Problem Selection:</strong> Teams must pick exactly 1 problem statement from the 8 official selections.</li>
+          <li><strong>Development:</strong> Plagiarized projects or pre-built commercial tools are strictly disqualified. Open-source tools/libraries are allowed.</li>
+          <li><strong>Entrance Check-in:</strong> The approved QR entry ticket sent to the leader's email is mandatory for physical verification at the check-in desk.</li>
+        </ul>
+      </div>
+
+      <!-- Call to action -->
+      <div class="pt-6 border-t border-slate-100 flex justify-center">
+        <a href="index.html" class="px-8 py-3.5 bg-gradient-to-r from-brand-600 to-brand-700 hover:from-brand-700 hover:to-brand-800 text-white font-bold rounded-xl text-sm transition-all shadow-md shadow-brand-500/10">
+          Open Registration Form &rarr;
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="glass-panel border-t border-slate-200 py-6 text-center text-xs text-slate-400 bg-white">
+    <p>Aadhira Solutions &copy; 2026. All rights reserved.</p>
+  </footer>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({
+      duration: 800,
+      easing: 'ease-in-out',
+      once: true
+    });
+
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+  </script>
+</body>
+</html>

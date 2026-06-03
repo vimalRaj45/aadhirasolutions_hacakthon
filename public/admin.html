@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard | Aadhira Solutions</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Outfit Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="style.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              800: '#1e40af',
+              900: '#1e3a8a',
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-gradient-animate min-h-screen text-slate-700 antialiased flex flex-col font-['Outfit']">
+
+  <!-- Login Overlay (OTP Authorization Portal) -->
+  <div id="loginOverlay" class="fixed inset-0 z-50 bg-slate-900/90 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="glass-panel rounded-3xl max-w-md w-full p-8 shadow-2xl relative bg-white border border-slate-200">
+      
+      <!-- Logo and Title -->
+      <div class="text-center mb-6">
+        <img src="logo.png" alt="Aadhira Solutions Logo" class="h-14 w-auto mx-auto object-contain mb-3">
+        <h2 class="text-2xl font-extrabold text-brand-900">Admin Portal Gate</h2>
+        <p class="text-slate-500 text-xs mt-1">Allowed administrator email addresses only</p>
+      </div>
+
+      <!-- State 1: Send Email form -->
+      <form id="otpEmailForm" class="space-y-4">
+        <div>
+          <label for="adminEmail" class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1.5 font-bold">Administrator Email</label>
+          <input type="email" id="adminEmail" required placeholder="e.g. admin@aadhirasolutions.skopick.org"
+            class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2.5 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/10 transition-all">
+        </div>
+        <button type="submit" id="sendOtpBtn" class="w-full py-2.5 bg-gradient-to-r from-brand-600 to-brand-700 hover:from-brand-700 hover:to-brand-800 text-white font-bold rounded-lg text-xs uppercase tracking-wider transition-all shadow-md">
+          Request OTP Code
+        </button>
+      </form>
+
+      <!-- State 2: Verify Code form (hidden initially) -->
+      <form id="otpCodeForm" class="space-y-4 hidden">
+        <div class="bg-blue-50 border border-blue-200 rounded-xl p-3 text-xs text-brand-800 flex items-start space-x-2">
+          <svg class="w-4 h-4 text-brand-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          <span>OTP has been sent to your email. Please enter the 6-digit verification code below.</span>
+        </div>
+        <div>
+          <label for="adminOtp" class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1.5 font-bold">Verification OTP Code</label>
+          <input type="text" id="adminOtp" required placeholder="e.g. 123456" pattern="\d{6}" maxlength="6"
+            class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2.5 text-center text-lg font-mono tracking-[8px] font-bold text-slate-800 focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/10 transition-all">
+        </div>
+        <div class="flex items-center justify-between gap-4">
+          <button type="button" onclick="showEmailForm()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-lg text-xs font-bold transition-all border border-slate-200 shadow-sm">
+            Back
+          </button>
+          <button type="submit" id="verifyOtpBtn" class="flex-grow py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-lg text-xs uppercase tracking-wider transition-all shadow-md">
+            Verify & Authorize
+          </button>
+        </div>
+      </form>
+
+      <div id="authError" class="text-xs text-red-500 text-center mt-4 hidden font-semibold"></div>
+
+    </div>
+  </div>
+
+  <!-- Navigation Bar -->
+  <nav class="glass-panel border-b border-slate-200/80 px-6 py-4 flex items-center justify-between bg-white">
+    <div class="flex items-center space-x-3">
+      <img src="logo.png" alt="Aadhira Solutions Logo" class="h-10 w-auto object-contain">
+      <div class="flex flex-col">
+        <span class="text-lg font-bold tracking-wider text-brand-900 font-bold">Aadhira Solutions</span>
+        <span class="text-xs text-brand-600 uppercase tracking-widest font-semibold">Admin Panel</span>
+      </div>
+    </div>
+    <div class="hidden md:flex items-center space-x-6 text-sm">
+      <a href="index.html" class="text-slate-500 hover:text-brand-600 transition-all font-medium">Form Site</a>
+      <a href="verify.html" class="text-slate-500 hover:text-brand-600 transition-all font-medium">Verification Desk</a>
+      <span class="bg-blue-50 text-brand-700 px-3 py-1 rounded-full text-xs font-semibold border border-blue-100">Administrator Mode</span>
+      <button onclick="logoutAdmin()" class="text-red-500 hover:text-red-700 transition-all font-semibold">Logout</button>
+    </div>
+    <!-- Mobile Hamburger Button -->
+    <button id="mobileMenuBtn" class="md:hidden text-slate-500 hover:text-brand-600 focus:outline-none">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+    </button>
+  </nav>
+
+  <!-- Mobile Menu Dropdown -->
+  <div id="mobileMenu" class="hidden md:hidden sticky top-[73px] z-40 glass-panel border-b border-slate-200 px-6 py-4 flex flex-col space-y-3 text-sm bg-white">
+    <a href="index.html" class="text-slate-500 hover:text-brand-600 transition-all font-medium">Form Site</a>
+    <a href="verify.html" class="text-slate-500 hover:text-brand-600 transition-all font-medium">Verification Desk</a>
+    <button onclick="logoutAdmin()" class="text-red-500 hover:text-red-700 text-left transition-all font-semibold">Logout</button>
+  </div>
+
+  <!-- Dashboard Container -->
+  <main class="max-w-7xl mx-auto px-6 py-10 w-full flex-grow space-y-8">
+    
+    <!-- Header -->
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div>
+        <h1 class="text-3xl font-extrabold text-brand-900">Hackathon Dashboard</h1>
+        <p class="text-slate-500 text-sm">Manage submissions, verify payments, send entrance tickets, and track attendee check-in.</p>
+      </div>
+      <button onclick="fetchDashboardData()" class="px-4 py-2 bg-white hover:bg-slate-50 text-slate-700 rounded-lg text-sm font-semibold transition-all border border-slate-200 flex items-center space-x-1.5 self-start md:self-center shadow-sm">
+        <svg class="w-4 h-4 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 15H19.5"></path></svg>
+        <span>Refresh Dashboard</span>
+      </button>
+    </div>
+
+    <!-- Analytics Cards -->
+    <section class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+      <!-- Total Registrations -->
+      <div class="glass-panel p-5 rounded-2xl shadow-sm border border-slate-200 bg-white">
+        <span class="text-slate-400 text-xs font-semibold block uppercase tracking-wider">Total Teams</span>
+        <span id="statTotal" class="text-2xl md:text-3xl font-extrabold text-slate-800 mt-1 block">0</span>
+      </div>
+      <!-- Revenue -->
+      <div class="glass-panel p-5 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-brand-600 bg-white">
+        <span class="text-slate-400 text-xs font-semibold block uppercase tracking-wider">Total Revenue</span>
+        <span id="statRevenue" class="text-2xl md:text-3xl font-extrabold text-brand-700 mt-1 block">₹0</span>
+      </div>
+      <!-- Pending -->
+      <div class="glass-panel p-5 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-amber-500 bg-white">
+        <span class="text-slate-400 text-xs font-semibold block uppercase tracking-wider">Pending</span>
+        <span id="statPending" class="text-2xl md:text-3xl font-extrabold text-amber-600 mt-1 block">0</span>
+      </div>
+      <!-- Approved -->
+      <div class="glass-panel p-5 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-green-500 bg-white">
+        <span class="text-slate-400 text-xs font-semibold block uppercase tracking-wider">Approved</span>
+        <span id="statApproved" class="text-2xl md:text-3xl font-extrabold text-green-600 mt-1 block">0</span>
+      </div>
+      <!-- Rejected -->
+      <div class="glass-panel p-5 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-red-500 bg-white">
+        <span class="text-slate-400 text-xs font-semibold block uppercase tracking-wider">Rejected</span>
+        <span id="statRejected" class="text-2xl md:text-3xl font-extrabold text-red-600 mt-1 block">0</span>
+      </div>
+      <!-- Checked In -->
+      <div class="glass-panel p-5 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-blue-500 bg-white">
+        <span class="text-slate-400 text-xs font-semibold block uppercase tracking-wider">Attended</span>
+        <span id="statAttended" class="text-2xl md:text-3xl font-extrabold text-blue-600 mt-1 block">0</span>
+      </div>
+    </section>
+
+    <!-- Filters & Search Bar -->
+    <section class="glass-panel p-4 rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-sm bg-white border border-slate-200">
+      <!-- Search Input -->
+      <div class="relative flex-grow max-w-md">
+        <input type="text" id="searchInput" placeholder="Search by team, college, phone, problem..."
+          class="w-full bg-slate-50 border border-slate-200 rounded-lg pl-10 pr-4 py-2 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-brand-500 transition-all">
+        <svg class="w-4 h-4 text-slate-400 absolute left-3 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+      </div>
+
+      <!-- Filters -->
+      <div class="flex items-center space-x-4 self-end md:self-auto">
+        <select id="statusFilter" class="bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-600 focus:outline-none focus:border-brand-500 transition-all">
+          <option value="">All Statuses</option>
+          <option value="Pending">Pending</option>
+          <option value="Approved">Approved</option>
+          <option value="Rejected">Rejected</option>
+        </select>
+      </div>
+    </section>
+
+    <!-- Table -->
+    <section class="glass-panel rounded-2xl overflow-hidden shadow-sm border border-slate-200 bg-white">
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="bg-slate-100 border-b border-slate-200 text-slate-500 text-xs uppercase tracking-wider font-semibold">
+              <th class="py-4 px-5">ID</th>
+              <th class="py-4 px-5">Team Leader / College</th>
+              <th class="py-4 px-5">Problem Selection</th>
+              <th class="py-4 px-5">Payment Proof</th>
+              <th class="py-4 px-5">Reg Status</th>
+              <th class="py-4 px-5">Attendance</th>
+              <th class="py-4 px-5 text-center">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="registrationsTable" class="divide-y divide-slate-100 text-sm text-slate-700">
+            <!-- Table content dynamically injected -->
+            <tr>
+              <td colspan="7" class="py-12 text-center text-slate-400">
+                <div class="w-8 h-8 border-2 border-brand-500 border-t-transparent rounded-full animate-spin mx-auto mb-2"></div>
+                Loading registrations...
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Detail Modal -->
+  <div id="detailModal" class="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="glass-panel-heavy rounded-2xl max-w-2xl w-full p-6 md:p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto bg-white">
+      <button onclick="closeDetailModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 transition-all">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+      </button>
+
+      <h2 class="text-2xl font-bold mb-5 text-brand-900 flex items-center border-b border-slate-100 pb-3">
+        <span class="text-brand-600 mr-2">Team Details</span>
+        <span id="modalTeamId" class="text-sm font-mono text-slate-400">#---</span>
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div>
+          <span class="text-xs text-slate-400 uppercase tracking-wider block">College/Institution</span>
+          <span id="modalCollege" class="text-slate-800 font-semibold block mt-0.5">---</span>
+        </div>
+        <div>
+          <span class="text-xs text-slate-400 uppercase tracking-wider block">Problem Statement</span>
+          <span id="modalProblem" class="text-slate-800 font-medium block mt-0.5 text-xs leading-relaxed">---</span>
+        </div>
+      </div>
+
+      <div class="space-y-4">
+        <h3 class="text-sm font-bold text-slate-400 uppercase tracking-wider border-b border-slate-100 pb-1.5">Members Info</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Leader -->
+          <div class="bg-slate-50 p-3 rounded-lg border border-slate-200">
+            <span class="text-[10px] text-brand-600 font-bold uppercase tracking-wider block">Leader (Member 1)</span>
+            <span id="modalLName" class="text-slate-700 font-semibold block text-sm">---</span>
+            <span id="modalLEmail" class="text-slate-500 block text-xs mt-0.5">---</span>
+            <span id="modalLPhone" class="text-slate-500 block text-xs font-mono">---</span>
+          </div>
+          <!-- Member 2 -->
+          <div class="bg-slate-50 p-3 rounded-lg border border-slate-200">
+            <span class="text-[10px] text-slate-500 font-bold uppercase tracking-wider block">Member 2</span>
+            <span id="modalM2Name" class="text-slate-700 font-semibold block text-sm">---</span>
+            <span id="modalM2Phone" class="text-slate-500 block text-xs mt-1 font-mono">---</span>
+          </div>
+          <!-- Member 3 -->
+          <div class="bg-slate-50 p-3 rounded-lg border border-slate-200">
+            <span class="text-[10px] text-slate-500 font-bold uppercase tracking-wider block">Member 3</span>
+            <span id="modalM3Name" class="text-slate-700 font-semibold block text-sm">---</span>
+            <span id="modalM3Phone" class="text-slate-500 block text-xs mt-1 font-mono">---</span>
+          </div>
+          <!-- Member 4 -->
+          <div class="bg-slate-50 p-3 rounded-lg border border-slate-200">
+            <span class="text-[10px] text-slate-500 font-bold uppercase tracking-wider block">Member 4</span>
+            <span id="modalM4Name" class="text-slate-700 font-semibold block text-sm">---</span>
+            <span id="modalM4Phone" class="text-slate-500 block text-xs mt-1 font-mono">---</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Proof Modal -->
+  <div id="proofModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="glass-panel-heavy rounded-2xl max-w-xl w-full p-4 shadow-2xl relative flex flex-col bg-white border border-slate-200">
+      <button onclick="closeProofModal()" class="absolute -top-10 right-0 text-slate-200 hover:text-white transition-all flex items-center space-x-1">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        <span class="text-xs uppercase font-semibold">Close</span>
+      </button>
+      <div class="w-full overflow-hidden rounded-lg bg-slate-100 max-h-[75vh] flex items-center justify-center border border-slate-200 shadow-inner">
+        <img id="proofImageEl" src="" alt="Payment Receipt Zoom" class="w-full h-auto object-contain">
+      </div>
+      <p class="text-center text-slate-400 text-xs mt-3 font-mono">UTR / Transaction details must be clearly readable</p>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="glass-panel border-t border-slate-200 py-6 text-center text-xs text-slate-400 bg-white">
+    <p>Aadhira Solutions &copy; 2026. All rights reserved.</p>
+  </footer>
+
+  <script>
+    let registrationsData = [];
+    let savedEmail = '';
+
+    // Check auth on startup
+    window.addEventListener('DOMContentLoaded', () => {
+      checkAuth();
+
+      // Hook search and filters
+      document.getElementById('searchInput').addEventListener('input', debounce(filterSearch, 300));
+      document.getElementById('statusFilter').addEventListener('change', filterSearch);
+
+      // Hook OTP Forms
+      document.getElementById('otpEmailForm').addEventListener('submit', sendOtpHandler);
+      document.getElementById('otpCodeForm').addEventListener('submit', verifyOtpHandler);
+    });
+
+    // Check Authorization State
+    function checkAuth() {
+      const token = localStorage.getItem('adminToken');
+      const overlay = document.getElementById('loginOverlay');
+      if (token) {
+        overlay.classList.add('hidden');
+        fetchDashboardData();
+      } else {
+        overlay.classList.remove('hidden');
+      }
+    }
+
+    // Toggle overlay view state
+    function showEmailForm() {
+      document.getElementById('otpEmailForm').classList.remove('hidden');
+      document.getElementById('otpCodeForm').classList.add('hidden');
+      document.getElementById('authError').classList.add('hidden');
+    }
+
+    // Logout Helper
+    function logoutAdmin() {
+      localStorage.removeItem('adminToken');
+      checkAuth();
+    }
+
+    // Handle Send OTP API Request
+    async function sendOtpHandler(e) {
+      e.preventDefault();
+      const email = document.getElementById('adminEmail').value.trim();
+      const sendBtn = document.getElementById('sendOtpBtn');
+      const errorDiv = document.getElementById('authError');
+
+      errorDiv.classList.add('hidden');
+      sendBtn.disabled = true;
+      sendBtn.textContent = 'Sending...';
+
+      try {
+        const res = await fetch('/api/auth/send-otp', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email })
+        });
+        const data = await res.json();
+        
+        if (res.ok && data.success) {
+          savedEmail = email;
+          document.getElementById('otpEmailForm').classList.add('hidden');
+          document.getElementById('otpCodeForm').classList.remove('hidden');
+        } else {
+          errorDiv.textContent = data.error || 'Failed to request OTP code.';
+          errorDiv.classList.remove('hidden');
+        }
+      } catch (err) {
+        console.error(err);
+        errorDiv.textContent = 'Connection error occurred.';
+        errorDiv.classList.remove('hidden');
+      } finally {
+        sendBtn.disabled = false;
+        sendBtn.textContent = 'Request OTP Code';
+      }
+    }
+
+    // Handle Verify OTP API Request
+    async function verifyOtpHandler(e) {
+      e.preventDefault();
+      const otp = document.getElementById('adminOtp').value.trim();
+      const verifyBtn = document.getElementById('verifyOtpBtn');
+      const errorDiv = document.getElementById('authError');
+
+      errorDiv.classList.add('hidden');
+      verifyBtn.disabled = true;
+      verifyBtn.textContent = 'Verifying...';
+
+      try {
+        const res = await fetch('/api/auth/verify-otp', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: savedEmail, otp })
+        });
+        const data = await res.json();
+
+        if (res.ok && data.success) {
+          localStorage.setItem('adminToken', data.token);
+          checkAuth(); // Hide modal and fetch
+        } else {
+          errorDiv.textContent = data.error || 'Invalid OTP code.';
+          errorDiv.classList.remove('hidden');
+        }
+      } catch (err) {
+        console.error(err);
+        errorDiv.textContent = 'Connection error occurred.';
+        errorDiv.classList.remove('hidden');
+      } finally {
+        verifyBtn.disabled = false;
+        verifyBtn.textContent = 'Verify & Authorize';
+      }
+    }
+
+    // Debounce function
+    function debounce(func, delay) {
+      let timer;
+      return function (...args) {
+        clearTimeout(timer);
+        timer = setTimeout(() => func.apply(this, args), delay);
+      };
+    }
+
+    // Authorization Header Helper
+    function getAuthHeaders() {
+      return {
+        'Authorization': 'Bearer ' + localStorage.getItem('adminToken'),
+        'Content-Type': 'application/json'
+      };
+    }
+
+    // Handle 401 Unauthorized API responses
+    function handleApiError(res, data) {
+      if (res.status === 401) {
+        logoutAdmin();
+        alert('Your administrator session has expired or is unauthorized. Please verify via OTP again.');
+        return true;
+      }
+      return false;
+    }
+
+    // Fetch Stats & Registrations
+    async function fetchDashboardData() {
+      try {
+        // Fetch stats
+        const statsRes = await fetch('/api/stats', {
+          headers: getAuthHeaders()
+        });
+        const statsData = await statsRes.json();
+        if (handleApiError(statsRes, statsData)) return;
+
+        if (statsData.success) {
+          const s = statsData.stats;
+          document.getElementById('statTotal').textContent = s.total;
+          document.getElementById('statRevenue').textContent = `₹${s.revenue}`;
+          document.getElementById('statPending').textContent = s.pending;
+          document.getElementById('statApproved').textContent = s.approved;
+          document.getElementById('statRejected').textContent = s.rejected;
+          document.getElementById('statAttended').textContent = s.attended;
+        }
+
+        // Fetch all registrations
+        const regRes = await fetch('/api/registrations', {
+          headers: getAuthHeaders()
+        });
+        const regData = await regRes.json();
+        if (handleApiError(regRes, regData)) return;
+
+        if (regData.success) {
+          registrationsData = regData.registrations;
+          renderTable(registrationsData);
+        }
+      } catch (err) {
+        console.error(err);
+        alert("Failed to load dashboard data.");
+      }
+    }
+
+    // Filter registrations on client (or make API query)
+    async function filterSearch() {
+      const search = document.getElementById('searchInput').value;
+      const status = document.getElementById('statusFilter').value;
+
+      try {
+        const res = await fetch(`/api/registrations?search=${encodeURIComponent(search)}&status=${encodeURIComponent(status)}`, {
+          headers: getAuthHeaders()
+        });
+        const data = await res.json();
+        if (handleApiError(res, data)) return;
+
+        if (data.success) {
+          renderTable(data.registrations);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    // Render registrations inside table
+    function renderTable(list) {
+      const tableBody = document.getElementById('registrationsTable');
+      if (list.length === 0) {
+        tableBody.innerHTML = `
+          <tr>
+            <td colspan="7" class="py-12 text-center text-slate-400">
+              No registrations found.
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tableBody.innerHTML = list.map(reg => {
+        // Status Badge
+        let statusBadge = `<span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500/10 text-amber-600 border border-amber-500/20">Pending</span>`;
+        if (reg.status === 'Approved') {
+          statusBadge = `<span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-green-500/10 text-green-600 border border-green-500/20">Approved</span>`;
+        } else if (reg.status === 'Rejected') {
+          statusBadge = `<span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-red-500/10 text-red-600 border border-red-500/20">Rejected</span>`;
+        }
+
+        // Attendance Badge
+        let attendanceBadge = `<span class="px-2 py-0.5 rounded text-[11px] font-bold bg-slate-100 text-slate-400 border border-slate-200">Absent</span>`;
+        if (reg.attended) {
+          const dateStr = reg.attended_at ? new Date(reg.attended_at).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : '';
+          attendanceBadge = `<span class="px-2 py-0.5 rounded text-[11px] font-bold bg-blue-500/10 text-blue-600 border border-blue-500/20 flex items-center space-x-1 w-max">
+            <span class="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse"></span>
+            <span>Attended (${dateStr})</span>
+          </span>`;
+        }
+
+        // Action Buttons
+        let actionButtons = `
+          <div class="flex items-center justify-center space-x-2">
+            <button onclick="updateStatus(${reg.id}, 'Approved')" title="Approve" class="p-1.5 bg-green-500/10 hover:bg-green-600 text-green-600 hover:text-white border border-green-500/20 rounded transition-all">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            </button>
+            <button onclick="updateStatus(${reg.id}, 'Rejected')" title="Reject" class="p-1.5 bg-red-500/10 hover:bg-red-600 text-red-600 hover:text-white border border-red-500/20 rounded transition-all">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+          </div>
+        `;
+
+        if (reg.status !== 'Pending') {
+          actionButtons = `<span class="text-slate-400 text-xs">Processed</span>`;
+        }
+
+        const dateFormatted = new Date(reg.created_at).toLocaleDateString([], {month: 'short', day: 'numeric'});
+
+        return `
+          <tr class="hover:bg-slate-50 transition-colors">
+            <td class="py-4 px-5 font-mono text-slate-400 font-bold">#${reg.id}</td>
+            <td class="py-4 px-5">
+              <div class="font-bold text-brand-900 cursor-pointer hover:text-brand-600 flex items-center space-x-1" onclick="openDetailModal(${reg.id})">
+                <span>${reg.leader_name}</span>
+                <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+              </div>
+              <div class="text-xs text-slate-400 mt-0.5 truncate max-w-[220px]">${reg.college_name}</div>
+            </td>
+            <td class="py-4 px-5 max-w-[250px]">
+              <div class="truncate font-medium text-slate-600 text-xs" title="${reg.problem_statement}">
+                ${reg.problem_statement}
+              </div>
+              <div class="text-[10px] text-slate-400 font-mono mt-0.5">${dateFormatted}</div>
+            </td>
+            <td class="py-4 px-5">
+              <button onclick="openProofModal(${reg.id})" class="px-2.5 py-1 bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-600 rounded text-xs font-semibold transition-all flex items-center space-x-1 shadow-sm">
+                <svg class="w-3.5 h-3.5 text-brand-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                <span>Receipt</span>
+              </button>
+            </td>
+            <td class="py-4 px-5">${statusBadge}</td>
+            <td class="py-4 px-5">${attendanceBadge}</td>
+            <td class="py-4 px-5 text-center">${actionButtons}</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    // Open detail modal with team full info
+    function openDetailModal(id) {
+      const reg = registrationsData.find(r => r.id === id);
+      if (!reg) return;
+
+      document.getElementById('modalTeamId').textContent = `#${reg.id}`;
+      document.getElementById('modalCollege').textContent = reg.college_name;
+      document.getElementById('modalProblem').textContent = reg.problem_statement;
+      
+      document.getElementById('modalLName').textContent = reg.leader_name;
+      document.getElementById('modalLEmail').textContent = reg.leader_email;
+      document.getElementById('modalLPhone').textContent = reg.leader_phone;
+
+      document.getElementById('modalM2Name').textContent = reg.member2_name;
+      document.getElementById('modalM2Phone').textContent = reg.member2_phone;
+
+      document.getElementById('modalM3Name').textContent = reg.member3_name;
+      document.getElementById('modalM3Phone').textContent = reg.member3_phone;
+
+      document.getElementById('modalM4Name').textContent = reg.member4_name;
+      document.getElementById('modalM4Phone').textContent = reg.member4_phone;
+
+      document.getElementById('detailModal').classList.remove('hidden');
+      document.getElementById('detailModal').classList.add('flex');
+    }
+
+    function closeDetailModal() {
+      document.getElementById('detailModal').classList.add('hidden');
+      document.getElementById('detailModal').classList.remove('flex');
+    }
+
+    // Open screenshot receipt image preview modal
+    function openProofModal(id) {
+      document.getElementById('proofImageEl').src = `/api/registration/${id}/proof`;
+      document.getElementById('proofModal').classList.remove('hidden');
+      document.getElementById('proofModal').classList.add('flex');
+    }
+
+    function closeProofModal() {
+      document.getElementById('proofModal').classList.add('hidden');
+      document.getElementById('proofModal').classList.remove('flex');
+    }
+
+    // Update Status API call
+    async function updateStatus(id, status) {
+      const confirmMsg = `Are you sure you want to mark Team #${id} as ${status}? This will trigger a notification email to their team leader.`;
+      if (!confirm(confirmMsg)) return;
+
+      try {
+        const res = await fetch(`/api/registration/${id}/status`, {
+          method: 'PATCH',
+          headers: getAuthHeaders(),
+          body: JSON.stringify({ status })
+        });
+        
+        const data = await res.json();
+        if (handleApiError(res, data)) return;
+
+        if (data.success) {
+          alert(`Team registration marked as ${status} successfully!`);
+          fetchDashboardData(); // Refresh UI
+        } else {
+          alert(`Error: ${data.error || 'Failed to update status.'}`);
+        }
+      } catch (err) {
+        console.error(err);
+        alert("Server error occurred while updating status.");
+      }
+    }
+
+    // Mobile menu toggle
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+  </script>
+</body>
+</html>

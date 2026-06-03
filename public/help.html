@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Help Desk | Aadhira Solutions</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- AOS (Animate on Scroll) -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="style.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              800: '#1e40af',
+              900: '#1e3a8a',
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-gradient-animate min-h-screen text-slate-700 antialiased selection:bg-brand-500 selection:text-white scroll-smooth flex flex-col justify-between">
+
+  <!-- Navigation Bar -->
+  <nav class="sticky top-0 z-50 glass-panel border-b border-slate-200/80 px-6 py-4 flex items-center justify-between bg-white">
+    <div class="flex items-center space-x-3">
+      <img src="logo.png" alt="Aadhira Solutions Logo" class="h-10 w-auto object-contain">
+      <div class="flex flex-col">
+        <span class="text-lg font-bold tracking-wider text-brand-900">Aadhira Solutions</span>
+        <span class="text-xs text-brand-600 uppercase tracking-widest font-semibold">Hackathon Portal</span>
+      </div>
+    </div>
+    
+    <!-- Desktop Navigation Links -->
+    <div class="hidden lg:flex items-center space-x-6 text-sm font-semibold">
+      <a href="about-hackathon.html" class="text-slate-500 hover:text-brand-600 transition-all">About Hackathon</a>
+      <a href="problems.html" class="text-slate-500 hover:text-brand-600 transition-all">Problems</a>
+      <a href="prizes.html" class="text-slate-500 hover:text-brand-600 transition-all">Prize Details</a>
+      <a href="about-us.html" class="text-slate-500 hover:text-brand-600 transition-all">About Us</a>
+      <a href="help.html" class="text-brand-600 transition-all">Help Desk</a>
+      <a href="index.html" class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-lg transition-all text-xs font-bold shadow-sm shadow-brand-500/10">Register Now</a>
+    </div>
+
+    <!-- Mobile Hamburger Button -->
+    <button id="mobileMenuBtn" class="lg:hidden text-slate-500 hover:text-brand-600 focus:outline-none">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+    </button>
+  </nav>
+
+  <!-- Mobile Menu Dropdown -->
+  <div id="mobileMenu" class="hidden lg:hidden sticky top-[73px] z-40 glass-panel border-b border-slate-200 px-6 py-4 flex flex-col space-y-3 text-sm bg-white font-semibold shadow-inner">
+    <a href="about-hackathon.html" class="text-slate-500 hover:text-brand-600 transition-all py-1">About Hackathon</a>
+    <a href="problems.html" class="text-slate-500 hover:text-brand-600 transition-all py-1">Problems Selection</a>
+    <a href="prizes.html" class="text-slate-500 hover:text-brand-600 transition-all py-1">Prize Details</a>
+    <a href="about-us.html" class="text-slate-500 hover:text-brand-600 transition-all py-1">About Us</a>
+    <a href="help.html" class="text-brand-600 transition-all py-1">Help Desk</a>
+    <a href="index.html" class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-lg transition-all text-xs font-bold shadow-sm shadow-brand-500/10 text-center">Register Now</a>
+  </div>
+
+  <!-- Main Content -->
+  <main class="max-w-5xl mx-auto px-6 py-12 flex-grow w-full">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+      
+      <!-- FAQ Column (7 cols) -->
+      <section class="lg:col-span-7 glass-panel rounded-3xl p-6 md:p-8 bg-white shadow-md space-y-6" data-aos="fade-right">
+        <h1 class="text-2xl font-extrabold text-brand-900 border-b border-slate-100 pb-3 mb-6">Frequently Asked Questions</h1>
+        
+        <div class="space-y-4">
+          <!-- FAQ Item 1 -->
+          <div class="border-b border-slate-200 pb-3">
+            <h3 class="font-bold text-slate-800 text-sm sm:text-base mb-1 cursor-pointer flex justify-between items-center" onclick="toggleFaq(1)">
+              <span>Q: Can a team consist of fewer than 4 members?</span>
+              <span id="faqIcon1" class="text-brand-600 font-bold">+</span>
+            </h3>
+            <p id="faqAns1" class="hidden text-slate-500 text-xs sm:text-sm leading-relaxed mt-1">
+              A: No. The Aadhira Solutions Hackathon requires teams of exactly 4 members (1 leader and 3 members). All team lineup input sections are mandatory to complete step 2.
+            </p>
+          </div>
+
+          <!-- FAQ Item 2 -->
+          <div class="border-b border-slate-200 pb-3">
+            <h3 class="font-bold text-slate-800 text-sm sm:text-base mb-1 cursor-pointer flex justify-between items-center" onclick="toggleFaq(2)">
+              <span>Q: How long does the verification take?</span>
+              <span id="faqIcon2" class="text-brand-600 font-bold">+</span>
+            </h3>
+            <p id="faqAns2" class="hidden text-slate-500 text-xs sm:text-sm leading-relaxed mt-1">
+              A: Once you submit your payment proof, our coordination committee reviews it. Approved teams will receive their entrance check-in ticket with QR code in their email within 12 hours.
+            </p>
+          </div>
+
+          <!-- FAQ Item 3 -->
+          <div class="border-b border-slate-200 pb-3">
+            <h3 class="font-bold text-slate-800 text-sm sm:text-base mb-1 cursor-pointer flex justify-between items-center" onclick="toggleFaq(3)">
+              <span>Q: Can I change my selected problem statement later?</span>
+              <span id="faqIcon3" class="text-brand-600 font-bold">+</span>
+            </h3>
+            <p id="faqAns3" class="hidden text-slate-500 text-xs sm:text-sm leading-relaxed mt-1">
+              A: Problem statement selections are locked once submitted. In case of an absolute error, please fill in the contact support form on this page with your Team ID to request a modification.
+            </p>
+          </div>
+
+          <!-- FAQ Item 4 -->
+          <div class="border-b border-slate-200 pb-3">
+            <h3 class="font-bold text-slate-800 text-sm sm:text-base mb-1 cursor-pointer flex justify-between items-center" onclick="toggleFaq(4)">
+              <span>Q: What is the file size limit for receipt uploads?</span>
+              <span id="faqIcon4" class="text-brand-600 font-bold">+</span>
+            </h3>
+            <p id="faqAns4" class="hidden text-slate-500 text-xs sm:text-sm leading-relaxed mt-1">
+              A: The receipt upload file size must be at most 2MB. Only image file formats (PNG, JPG, JPEG) are accepted.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact Support Column (5 cols) -->
+      <section class="lg:col-span-5 space-y-6" data-aos="fade-left">
+        <!-- Direct contact details -->
+        <div class="glass-panel rounded-3xl p-6 bg-white shadow-md border-l-4 border-brand-500">
+          <h2 class="text-lg font-bold text-brand-800 mb-3">Direct Contact Help</h2>
+          <div class="space-y-2 text-xs sm:text-sm text-slate-500">
+            <p>📧 Email: <span class="font-semibold text-brand-700">vsgrpsemail@gmail.com</span></p>
+            <p>📞 Phone Support: <span class="font-semibold text-slate-700">+91 98765 43210</span></p>
+            <p>⏰ Hours: 9:00 AM to 6:00 PM (Monday - Saturday)</p>
+          </div>
+        </div>
+
+        <!-- Contact Support Form -->
+        <div class="glass-panel rounded-3xl p-6 bg-white shadow-md space-y-4">
+          <h2 class="text-lg font-bold text-brand-800 border-b border-slate-100 pb-2">Support Ticket Desk</h2>
+          <form id="supportForm" class="space-y-4 text-xs sm:text-sm">
+            <div>
+              <label for="supName" class="block font-bold text-slate-500 uppercase tracking-wider mb-1">Your Name</label>
+              <input type="text" id="supName" required placeholder="Enter your name" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-slate-800 placeholder-slate-400 focus:outline-none focus:border-brand-500 transition-all">
+            </div>
+            <div>
+              <label for="supEmail" class="block font-bold text-slate-500 uppercase tracking-wider mb-1">Leader Email</label>
+              <input type="email" id="supEmail" required placeholder="Enter email" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-slate-800 placeholder-slate-400 focus:outline-none focus:border-brand-500 transition-all">
+            </div>
+            <div>
+              <label for="supMsg" class="block font-bold text-slate-500 uppercase tracking-wider mb-1">How can we help?</label>
+              <textarea id="supMsg" required rows="4" placeholder="Describe your issue or query..." class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-slate-800 placeholder-slate-400 focus:outline-none focus:border-brand-500 transition-all"></textarea>
+            </div>
+            <button type="submit" class="w-full py-2.5 bg-gradient-to-r from-brand-600 to-brand-700 hover:from-brand-700 hover:to-brand-800 text-white font-bold rounded-lg transition-all shadow-md uppercase tracking-wider text-xs">Submit Ticket</button>
+          </form>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="glass-panel border-t border-slate-200 py-6 text-center text-xs text-slate-400 bg-white">
+    <p>Aadhira Solutions &copy; 2026. All rights reserved.</p>
+  </footer>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({
+      duration: 800,
+      easing: 'ease-in-out',
+      once: true
+    });
+
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    // Interactive Accordion logic
+    function toggleFaq(num) {
+      const ans = document.getElementById(`faqAns${num}`);
+      const icon = document.getElementById(`faqIcon${num}`);
+      
+      ans.classList.toggle('hidden');
+      if (ans.classList.contains('hidden')) {
+        icon.textContent = '+';
+      } else {
+        icon.textContent = '-';
+      }
+    }
+
+    // Support Form Handler
+    document.getElementById('supportForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert("Your support request has been submitted successfully! Our help desk team will review it and follow up via email within 4 hours.");
+      document.getElementById('supportForm').reset();
+    });
+  </script>
+</body>
+</html>

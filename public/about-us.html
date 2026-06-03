@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us | Aadhira Solutions</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- AOS (Animate on Scroll) -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="style.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              800: '#1e40af',
+              900: '#1e3a8a',
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-gradient-animate min-h-screen text-slate-700 antialiased selection:bg-brand-500 selection:text-white scroll-smooth flex flex-col justify-between">
+
+  <!-- Navigation Bar -->
+  <nav class="sticky top-0 z-50 glass-panel border-b border-slate-200/80 px-6 py-4 flex items-center justify-between bg-white">
+    <div class="flex items-center space-x-3">
+      <img src="logo.png" alt="Aadhira Solutions Logo" class="h-10 w-auto object-contain">
+      <div class="flex flex-col">
+        <span class="text-lg font-bold tracking-wider text-brand-900">Aadhira Solutions</span>
+        <span class="text-xs text-brand-600 uppercase tracking-widest font-semibold">Hackathon Portal</span>
+      </div>
+    </div>
+    
+    <!-- Desktop Navigation Links -->
+    <div class="hidden lg:flex items-center space-x-6 text-sm font-semibold">
+      <a href="about-hackathon.html" class="text-slate-500 hover:text-brand-600 transition-all">About Hackathon</a>
+      <a href="problems.html" class="text-slate-500 hover:text-brand-600 transition-all">Problems</a>
+      <a href="prizes.html" class="text-slate-500 hover:text-brand-600 transition-all">Prize Details</a>
+      <a href="about-us.html" class="text-brand-600 transition-all">About Us</a>
+      <a href="help.html" class="text-slate-500 hover:text-brand-600 transition-all">Help Desk</a>
+      <a href="index.html" class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-lg transition-all text-xs font-bold shadow-sm shadow-brand-500/10">Register Now</a>
+    </div>
+
+    <!-- Mobile Hamburger Button -->
+    <button id="mobileMenuBtn" class="lg:hidden text-slate-500 hover:text-brand-600 focus:outline-none">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+    </button>
+  </nav>
+
+  <!-- Mobile Menu Dropdown -->
+  <div id="mobileMenu" class="hidden lg:hidden sticky top-[73px] z-40 glass-panel border-b border-slate-200 px-6 py-4 flex flex-col space-y-3 text-sm bg-white font-semibold shadow-inner">
+    <a href="about-hackathon.html" class="text-slate-500 hover:text-brand-600 transition-all py-1">About Hackathon</a>
+    <a href="problems.html" class="text-slate-500 hover:text-brand-600 transition-all py-1">Problems Selection</a>
+    <a href="prizes.html" class="text-slate-500 hover:text-brand-600 transition-all py-1">Prize Details</a>
+    <a href="about-us.html" class="text-brand-600 transition-all py-1">About Us</a>
+    <a href="help.html" class="text-slate-500 hover:text-brand-600 transition-all py-1">Help Desk</a>
+    <a href="index.html" class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-lg transition-all text-xs font-bold shadow-sm shadow-brand-500/10 text-center">Register Now</a>
+  </div>
+
+  <!-- Main Content -->
+  <main class="max-w-4xl mx-auto px-6 py-12 flex-grow w-full">
+    <div class="glass-panel rounded-3xl p-8 md:p-12 bg-white shadow-md relative overflow-hidden" data-aos="fade-up">
+      <div class="absolute top-0 right-0 w-48 h-48 bg-brand-500/5 rounded-full blur-3xl"></div>
+      
+      <div class="flex flex-col md:flex-row items-center justify-between gap-8 border-b border-slate-100 pb-8 mb-8">
+        <div class="space-y-4 md:w-2/3">
+          <span class="text-xs text-brand-600 font-bold uppercase tracking-widest bg-brand-50 px-3 py-1 rounded-full border border-brand-100">Our Profile</span>
+          <h1 class="text-3xl md:text-4xl font-extrabold text-brand-900 tracking-tight">About Aadhira Solutions</h1>
+          <p class="text-slate-500 text-sm sm:text-base leading-relaxed">
+            Aadhira Solutions is a pioneer in technical incubation, learning systems design, and digital transformation solutions, dedicated to empowering academic innovation and engineering talent.
+          </p>
+        </div>
+        <div class="md:w-1/3 flex items-center justify-center">
+          <img src="logo.png" alt="Aadhira Solutions Logo" class="max-h-32 w-auto object-contain p-4 bg-slate-50 border border-slate-100 rounded-2xl shadow-inner hover:scale-105 transition-all duration-300">
+        </div>
+      </div>
+
+      <div class="space-y-8 text-sm sm:text-base leading-relaxed text-slate-600">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="space-y-3 bg-slate-50 p-5 rounded-2xl border border-slate-100">
+            <h3 class="font-bold text-brand-800 text-base flex items-center">
+              <span class="bg-brand-100 text-brand-600 w-6 h-6 rounded-md flex items-center justify-center mr-2 text-xs font-bold">🎯</span>
+              Our Mission
+            </h3>
+            <p class="text-xs text-slate-500">
+              To bridge the gap between academic capability and industry requirements by fostering innovation challenges, corporate-sponsored projects, and advanced software architectures for engineering systems. We create modern, secure digital ecosystems.
+            </p>
+          </div>
+          <div class="space-y-3 bg-slate-50 p-5 rounded-2xl border border-slate-100">
+            <h3 class="font-bold text-brand-800 text-base flex items-center">
+              <span class="bg-brand-100 text-brand-600 w-6 h-6 rounded-md flex items-center justify-center mr-2 text-xs font-bold">💡</span>
+              Our Vision
+            </h3>
+            <p class="text-xs text-slate-500">
+              To build a sustainable digital incubation pipeline where student developers learn to build state-of-the-art enterprise projects. We empower colleges with robust portal solutions for training, internships, and placement ecosystems.
+            </p>
+          </div>
+        </div>
+
+        <div class="space-y-4">
+          <h2 class="text-xl font-bold text-brand-900 flex items-center">
+            <svg class="w-5 h-5 mr-2 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+            Incubation and Industry Readiness
+          </h2>
+          <p class="text-xs sm:text-sm text-slate-500">
+            Through hackathons and hands-on coding challenges, we bring real-world software engineering processes directly to student teams. Students are challenged to build secure full-stack applications with strict constraints (like BLOB database storage, multi-stage confirmation flows, and QR verification scanners).
+          </p>
+          <p class="text-xs sm:text-sm text-slate-500">
+            Aadhira Solutions operates the official portal on <strong>skopick.org</strong>, where physical evaluation scorecards are managed and verified in real-time by industry coordinators.
+          </p>
+        </div>
+
+        <div class="p-4 bg-brand-50 border border-brand-100 rounded-xl flex items-center justify-between flex-wrap gap-4 text-xs mt-6">
+          <div>
+            <span class="font-bold text-brand-900 block text-sm">Official Skopick Portal</span>
+            <span class="text-slate-400">incubated under Aadhira Solutions development framework.</span>
+          </div>
+          <a href="https://aadhirasolutions.skopick.org/" target="_blank" class="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-lg font-bold text-[11px] transition-all">Visit Official Website</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="glass-panel border-t border-slate-200 py-6 text-center text-xs text-slate-400 bg-white">
+    <p>Aadhira Solutions &copy; 2026. All rights reserved.</p>
+  </footer>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({
+      duration: 800,
+      easing: 'ease-in-out',
+      once: true
+    });
+
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+  </script>
+</body>
+</html>
