@@ -105,7 +105,17 @@
       </div>
 
       <div id="summaryCard" class="hidden text-left bg-slate-50 border border-slate-200 rounded-2xl p-4 mb-8 space-y-3">
-        <h3 class="text-sm sm:text-base font-bold text-brand-950 border-b border-slate-200 pb-2.5 flex justify-between items-center font-bold">
+        
+        <!-- Company Header for PDF -->
+        <div class="flex items-center space-x-3 pb-3 border-b border-slate-200/60">
+          <img src="logo.png" alt="Aadhira Solutions Logo" class="h-10 w-auto object-contain">
+          <div class="flex flex-col">
+            <span class="text-sm font-extrabold text-brand-950 tracking-wider">Aadhira Solutions</span>
+            <span class="text-[10px] text-brand-600 uppercase tracking-widest font-semibold">Hackathon 2026 Portal</span>
+          </div>
+        </div>
+
+        <h3 class="text-sm sm:text-base font-bold text-slate-800 border-b border-slate-200 pb-2.5 flex justify-between items-center">
           <span>Registration Receipt</span>
           <span class="text-xs font-mono font-normal text-slate-400">ID: #<span id="summaryId"></span></span>
         </h3>
