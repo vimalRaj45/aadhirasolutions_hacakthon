@@ -32,7 +32,7 @@
 
   <!-- Login Overlay (OTP Authorization Portal) -->
   <div id="loginOverlay" class="fixed inset-0 z-50 bg-slate-900/90 backdrop-blur-md flex items-center justify-center p-4">
-    <div class="glass-panel rounded-3xl max-w-md w-full p-8 shadow-2xl relative bg-white border border-slate-200">
+    <div class="bg-white max-w-md w-full p-8 shadow-2xl relative bg-white border border-slate-200">
       
       <!-- Logo and Title -->
       <div class="text-center mb-2">
@@ -78,7 +78,7 @@
   </div>
 
   <!-- Navigation Bar -->
-  <nav class="glass-panel border-b border-slate-200/80 px-6 py-4 flex items-center justify-between bg-white">
+  <nav class="bg-white border-b border-slate-200/80 px-6 py-4 flex items-center justify-between bg-white">
     <div class="flex items-center space-x-3">
       <img src="logo.png" alt="Aadhira Solutions Logo" class="h-10 w-auto object-contain">
       <div class="flex flex-col">
@@ -104,7 +104,7 @@
   </div>
 
   <!-- Dashboard Container -->
-  <main class="max-w-7xl mx-auto px-6 py-10 w-full flex-grow space-y-8">
+  <main class="w-full flex-grow space-y-8">
     
     <!-- Header -->
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -121,39 +121,39 @@
     <!-- Analytics Cards -->
     <section class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
       <!-- Total Registrations -->
-      <div class="glass-panel p-5 rounded-2xl shadow-sm border border-slate-200 bg-white">
+      <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 bg-white">
         <span class="text-slate-400 text-xs font-semibold block uppercase tracking-wider">Total Teams</span>
         <span id="statTotal" class="text-2xl md:text-3xl font-extrabold text-slate-800 mt-1 block">0</span>
       </div>
       <!-- Revenue -->
-      <div class="glass-panel p-5 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-brand-600 bg-white">
+      <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-brand-600 bg-white">
         <span class="text-slate-400 text-xs font-semibold block uppercase tracking-wider">Total Revenue</span>
         <span id="statRevenue" class="text-2xl md:text-3xl font-extrabold text-brand-700 mt-1 block">₹0</span>
       </div>
       <!-- Pending -->
-      <div class="glass-panel p-5 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-amber-500 bg-white">
+      <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-amber-500 bg-white">
         <span class="text-slate-400 text-xs font-semibold block uppercase tracking-wider">Pending</span>
         <span id="statPending" class="text-2xl md:text-3xl font-extrabold text-amber-600 mt-1 block">0</span>
       </div>
       <!-- Approved -->
-      <div class="glass-panel p-5 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-green-500 bg-white">
+      <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-green-500 bg-white">
         <span class="text-slate-400 text-xs font-semibold block uppercase tracking-wider">Approved</span>
         <span id="statApproved" class="text-2xl md:text-3xl font-extrabold text-green-600 mt-1 block">0</span>
       </div>
       <!-- Rejected -->
-      <div class="glass-panel p-5 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-red-500 bg-white">
+      <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-red-500 bg-white">
         <span class="text-slate-400 text-xs font-semibold block uppercase tracking-wider">Rejected</span>
         <span id="statRejected" class="text-2xl md:text-3xl font-extrabold text-red-600 mt-1 block">0</span>
       </div>
       <!-- Checked In -->
-      <div class="glass-panel p-5 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-blue-500 bg-white">
+      <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-blue-500 bg-white">
         <span class="text-slate-400 text-xs font-semibold block uppercase tracking-wider">Attended</span>
         <span id="statAttended" class="text-2xl md:text-3xl font-extrabold text-blue-600 mt-1 block">0</span>
       </div>
     </section>
 
     <!-- Filters & Search Bar -->
-    <section class="glass-panel p-4 rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-sm bg-white border border-slate-200">
+    <section class="bg-white p-4 rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-sm bg-white border border-slate-200">
       <!-- Search Input -->
       <div class="relative flex-grow max-w-md">
         <input type="text" id="searchInput" placeholder="Search by team, college, phone, problem..." class="w-full bg-slate-50 border border-slate-200 rounded-lg pl-10 pr-4 py-2 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-brand-500 transition-all">
@@ -183,7 +183,7 @@
     </section>
 
     <!-- Table -->
-    <section class="glass-panel rounded-2xl overflow-hidden shadow-sm border border-slate-200 bg-white">
+    <section class="bg-white overflow-hidden shadow-sm border border-slate-200 bg-white">
       <div class="overflow-x-auto">
         <table class="w-full text-left border-collapse">
           <thead>
@@ -214,7 +214,7 @@
 
   <!-- Detail Modal -->
   <div id="detailModal" class="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm hidden items-center justify-center p-4">
-    <div class="glass-panel-heavy rounded-2xl max-w-2xl w-full p-4 md:p-5 shadow-2xl relative max-h-[90vh] overflow-y-auto bg-white">
+    <div class="bg-white-heavy rounded-2xl max-w-2xl w-full p-4 md:p-5 shadow-2xl relative max-h-[90vh] overflow-y-auto bg-white">
       <button onclick="closeDetailModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 transition-all">
         <i class="bi bi-x-lg text-2xl"></i>
       </button>
@@ -270,7 +270,7 @@
 
   <!-- Proof Modal -->
   <div id="proofModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
-    <div class="glass-panel-heavy rounded-2xl max-w-xl w-full p-4 shadow-2xl relative flex flex-col bg-white border border-slate-200">
+    <div class="bg-white-heavy rounded-2xl max-w-xl w-full p-4 shadow-2xl relative flex flex-col bg-white border border-slate-200">
       <button onclick="closeProofModal()" class="absolute -top-10 right-0 text-slate-200 hover:text-white transition-all flex items-center space-x-1">
         <i class="bi bi-x-lg text-2xl"></i>
         <span class="text-xs uppercase font-semibold">Close</span>
@@ -288,7 +288,7 @@
   </div>
 
   <!-- Footer -->
-  <footer class="glass-panel border-t border-slate-200 py-4 text-center text-xs text-slate-400 bg-white">
+  <footer class="bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-400 bg-white">
     <p>Aadhira Solutions © 2026. All rights reserved.</p>
   </footer>
 
