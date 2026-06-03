@@ -596,12 +596,21 @@ fastify.patch('/api/registration/:id/status', async (request, reply) => {
     }
 
     // Call Brevo API with QR code attachment if approved
-    const attachment = status === 'Approved' ? [
-      {
-        url: qrImageUrl,
-        name: `team_${team.id}_entry_qr.png`
+    let attachment;
+    if (status === 'Approved') {
+      try {
+        const qrRes = await fetch(qrImageUrl);
+        const qrBuffer = await qrRes.arrayBuffer();
+        attachment = [
+          {
+            content: Buffer.from(qrBuffer).toString('base64'),
+            name: `team_${team.id}_entry_qr.png`
+          }
+        ];
+      } catch (err) {
+        fastify.log.error('Failed to fetch QR code for attachment:', err);
       }
-    ] : undefined;
+    }
 
     await sendBrevoEmail({
       toEmail: team.leader_email,
