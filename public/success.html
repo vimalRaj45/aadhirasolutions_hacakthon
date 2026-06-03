@@ -1,6 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<!DOCTYPE html><html lang="en"><head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Registration Confirmed | Aadhira Solutions</title>
@@ -29,7 +27,7 @@
       }
     }
   </script>
-</head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"></head>
 <body class="bg-gradient-animate min-h-screen text-slate-700 antialiased flex flex-col scroll-smooth justify-between">
 
   <!-- Navigation Bar -->
@@ -53,21 +51,17 @@
     </div>
 
     <!-- Mobile Hamburger Button -->
-    <button id="mobileMenuBtn" class="lg:hidden text-slate-500 hover:text-brand-600 focus:outline-none">
-      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-      </svg>
-    </button>
+    <button id="mobileMenuBtn" class="lg:hidden text-slate-500 hover:text-brand-600 focus:outline-none relative z-50"><i class="bi bi-list text-2xl"></i></button>
   </nav>
 
   <!-- Mobile Menu Dropdown -->
-  <div id="mobileMenu" class="hidden lg:hidden sticky top-[73px] z-40 glass-panel border-b border-slate-200 px-6 py-4 flex flex-col space-y-3 text-sm bg-white font-semibold shadow-inner">
-    <a href="about-hackathon.html" class="text-slate-500 hover:text-brand-600 transition-all py-1">About Hackathon</a>
-    <a href="problems.html" class="text-slate-500 hover:text-brand-600 transition-all py-1">Problems Selection</a>
-    <a href="prizes.html" class="text-slate-500 hover:text-brand-600 transition-all py-1">Prize Details</a>
-    <a href="about-us.html" class="text-slate-500 hover:text-brand-600 transition-all py-1">About Us</a>
-    <a href="help.html" class="text-slate-500 hover:text-brand-600 transition-all py-1">Help Desk</a>
-    <a href="index.html" class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-lg transition-all text-xs font-bold shadow-sm shadow-brand-500/10 text-center">Register Now</a>
+  <div id="mobileMenuOverlay" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-30 hidden opacity-0 transition-opacity duration-300"></div><div id="mobileMenu" class="fixed inset-y-0 left-0 w-64 bg-white shadow-2xl transform -translate-x-full transition-transform duration-300 ease-in-out z-40 flex flex-col pt-20 px-6 space-y-4">
+    <a href="about-hackathon.html" class="text-slate-500 hover:text-brand-600 transition-all py-1"><i class="bi bi-info-circle mr-2"></i>About Hackathon</a>
+    <a href="problems.html" class="text-slate-500 hover:text-brand-600 transition-all py-1"><i class="bi bi-lightbulb mr-2"></i>Problems Selection</a>
+    <a href="prizes.html" class="text-slate-500 hover:text-brand-600 transition-all py-1"><i class="bi bi-trophy mr-2"></i>Prize Details</a>
+    <a href="about-us.html" class="text-slate-500 hover:text-brand-600 transition-all py-1"><i class="bi bi-info-circle mr-2"></i>About Us</a>
+    <a href="help.html" class="text-slate-500 hover:text-brand-600 transition-all py-1"><i class="bi bi-question-circle mr-2"></i>Help Desk</a>
+    <a href="index.html" class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-lg transition-all text-xs font-bold shadow-sm shadow-brand-500/10 text-center"><i class="bi bi-person-plus mr-2"></i>Register Now</a>
   </div>
 
   <!-- Success Content -->
@@ -156,7 +150,7 @@
 
   <!-- Footer -->
   <footer class="glass-panel border-t border-slate-200 py-6 text-center text-xs text-slate-400 bg-white">
-    <p>Aadhira Solutions &copy; 2026. All rights reserved.</p>
+    <p>Aadhira Solutions © 2026. All rights reserved.</p>
   </footer>
 
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
@@ -223,5 +217,41 @@
         });
     }
   </script>
-</body>
-</html>
+
+
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const btn = document.getElementById('mobileMenuBtn');
+            const menu = document.getElementById('mobileMenu');
+            const overlay = document.getElementById('mobileMenuOverlay');
+            let isOpen = false;
+            
+            if(btn && menu) {
+                // remove existing listeners by cloning (optional, might break other listeners)
+                const newBtn = btn.cloneNode(true);
+                btn.parentNode.replaceChild(newBtn, btn);
+                
+                const toggle = () => {
+                    isOpen = !isOpen;
+                    if(isOpen) {
+                        menu.classList.remove('-translate-x-full');
+                        if(overlay) {
+                            overlay.classList.remove('hidden');
+                            setTimeout(() => overlay.classList.remove('opacity-0'), 10);
+                        }
+                        newBtn.innerHTML = '<i class="bi bi-x-lg text-2xl"></i>';
+                    } else {
+                        menu.classList.add('-translate-x-full');
+                        if(overlay) {
+                            overlay.classList.add('opacity-0');
+                            setTimeout(() => overlay.classList.add('hidden'), 300);
+                        }
+                        newBtn.innerHTML = '<i class="bi bi-list text-2xl"></i>';
+                    }
+                };
+                
+                newBtn.addEventListener('click', toggle);
+                if(overlay) overlay.addEventListener('click', toggle);
+            }
+        });
+    </script></body></html>
