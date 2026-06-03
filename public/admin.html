@@ -27,7 +27,8 @@
       }
     }
   </script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"></head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
 <body class="bg-gradient-animate min-h-screen text-slate-700 antialiased flex flex-col font-['Outfit']">
 
   <!-- Login Overlay (OTP Authorization Portal) -->
@@ -45,9 +46,9 @@
       <form id="otpEmailForm" class="space-y-3">
         <div>
           <label for="adminEmail" class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1.5 font-bold">Administrator Email</label>
-          <input type="email" id="adminEmail" required="" placeholder="e.g. admin@aadhirasolutions.skopick.org" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2.5 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/10 transition-all">
+          <input type="email" id="adminEmail" required="" placeholder="e.g. admin@aadhirasolutions.skopick.org" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-2.5 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/10 transition-all">
         </div>
-        <button type="submit" id="sendOtpBtn" class="w-full py-2.5 bg-gradient-to-r from-brand-600 to-brand-700 hover:from-brand-700 hover:to-brand-800 text-white font-bold rounded-lg text-xs uppercase tracking-wider transition-all shadow-md">
+        <button type="submit" id="sendOtpBtn" class="w-full py-2.5 bg-gradient-to-r from-brand-600 to-brand-700 hover:from-brand-700 hover:to-brand-800 text-white font-bold rounded-2xl text-xs uppercase tracking-wider transition-all shadow-md">
           Request OTP Code
         </button>
       </form>
@@ -60,13 +61,13 @@
         </div>
         <div>
           <label for="adminOtp" class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1.5 font-bold">Verification OTP Code</label>
-          <input type="text" id="adminOtp" required="" placeholder="e.g. 123456" pattern="\d{6}" maxlength="6" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2.5 text-center text-lg font-mono tracking-[8px] font-bold text-slate-800 focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/10 transition-all">
+          <input type="text" id="adminOtp" required="" placeholder="e.g. 123456" pattern="\d{6}" maxlength="6" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-2.5 text-center text-lg font-mono tracking-[8px] font-bold text-slate-800 focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/10 transition-all">
         </div>
         <div class="flex items-center justify-between gap-4">
-          <button type="button" onclick="showEmailForm()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-lg text-xs font-bold transition-all border border-slate-200 shadow-sm">
+          <button type="button" onclick="showEmailForm()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-2xl text-xs font-bold transition-all border border-slate-200 shadow-sm">
             Back
           </button>
-          <button type="submit" id="verifyOtpBtn" class="flex-grow py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-lg text-xs uppercase tracking-wider transition-all shadow-md">
+          <button type="submit" id="verifyOtpBtn" class="flex-grow py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-2xl text-xs uppercase tracking-wider transition-all shadow-md">
             Verify &amp; Authorize
           </button>
         </div>
@@ -114,7 +115,7 @@
         <h1 class="text-3xl font-extrabold text-brand-900">Hackathon Dashboard</h1>
         <p class="text-slate-500 text-sm">Manage submissions, verify payments, send entrance tickets, and track attendee check-in.</p>
       </div>
-      <button onclick="fetchDashboardData()" class="px-4 py-2 bg-white hover:bg-slate-50 text-slate-700 rounded-lg text-sm font-semibold transition-all border border-slate-200 flex items-center space-x-1.5 self-start md:self-center shadow-sm">
+      <button onclick="fetchDashboardData()" class="px-4 py-2 bg-white hover:bg-slate-50 text-slate-700 rounded-2xl text-sm font-semibold transition-all border border-slate-200 flex items-center space-x-1.5 self-start md:self-center shadow-sm">
         <i class="bi bi-arrow-clockwise text-brand-600 text-base"></i>
         <span>Refresh Dashboard</span>
       </button>
@@ -158,20 +159,20 @@
     <section class="bg-white p-4 rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-sm bg-white border border-slate-200">
       <!-- Search Input -->
       <div class="relative flex-grow max-w-md">
-        <input type="text" id="searchInput" placeholder="Search by team, college, phone, problem..." class="w-full bg-slate-50 border border-slate-200 rounded-lg pl-10 pr-4 py-2 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-brand-500 transition-all">
+        <input type="text" id="searchInput" placeholder="Search by team, college, phone, problem..." class="w-full bg-slate-50 border border-slate-200 rounded-2xl pl-10 pr-4 py-2 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-brand-500 transition-all">
         <i class="bi bi-search text-slate-400 absolute left-3 top-3 text-base"></i>
       </div>
 
       <!-- Filters & Export -->
       <div class="flex items-center space-x-3 self-end md:self-auto flex-wrap gap-2">
-        <select id="statusFilter" onchange="filterSearch()" class="bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-600 focus:outline-none focus:border-brand-500 transition-all">
+        <select id="statusFilter" onchange="filterSearch()" class="bg-slate-50 border border-slate-200 rounded-2xl px-3 py-2 text-sm text-slate-600 focus:outline-none focus:border-brand-500 transition-all">
           <option value="">All Statuses</option>
           <option value="Pending">Pending</option>
           <option value="Approved">Approved</option>
           <option value="Rejected">Rejected</option>
         </select>
 
-        <div class="inline-flex rounded-lg shadow-sm">
+        <div class="inline-flex rounded-2xl shadow-sm">
           <button onclick="exportToExcel('verified')" class="px-3.5 py-2 bg-green-600 hover:bg-green-700 text-white text-xs font-bold rounded-l-lg transition-all flex items-center space-x-1">
             <i class="bi bi-download "></i>
             <span>Export Verified</span>
@@ -241,26 +242,26 @@
         <h3 class="text-sm font-bold text-slate-400 uppercase tracking-wider border-b border-slate-100 pb-1.5">Members Info</h3>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <!-- Leader -->
-          <div class="bg-slate-50 p-3 rounded-lg border border-slate-200">
+          <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200">
             <span class="text-[10px] text-brand-600 font-bold uppercase tracking-wider block">Leader (Member 1)</span>
             <span id="modalLName" class="text-slate-700 font-semibold block text-sm">---</span>
             <span id="modalLEmail" class="text-slate-500 block text-xs mt-0.5">---</span>
             <span id="modalLPhone" class="text-slate-500 block text-xs font-mono">---</span>
           </div>
           <!-- Member 2 -->
-          <div class="bg-slate-50 p-3 rounded-lg border border-slate-200">
+          <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200">
             <span class="text-[10px] text-slate-500 font-bold uppercase tracking-wider block">Member 2</span>
             <span id="modalM2Name" class="text-slate-700 font-semibold block text-sm">---</span>
             <span id="modalM2Phone" class="text-slate-500 block text-xs mt-1 font-mono">---</span>
           </div>
           <!-- Member 3 -->
-          <div class="bg-slate-50 p-3 rounded-lg border border-slate-200">
+          <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200">
             <span class="text-[10px] text-slate-500 font-bold uppercase tracking-wider block">Member 3</span>
             <span id="modalM3Name" class="text-slate-700 font-semibold block text-sm">---</span>
             <span id="modalM3Phone" class="text-slate-500 block text-xs mt-1 font-mono">---</span>
           </div>
           <!-- Member 4 -->
-          <div class="bg-slate-50 p-3 rounded-lg border border-slate-200">
+          <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200">
             <span class="text-[10px] text-slate-500 font-bold uppercase tracking-wider block">Member 4</span>
             <span id="modalM4Name" class="text-slate-700 font-semibold block text-sm">---</span>
             <span id="modalM4Phone" class="text-slate-500 block text-xs mt-1 font-mono">---</span>
@@ -277,7 +278,7 @@
         <i class="bi bi-x-lg text-2xl"></i>
         <span class="text-xs uppercase font-semibold">Close</span>
       </button>
-      <div class="w-full overflow-hidden rounded-lg bg-slate-100 max-h-[75vh] flex items-center justify-center border border-slate-200 shadow-inner min-h-[300px] relative">
+      <div class="w-full overflow-hidden rounded-2xl bg-slate-100 max-h-[75vh] flex items-center justify-center border border-slate-200 shadow-inner min-h-[300px] relative">
         <!-- Spinner -->
         <div id="proofModalSpinner" class="absolute flex flex-col items-center justify-center space-y-2">
           <i class="bi bi-arrow-repeat animate-spin   text-brand-600 text-4xl"></i>
@@ -430,7 +431,7 @@
     function handleApiError(res, data) {
       if (res.status === 401) {
         logoutAdmin();
-        alert('Your administrator session has expired or is unauthorized. Please verify via OTP again.');
+        Swal.fire('Your administrator session has expired or is unauthorized. Please verify via OTP again.');
         return true;
       }
       return false;
@@ -469,7 +470,7 @@
         }
       } catch (err) {
         console.error(err);
-        alert("Failed to load dashboard data.");
+        Swal.fire("Failed to load dashboard data.");
       }
     }
 
@@ -622,7 +623,7 @@
       
       img.onerror = function() {
         spinner.classList.add('hidden');
-        alert("Failed to load payment proof screenshot.");
+        Swal.fire("Failed to load payment proof screenshot.");
       };
 
       // Set image source
@@ -646,7 +647,7 @@
     // Export registrations to CSV (Excel compatible) format
     function exportToExcel(type) {
       if (!registrationsData || registrationsData.length === 0) {
-        alert("No registration data available to export.");
+        Swal.fire("No registration data available to export.");
         return;
       }
 
@@ -660,7 +661,7 @@
       }
 
       if (filtered.length === 0) {
-        alert(`No ${type} registration records found.`);
+        Swal.fire(`No ${type} registration records found.`);
         return;
       }
 
@@ -721,14 +722,14 @@
         if (handleApiError(res, data)) return;
 
         if (data.success) {
-          alert(`Team registration marked as ${status} successfully!`);
+          Swal.fire(`Team registration marked as ${status} successfully!`);
           fetchDashboardData(); // Refresh UI
         } else {
-          alert(`Error: ${data.error || 'Failed to update status.'}`);
+          Swal.fire(`Error: ${data.error || 'Failed to update status.'}`);
         }
       } catch (err) {
         console.error(err);
-        alert("Server error occurred while updating status.");
+        Swal.fire("Server error occurred while updating status.");
       }
     }
 

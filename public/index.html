@@ -27,7 +27,8 @@
       }
     }
   </script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"></head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
 <body class="bg-gradient-animate min-h-screen text-slate-700 antialiased selection:bg-brand-500 selection:text-white scroll-smooth flex flex-col justify-between">
 
   <!-- Navigation Bar -->
@@ -47,7 +48,7 @@
       <a href="prizes.html" class="text-slate-500 hover:text-brand-600 transition-all">Prize Details</a>
       <a href="about-us.html" class="text-slate-500 hover:text-brand-600 transition-all">About Us</a>
       <a href="help.html" class="text-slate-500 hover:text-brand-600 transition-all">Help Desk</a>
-      <a href="index.html" class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-lg transition-all text-xs font-bold shadow-sm shadow-brand-500/10">Register Now</a>
+      <a href="index.html" class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-2xl transition-all text-xs font-bold shadow-sm shadow-brand-500/10">Register Now</a>
     </div>
 
     <!-- Mobile Hamburger Button -->
@@ -61,7 +62,7 @@
     <a href="prizes.html" class="text-slate-500 hover:text-brand-600 transition-all py-1"><i class="bi bi-trophy mr-2"></i>Prize Details</a>
     <a href="about-us.html" class="text-slate-500 hover:text-brand-600 transition-all py-1"><i class="bi bi-info-circle mr-2"></i>About Us</a>
     <a href="help.html" class="text-slate-500 hover:text-brand-600 transition-all py-1"><i class="bi bi-question-circle mr-2"></i>Help Desk</a>
-    <a href="index.html" class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-lg transition-all text-xs font-bold shadow-sm shadow-brand-500/10 text-center animate-pulse"><i class="bi bi-person-plus mr-2"></i>Register Now</a>
+    <a href="index.html" class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-2xl transition-all text-xs font-bold shadow-sm shadow-brand-500/10 text-center animate-pulse"><i class="bi bi-person-plus mr-2"></i>Register Now</a>
   </div>
 
   <!-- Banner / Header -->
@@ -86,12 +87,12 @@
     <section class="lg:col-span-4 space-y-3 sm:space-y-3" data-aos="fade-right" data-aos-delay="200">
       
       <!-- Generated Illustration Image -->
-      <div class="bg-white sm:rounded-2xl p-3 sm:p-4 shadow-md flex items-center justify-center relative overflow-hidden bg-white">
+      <div class="bg-white rounded-2xl p-3 sm:p-4 shadow-md flex items-center justify-center relative overflow-hidden bg-white">
         <img src="hackathon_illustration.png" alt="Aadhira Solutions Hackathon Coding Workspace" class="w-full h-auto object-contain rounded-xl hover:scale-102 transition-all duration-300">
       </div>
 
       <!-- Info Card -->
-      <div class="bg-white sm:rounded-2xl p-4 sm:p-4 shadow-md relative overflow-hidden bg-white">
+      <div class="bg-white rounded-2xl p-4 sm:p-4 shadow-md relative overflow-hidden bg-white">
         <div class="absolute top-0 right-0 w-24 h-24 bg-brand-500/5 rounded-full blur-xl"></div>
         <h2 class="text-lg font-bold mb-2 flex items-center text-brand-800">
           <i class="bi bi-info-circle mr-2 text-brand-600 text-xl"></i>
@@ -125,7 +126,7 @@
       <form id="registrationForm" class="space-y-3" enctype="multipart/form-data">
         
         <!-- Step Indicators -->
-        <div class="bg-white sm:rounded-2xl p-3 sm:p-4 md:p-4 shadow-md bg-white mb-2 md:mb-2">
+        <div class="bg-white rounded-2xl p-3 sm:p-4 md:p-4 shadow-md bg-white mb-2 md:mb-2">
           <div class="flex items-center justify-between relative w-full max-w-xl mx-auto">
             <!-- Progress Line -->
             <div class="absolute left-0 right-0 top-1/2 h-0.5 bg-slate-100 -translate-y-1/2 z-0"></div>
@@ -167,9 +168,9 @@
 
         <!-- Step 1: College & Leader Details -->
         <div id="stepSection1" class="step-section">
-          <div class="bg-white sm:rounded-2xl p-4 sm:p-4 md:p-5 shadow-md space-y-3 sm:space-y-3 bg-white" data-aos="fade-left">
+          <div class="bg-white rounded-2xl p-4 sm:p-4 md:p-5 shadow-md space-y-3 sm:space-y-3 bg-white" data-aos="fade-left">
             <h2 class="text-xl font-bold border-b border-slate-100 pb-3 flex items-center text-brand-900">
-              <span class="bg-brand-550 text-brand-600 bg-brand-50 w-8 h-8 rounded-lg flex items-center justify-center mr-3 text-sm font-bold">1</span>
+              <span class="bg-brand-550 text-brand-600 bg-brand-50 w-8 h-8 rounded-2xl flex items-center justify-center mr-3 text-sm font-bold">1</span>
               Institution &amp; Leader Details
             </h2>
             
@@ -177,27 +178,27 @@
               <!-- College Name -->
               <div class="md:col-span-2">
                 <label for="college_name" class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">College/Institution Name <span class="text-red-500">*</span></label>
-                <input type="text" id="college_name" name="college_name" required="" placeholder="Enter your full college name" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2.5 text-slate-800 placeholder-slate-400 focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/10 focus:bg-white transition-all text-sm">
+                <input type="text" id="college_name" name="college_name" required="" placeholder="Enter your full college name" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-2.5 text-slate-800 placeholder-slate-400 focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/10 focus:bg-white transition-all text-sm">
               </div>
 
               <!-- Leader Name -->
               <div>
                 <label for="leader_name" class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">Team Leader Name <span class="text-red-500">*</span></label>
-                <input type="text" id="leader_name" name="leader_name" required="" placeholder="Enter leader's name" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2.5 text-slate-800 placeholder-slate-400 focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/10 focus:bg-white transition-all text-sm">
+                <input type="text" id="leader_name" name="leader_name" required="" placeholder="Enter leader's name" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-2.5 text-slate-800 placeholder-slate-400 focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/10 focus:bg-white transition-all text-sm">
               </div>
 
               <!-- Leader Phone -->
               <div>
                 <label for="leader_phone" class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">Team Leader Phone <span class="text-red-500">*</span></label>
-                <input type="tel" id="leader_phone" name="leader_phone" required="" placeholder="Enter leader's phone number" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2.5 text-slate-800 placeholder-slate-400 focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/10 focus:bg-white transition-all text-sm">
+                <input type="tel" id="leader_phone" name="leader_phone" required="" placeholder="Enter leader's phone number" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-2.5 text-slate-800 placeholder-slate-400 focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/10 focus:bg-white transition-all text-sm">
               </div>
 
               <!-- Leader Email -->
               <div class="md:col-span-2">
                 <label for="leader_email" class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">Team Leader Email ID <span class="text-red-500">*</span></label>
                 <div class="flex space-x-2">
-                  <input type="email" id="leader_email" name="leader_email" required="" placeholder="Enter leader's email address" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2.5 text-slate-800 placeholder-slate-400 focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/10 focus:bg-white transition-all text-sm">
-                  <button type="button" id="sendOtpBtn" class="px-4 py-2.5 bg-brand-600 hover:bg-brand-700 disabled:opacity-60 disabled:cursor-not-allowed text-white rounded-lg font-bold text-xs transition-all shadow-sm flex items-center justify-center whitespace-nowrap">
+                  <input type="email" id="leader_email" name="leader_email" required="" placeholder="Enter leader's email address" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-2.5 text-slate-800 placeholder-slate-400 focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/10 focus:bg-white transition-all text-sm">
+                  <button type="button" id="sendOtpBtn" class="px-4 py-2.5 bg-brand-600 hover:bg-brand-700 disabled:opacity-60 disabled:cursor-not-allowed text-white rounded-2xl font-bold text-xs transition-all shadow-sm flex items-center justify-center whitespace-nowrap">
                     Send OTP
                   </button>
                 </div>
@@ -207,8 +208,8 @@
                 <div id="otpSection" class="hidden mt-2 bg-slate-50/80 p-4 rounded-xl border border-slate-200/80 space-y-3">
                   <label for="reg_otp" class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1">Enter 6-Digit Verification Code <span class="text-red-500">*</span></label>
                   <div class="flex space-x-2">
-                    <input type="text" id="reg_otp" placeholder="Enter OTP code" maxlength="6" class="w-full bg-white border border-slate-200 rounded-lg px-4 py-2.5 text-slate-800 placeholder-slate-400 focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/10 transition-all text-sm font-mono tracking-widest text-center">
-                    <button type="button" id="verifyOtpBtn" class="px-4 py-2.5 bg-green-600 hover:bg-green-700 disabled:opacity-60 disabled:cursor-not-allowed text-white rounded-lg font-bold text-xs transition-all shadow-sm flex items-center justify-center whitespace-nowrap">
+                    <input type="text" id="reg_otp" placeholder="Enter OTP code" maxlength="6" class="w-full bg-white border border-slate-200 rounded-2xl px-4 py-2.5 text-slate-800 placeholder-slate-400 focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/10 transition-all text-sm font-mono tracking-widest text-center">
+                    <button type="button" id="verifyOtpBtn" class="px-4 py-2.5 bg-green-600 hover:bg-green-700 disabled:opacity-60 disabled:cursor-not-allowed text-white rounded-2xl font-bold text-xs transition-all shadow-sm flex items-center justify-center whitespace-nowrap">
                       Verify OTP
                     </button>
                   </div>
@@ -225,9 +226,9 @@
 
         <!-- Step 2: Team Members -->
         <div id="stepSection2" class="step-section hidden">
-          <div class="bg-white sm:rounded-2xl p-4 sm:p-4 md:p-5 shadow-md space-y-3 sm:space-y-3 bg-white">
+          <div class="bg-white rounded-2xl p-4 sm:p-4 md:p-5 shadow-md space-y-3 sm:space-y-3 bg-white">
             <h2 class="text-xl font-bold border-b border-slate-100 pb-3 flex items-center text-brand-900">
-              <span class="bg-brand-50 text-brand-600 w-8 h-8 rounded-lg flex items-center justify-center mr-3 text-sm font-bold">2</span>
+              <span class="bg-brand-50 text-brand-600 w-8 h-8 rounded-2xl flex items-center justify-center mr-3 text-sm font-bold">2</span>
               Team Members Lineup
             </h2>
 
@@ -236,11 +237,11 @@
               <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 bg-slate-50 p-3 sm:p-4 rounded-xl border border-slate-100">
                 <div>
                   <label for="member2_name" class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">Team Member 2 Name <span class="text-red-500">*</span></label>
-                  <input type="text" id="member2_name" name="member2_name" required="" placeholder="Enter member 2 name" class="w-full bg-white border border-slate-200 rounded-lg px-4 py-2.5 text-slate-800 placeholder-slate-400 focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/10 transition-all text-sm">
+                  <input type="text" id="member2_name" name="member2_name" required="" placeholder="Enter member 2 name" class="w-full bg-white border border-slate-200 rounded-2xl px-4 py-2.5 text-slate-800 placeholder-slate-400 focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/10 transition-all text-sm">
                 </div>
                 <div>
                   <label for="member2_phone" class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">Team Member 2 Phone <span class="text-red-500">*</span></label>
-                  <input type="tel" id="member2_phone" name="member2_phone" required="" placeholder="Enter member 2 phone" class="w-full bg-white border border-slate-200 rounded-lg px-4 py-2.5 text-slate-800 placeholder-slate-400 focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/10 transition-all text-sm">
+                  <input type="tel" id="member2_phone" name="member2_phone" required="" placeholder="Enter member 2 phone" class="w-full bg-white border border-slate-200 rounded-2xl px-4 py-2.5 text-slate-800 placeholder-slate-400 focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/10 transition-all text-sm">
                 </div>
               </div>
 
@@ -248,11 +249,11 @@
               <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 bg-slate-50 p-3 sm:p-4 rounded-xl border border-slate-100">
                 <div>
                   <label for="member3_name" class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">Team Member 3 Name <span class="text-red-500">*</span></label>
-                  <input type="text" id="member3_name" name="member3_name" required="" placeholder="Enter member 3 name" class="w-full bg-white border border-slate-200 rounded-lg px-4 py-2.5 text-slate-800 placeholder-slate-400 focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/10 transition-all text-sm">
+                  <input type="text" id="member3_name" name="member3_name" required="" placeholder="Enter member 3 name" class="w-full bg-white border border-slate-200 rounded-2xl px-4 py-2.5 text-slate-800 placeholder-slate-400 focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/10 transition-all text-sm">
                 </div>
                 <div>
                   <label for="member3_phone" class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">Team Member 3 Phone <span class="text-red-500">*</span></label>
-                  <input type="tel" id="member3_phone" name="member3_phone" required="" placeholder="Enter member 3 phone" class="w-full bg-white border border-slate-200 rounded-lg px-4 py-2.5 text-slate-800 placeholder-slate-400 focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/10 transition-all text-sm">
+                  <input type="tel" id="member3_phone" name="member3_phone" required="" placeholder="Enter member 3 phone" class="w-full bg-white border border-slate-200 rounded-2xl px-4 py-2.5 text-slate-800 placeholder-slate-400 focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/10 transition-all text-sm">
                 </div>
               </div>
 
@@ -260,11 +261,11 @@
               <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 bg-slate-50 p-3 sm:p-4 rounded-xl border border-slate-100">
                 <div>
                   <label for="member4_name" class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">Team Member 4 Name <span class="text-red-500">*</span></label>
-                  <input type="text" id="member4_name" name="member4_name" required="" placeholder="Enter member 4 name" class="w-full bg-white border border-slate-200 rounded-lg px-4 py-2.5 text-slate-800 placeholder-slate-400 focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/10 transition-all text-sm">
+                  <input type="text" id="member4_name" name="member4_name" required="" placeholder="Enter member 4 name" class="w-full bg-white border border-slate-200 rounded-2xl px-4 py-2.5 text-slate-800 placeholder-slate-400 focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/10 transition-all text-sm">
                 </div>
                 <div>
                   <label for="member4_phone" class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">Team Member 4 Phone <span class="text-red-500">*</span></label>
-                  <input type="tel" id="member4_phone" name="member4_phone" required="" placeholder="Enter member 4 phone" class="w-full bg-white border border-slate-200 rounded-lg px-4 py-2.5 text-slate-800 placeholder-slate-400 focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/10 transition-all text-sm">
+                  <input type="tel" id="member4_phone" name="member4_phone" required="" placeholder="Enter member 4 phone" class="w-full bg-white border border-slate-200 rounded-2xl px-4 py-2.5 text-slate-800 placeholder-slate-400 focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/10 transition-all text-sm">
                 </div>
               </div>
             </div>
@@ -273,9 +274,9 @@
 
         <!-- Step 3: Select Problem Statement -->
         <div id="stepSection3" class="step-section hidden">
-          <div class="bg-white sm:rounded-2xl p-4 sm:p-4 md:p-5 shadow-md space-y-3 sm:space-y-3 bg-white">
+          <div class="bg-white rounded-2xl p-4 sm:p-4 md:p-5 shadow-md space-y-3 sm:space-y-3 bg-white">
             <h2 class="text-xl font-bold border-b border-slate-100 pb-3 flex items-center text-brand-900">
-              <span class="bg-brand-50 text-brand-600 w-8 h-8 rounded-lg flex items-center justify-center mr-3 text-sm font-bold">3</span>
+              <span class="bg-brand-50 text-brand-600 w-8 h-8 rounded-2xl flex items-center justify-center mr-3 text-sm font-bold">3</span>
               Select Your Problem Statement
             </h2>
             <p class="text-xs text-slate-400 -mt-2">Please select exactly ONE official problem statement for your team's hackathon submission.</p>
@@ -382,9 +383,9 @@
 
         <!-- Step 4: Upload Payment Proof -->
         <div id="stepSection4" class="step-section hidden">
-          <div class="bg-white sm:rounded-2xl p-4 sm:p-4 md:p-5 shadow-md space-y-3 sm:space-y-3 bg-white">
+          <div class="bg-white rounded-2xl p-4 sm:p-4 md:p-5 shadow-md space-y-3 sm:space-y-3 bg-white">
             <h2 class="text-xl font-bold border-b border-slate-100 pb-3 flex items-center text-brand-900">
-              <span class="bg-brand-50 text-brand-600 w-8 h-8 rounded-lg flex items-center justify-center mr-3 text-sm font-bold">4</span>
+              <span class="bg-brand-50 text-brand-600 w-8 h-8 rounded-2xl flex items-center justify-center mr-3 text-sm font-bold">4</span>
               Payment &amp; Receipt Upload
             </h2>
 
@@ -395,7 +396,7 @@
                 <span class="text-xs text-brand-600 font-bold uppercase tracking-wider block">Scan to Pay ₹400</span>
                 
                 <!-- UPI QR Code -->
-                <div class="flex flex-col items-center justify-center bg-white p-3 rounded-lg max-w-[150px] mx-auto border border-slate-100 shadow-sm">
+                <div class="flex flex-col items-center justify-center bg-white p-3 rounded-2xl max-w-[150px] mx-auto border border-slate-100 shadow-sm">
                   <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&amp;color=1e3a8a&amp;bgcolor=ffffff&amp;data=upi://pay?pa=vimalraj5207@okaxis%26pn=Aadhira%20Solutions%26am=400%26cu=INR" alt="UPI Payment QR Code" class="w-full h-auto">
                 </div>
 
@@ -426,7 +427,7 @@
                   </div>
                   
                   <!-- File name preview -->
-                  <div id="filePreview" class="hidden mt-3 bg-white p-2.5 rounded-lg border border-slate-200 inline-flex items-center space-x-2 shadow-sm">
+                  <div id="filePreview" class="hidden mt-3 bg-white p-2.5 rounded-2xl border border-slate-200 inline-flex items-center space-x-2 shadow-sm">
                     <i class="bi bi-check-circle text-brand-500 text-base"></i>
                     <span id="fileNameDisplay" class="text-xs text-slate-600 font-mono font-medium max-w-[150px] truncate font-semibold">screenshot.png</span>
                   </div>
@@ -440,9 +441,9 @@
 
         <!-- Step 5: Review & Submit -->
         <div id="stepSection5" class="step-section hidden">
-          <div class="bg-white sm:rounded-2xl p-4 sm:p-4 md:p-5 shadow-md bg-white space-y-3 sm:space-y-3">
+          <div class="bg-white rounded-2xl p-4 sm:p-4 md:p-5 shadow-md bg-white space-y-3 sm:space-y-3">
             <h2 class="text-xl font-bold border-b border-slate-100 pb-3 flex items-center text-brand-900">
-              <span class="bg-brand-50 text-brand-600 w-8 h-8 rounded-lg flex items-center justify-center mr-3 text-sm font-bold">5</span>
+              <span class="bg-brand-50 text-brand-600 w-8 h-8 rounded-2xl flex items-center justify-center mr-3 text-sm font-bold">5</span>
               Review Registration Summary
             </h2>
             
@@ -463,17 +464,17 @@
               <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
                 <span class="text-slate-400 block text-[10px] font-bold uppercase tracking-wider mb-1">Team Members Lineup</span>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-                  <div class="p-2 border border-slate-200 rounded-lg bg-white">
+                  <div class="p-2 border border-slate-200 rounded-2xl bg-white">
                     <span class="text-[9px] text-slate-400 uppercase font-bold block">Member 2</span>
                     <span id="revM2" class="font-bold text-slate-700 block text-xs"></span>
                     <span id="revM2Phone" class="text-slate-500 text-[11px] font-mono"></span>
                   </div>
-                  <div class="p-2 border border-slate-200 rounded-lg bg-white">
+                  <div class="p-2 border border-slate-200 rounded-2xl bg-white">
                     <span class="text-[9px] text-slate-400 uppercase font-bold block">Member 3</span>
                     <span id="revM3" class="font-bold text-slate-700 block text-xs"></span>
                     <span id="revM3Phone" class="text-slate-500 text-[11px] font-mono"></span>
                   </div>
-                  <div class="p-2 border border-slate-200 rounded-lg bg-white">
+                  <div class="p-2 border border-slate-200 rounded-2xl bg-white">
                     <span class="text-[9px] text-slate-400 uppercase font-bold block">Member 4</span>
                     <span id="revM4" class="font-bold text-slate-700 block text-xs"></span>
                     <span id="revM4Phone" class="text-slate-500 text-[11px] font-mono"></span>
@@ -499,11 +500,11 @@
 
         <!-- Wizard Navigation Buttons -->
         <div class="flex items-center justify-between pt-6 border-t border-slate-100 mt-2">
-          <button type="button" id="prevBtn" class="hidden px-6 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-lg font-bold text-sm transition-all border border-slate-200 shadow-sm">
+          <button type="button" id="prevBtn" class="hidden px-6 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-2xl font-bold text-sm transition-all border border-slate-200 shadow-sm">
             Previous Step
           </button>
           
-          <button type="button" id="nextBtn" class="ml-auto px-6 py-2.5 bg-brand-600 hover:bg-brand-700 text-white rounded-lg font-bold text-sm transition-all shadow-md shadow-brand-500/10 flex items-center space-x-1.5">
+          <button type="button" id="nextBtn" class="ml-auto px-6 py-2.5 bg-brand-600 hover:bg-brand-700 text-white rounded-2xl font-bold text-sm transition-all shadow-md shadow-brand-500/10 flex items-center space-x-1.5">
             <span>Next Step</span>
             <i class="bi bi-chevron-right text-base"></i>
           </button>
@@ -554,7 +555,7 @@
     sendOtpBtn.addEventListener('click', async () => {
       const email = leaderEmailInput.value.trim();
       if (!email) {
-        alert('Please enter a valid email address first.');
+        Swal.fire('Please enter a valid email address first.');
         leaderEmailInput.focus();
         return;
       }
@@ -583,13 +584,13 @@
           otpMessage.textContent = "OTP sent successfully! Please check your email inbox.";
           regOtpInput.focus();
         } else {
-          alert(`Error: ${data.error || 'Failed to send OTP.'}`);
+          Swal.fire(`Error: ${data.error || 'Failed to send OTP.'}`);
           otpMessage.className = "text-[11px] text-red-500 font-semibold";
           otpMessage.textContent = data.error || 'Failed to send OTP.';
         }
       } catch (err) {
         console.error(err);
-        alert('Server communication error. Please try again.');
+        Swal.fire('Server communication error. Please try again.');
       } finally {
         sendOtpBtn.disabled = false;
         sendOtpBtn.textContent = 'Send OTP';
@@ -600,7 +601,7 @@
       const email = leaderEmailInput.value.trim();
       const otp = regOtpInput.value.trim();
       if (!otp || otp.length !== 6) {
-        alert('Please enter a 6-digit OTP code.');
+        Swal.fire('Please enter a 6-digit OTP code.');
         regOtpInput.focus();
         return;
       }
@@ -628,20 +629,20 @@
           
           // Change Send OTP Button to Verified state
           sendOtpBtn.disabled = true;
-          sendOtpBtn.className = "px-4 py-2.5 bg-green-600 text-white rounded-lg font-bold text-xs cursor-not-allowed shadow-sm flex items-center justify-center whitespace-nowrap";
+          sendOtpBtn.className = "px-4 py-2.5 bg-green-600 text-white rounded-2xl font-bold text-xs cursor-not-allowed shadow-sm flex items-center justify-center whitespace-nowrap";
           sendOtpBtn.textContent = "Verified ✓";
 
           // Hide OTP input section and show success message
           otpSection.classList.add('hidden');
           emailSuccessMessage.classList.remove('hidden');
         } else {
-          alert(`Verification Failed: ${data.error || 'Invalid OTP code.'}`);
+          Swal.fire(`Verification Failed: ${data.error || 'Invalid OTP code.'}`);
           otpMessage.className = "text-[11px] text-red-500 font-semibold";
           otpMessage.textContent = data.error || 'Invalid OTP code. Please try again.';
         }
       } catch (err) {
         console.error(err);
-        alert('Server communication error. Please try again.');
+        Swal.fire('Server communication error. Please try again.');
       } finally {
         verifyOtpBtn.disabled = false;
         verifyOtpBtn.textContent = 'Verify OTP';
@@ -736,7 +737,7 @@
         }
 
         if (!isEmailVerified || lEmail.value.trim().toLowerCase() !== verifiedEmailAddress) {
-          alert('Please verify your email address via the OTP code before proceeding.');
+          Swal.fire('Please verify your email address via the OTP code before proceeding.');
           return false;
         }
       } else if (step === 2) {
@@ -753,12 +754,12 @@
       } else if (step === 3) {
         const selectedProblem = document.querySelector('input[name="problem_statement"]:checked');
         if (!selectedProblem) {
-          alert('Please select a problem statement before moving forward.');
+          Swal.fire('Please select a problem statement before moving forward.');
           return false;
         }
       } else if (step === 4) {
         if (fileInput.files.length === 0) {
-          alert('Please upload a screenshot of your payment receipt to continue.');
+          Swal.fire('Please upload a screenshot of your payment receipt to continue.');
           return false;
         }
       }
@@ -863,7 +864,7 @@
           // Redirect to success page
           window.location.href = `success.html?id=${data.registration.id}`;
         } else {
-          alert(`Error: ${data.error || 'Failed to submit registration.'}`);
+          Swal.fire(`Error: ${data.error || 'Failed to submit registration.'}`);
           submitBtn.disabled = false;
           submitBtn.innerHTML = `
             <span>Submit Registration</span>
@@ -872,7 +873,7 @@
         }
       } catch (err) {
         console.error(err);
-        alert("Server communication error. Please try again.");
+        Swal.fire("Server communication error. Please try again.");
         submitBtn.disabled = false;
         submitBtn.innerHTML = `
           <span>Submit Registration</span>
@@ -966,7 +967,7 @@
   <!-- Floating Share Button HTML -->
   <div class="fixed bottom-6 right-6 z-40 flex flex-col items-end">
     <!-- Share Toast Notification -->
-    <div id="shareToast" class="hidden mb-3 bg-slate-900 text-white text-xs font-semibold px-4 py-2.5 rounded-lg shadow-lg flex items-center space-x-2 transition-all duration-300 transform translate-y-2 opacity-0">
+    <div id="shareToast" class="hidden mb-3 bg-slate-900 text-white text-xs font-semibold px-4 py-2.5 rounded-2xl shadow-lg flex items-center space-x-2 transition-all duration-300 transform translate-y-2 opacity-0">
       <i class="bi bi-check-circle text-green-400 text-base"></i>
       <span>Event link copied to clipboard!</span>
     </div>
