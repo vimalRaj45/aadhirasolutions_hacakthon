@@ -58,8 +58,15 @@ async function initDb() {
   try {
     const client = await pool.connect();
     await client.query(createText);
-    fastify.log.info('Database table "registrations" checked/initialized with BLOB support successfully.');
+    
+    // Auto-migrate to add team_name if it doesn't exist
+    await client.query(`
+      ALTER TABLE registrations 
+      ADD COLUMN IF NOT EXISTS team_name VARCHAR(100) DEFAULT 'Unnamed Team';
+    `);
+
     client.release();
+    fastify.log.info('Database table "registrations" checked/initialized with BLOB support successfully.');
   } catch (err) {
     fastify.log.error('Failed to initialize database table:', err);
     process.exit(1);
@@ -457,8 +464,8 @@ fastify.get('/api/registrations', async (request, reply) => {
     queryParams.push(`%${search}%`);
     const searchIndex = queryParams.length;
     whereClauses.push(`(
-      team_name ILIKE ${searchIndex} OR
-      college_name ILIKE ${searchIndex} OR
+      team_name ILIKE $${searchIndex} OR
+      college_name ILIKE $${searchIndex} OR
       leader_name ILIKE $${searchIndex} OR
       leader_email ILIKE $${searchIndex} OR
       leader_phone ILIKE $${searchIndex} OR
