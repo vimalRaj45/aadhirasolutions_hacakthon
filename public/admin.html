@@ -440,12 +440,16 @@
     // Fetch Stats & Registrations
     async function fetchDashboardData() {
       try {
-        // Fetch stats
-        const statsRes = await fetch('/api/stats', {
-          headers: getAuthHeaders()
-        });
+        // Fetch stats and registrations concurrently
+        const [statsRes, regRes] = await Promise.all([
+          fetch('/api/stats', { headers: getAuthHeaders() }),
+          fetch('/api/registrations', { headers: getAuthHeaders() })
+        ]);
+
         const statsData = await statsRes.json();
-        if (handleApiError(statsRes, statsData)) return;
+        const regData = await regRes.json();
+
+        if (handleApiError(statsRes, statsData) || handleApiError(regRes, regData)) return;
 
         if (statsData.success) {
           const s = statsData.stats;
@@ -456,13 +460,6 @@
           document.getElementById('statRejected').textContent = s.rejected;
           document.getElementById('statAttended').textContent = s.attended;
         }
-
-        // Fetch all registrations
-        const regRes = await fetch('/api/registrations', {
-          headers: getAuthHeaders()
-        });
-        const regData = await regRes.json();
-        if (handleApiError(regRes, regData)) return;
 
         if (regData.success) {
           registrationsData = regData.registrations;
