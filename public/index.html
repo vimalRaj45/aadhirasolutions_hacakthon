@@ -32,7 +32,7 @@
 <body class="bg-gradient-animate min-h-screen text-slate-700 antialiased selection:bg-brand-500 selection:text-white scroll-smooth flex flex-col justify-between">
 
   <!-- Welcome Splash Screen Overlay -->
-  <div id="welcomeSplash" class="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-gradient-to-br from-brand-50 to-blue-100 transition-all duration-700 ease-in-out cursor-pointer" title="Click to skip animation">
+  <div id="welcomeSplash" class="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-gradient-to-br from-brand-50 to-blue-100 transition-all duration-700 ease-in-out">
     <div class="flex flex-col items-center space-y-4">
       <!-- Animated Logo Wrapper -->
       <div class="relative w-28 h-28 flex items-center justify-center bg-white rounded-full p-4 shadow-2xl border border-brand-500/20 animate-logo-pop">
@@ -468,13 +468,7 @@
     };
 
     // Auto fade-out after 2.3 seconds
-    const timer = setTimeout(fadeOutSplash, 2300);
-
-    // Skip on click
-    splash.addEventListener('click', () => {
-      clearTimeout(timer);
-      fadeOutSplash();
-    });
+    setTimeout(fadeOutSplash, 2300);
   });
 </script>
 
