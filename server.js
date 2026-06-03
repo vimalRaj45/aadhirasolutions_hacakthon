@@ -387,7 +387,7 @@ fastify.post('/api/register', async (request, reply) => {
       team_name, college_name, leader_name, leader_email, leader_phone,
       member2_name, member2_phone, member3_name, member3_phone,
       member4_name, member4_phone, problem_statement, payment_proof_data, payment_proof_mime
-    ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
+    ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
     RETURNING id, team_name, college_name, leader_name, leader_email, leader_phone, status, created_at;
   `;
 
