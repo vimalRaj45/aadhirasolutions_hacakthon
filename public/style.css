@@ -216,3 +216,10 @@ input[type="radio"]:checked + .problem-card {
 .animate-progress-load {
   animation: progressLoad 1.8s cubic-bezier(0.22, 1, 0.36, 1) 0.4s forwards;
 }
+
+/* Add padding for sticky mobile bottom navigation bar */
+@media (max-width: 1023px) {
+  body {
+    padding-bottom: 5rem !important;
+  }
+}

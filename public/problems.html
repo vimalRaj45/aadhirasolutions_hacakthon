@@ -32,7 +32,7 @@
 <body class="bg-gradient-animate min-h-screen text-slate-700 antialiased selection:bg-brand-500 selection:text-white scroll-smooth flex flex-col justify-between">
 
   <!-- Navigation Bar -->
-  <nav class="sticky top-0 z-50 bg-white border-b border-slate-200/80 px-6 py-4 flex items-center justify-between bg-white rounded-2xl shadow-sm">
+  <nav class="sticky top-0 z-50 bg-white border-b border-slate-200/80 px-6 py-4 flex items-center justify-between bg-white rounded-xl shadow-sm">
     <div class="flex items-center space-x-3">
       <img src="logo.png" alt="Aadhira Solutions Logo" class="h-10 w-auto object-contain">
       <div class="flex flex-col">
@@ -237,4 +237,29 @@
                 if(overlay) overlay.addEventListener('click', toggle);
             }
         });
-    </script></body></html>
+    </script>
+  <!-- Mobile Bottom Sticky Navigation Bar -->
+  <div class="fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-t border-slate-200/80 px-4 py-2 flex items-center justify-around lg:hidden shadow-lg safe-bottom">
+    <a href="index.html" class="flex flex-col items-center space-y-1 text-slate-500 hover:text-brand-600 transition-all">
+      <i class="bi bi-house-door text-lg"></i>
+      <span class="text-[10px] font-bold tracking-wider">Home</span>
+    </a>
+    <a href="problems.html" class="flex flex-col items-center space-y-1 text-brand-600 transition-all">
+      <i class="bi bi-lightbulb-fill text-lg"></i>
+      <span class="text-[10px] font-bold tracking-wider">Problems</span>
+    </a>
+    <a href="register.html" class="flex flex-col items-center space-y-1 bg-brand-600 text-white px-3 py-1.5 rounded-xl shadow-md shadow-brand-500/20 transform -translate-y-2 hover:scale-105 transition-all">
+      <i class="bi bi-pencil-square text-base"></i>
+      <span class="text-[9px] font-bold uppercase tracking-wider">Register</span>
+    </a>
+    <a href="prizes.html" class="flex flex-col items-center space-y-1 text-slate-500 hover:text-brand-600 transition-all">
+      <i class="bi bi-trophy text-lg"></i>
+      <span class="text-[10px] font-bold tracking-wider">Prizes</span>
+    </a>
+    <a href="help.html" class="flex flex-col items-center space-y-1 text-slate-500 hover:text-brand-600 transition-all">
+      <i class="bi bi-question-circle text-lg"></i>
+      <span class="text-[10px] font-bold tracking-wider">Help</span>
+    </a>
+  </div>
+
+</body></html>
