@@ -1,6 +1,9 @@
 const path = require('path');
 const fs = require('fs');
-const fastify = require('fastify')({ logger: true });
+const fastify = require('fastify')({ 
+  logger: true,
+  trustProxy: true
+});
 const { Pool } = require('pg');
 require('dotenv').config();
 
@@ -148,6 +151,54 @@ const activeOtps = new Map(); // email -> { otp, expiresAt }
 const activeSessions = new Set(); // set of valid session tokens
 const registrationOtps = new Map(); // email -> { otp, expiresAt }
 const verifiedRegistrationEmails = new Set(); // set of verified leader emails
+
+// Rate limiting and IP blocking store (in-memory)
+const rateLimitStore = new Map(); // IP -> { count, windowStart, blockedUntil }
+
+fastify.addHook('onRequest', async (request, reply) => {
+  // Only rate-limit API routes (exempt static assets)
+  if (!request.url.startsWith('/api/')) {
+    return;
+  }
+
+  const ip = request.ip || 'unknown';
+  const now = Date.now();
+  const record = rateLimitStore.get(ip);
+
+  // Check if IP is currently blocked
+  if (record && record.blockedUntil && now < record.blockedUntil) {
+    const timeLeft = Math.ceil((record.blockedUntil - now) / 1000);
+    reply.status(429).send({
+      success: false,
+      error: `Too many requests from this IP. Please try again after ${timeLeft} seconds.`
+    });
+    return;
+  }
+
+  const limitWindow = 60 * 1000; // 1 minute window
+  const maxRequests = 10;        // max 10 API requests per minute per IP
+  const blockDuration = 5 * 60 * 1000; // 5 minutes block on breach
+
+  if (!record || now - record.windowStart > limitWindow) {
+    // Start a new window
+    rateLimitStore.set(ip, {
+      count: 1,
+      windowStart: now,
+      blockedUntil: null
+    });
+  } else {
+    record.count++;
+    if (record.count > maxRequests) {
+      record.blockedUntil = now + blockDuration;
+      fastify.log.warn(`IP Rate Limit Violation: Blocked ${ip}`);
+      reply.status(429).send({
+        success: false,
+        error: `Too many requests. Your IP has been temporarily blocked for 5 minutes.`
+      });
+      return;
+    }
+  }
+});
 
 
 // Authentication Helper: Verify Session Token
