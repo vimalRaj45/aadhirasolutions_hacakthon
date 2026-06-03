@@ -757,7 +757,12 @@ fastify.post('/api/tickets', async (request, reply) => {
 fastify.get('/api/admin/tickets', async (request, reply) => {
   await verifyAdminSession(request, reply);
   try {
-    const res = await pool.query('SELECT * FROM tickets ORDER BY created_at DESC');
+    const res = await pool.query(`
+      SELECT t.*, r.leader_phone, r.team_name
+      FROM tickets t
+      LEFT JOIN registrations r ON LOWER(r.leader_email) = t.leader_email
+      ORDER BY t.created_at DESC
+    `);
     return reply.send({ success: true, tickets: res.rows });
   } catch (err) {
     fastify.log.error('Ticket Fetch Error:', err);

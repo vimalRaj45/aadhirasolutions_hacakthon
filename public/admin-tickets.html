@@ -218,8 +218,17 @@
           <span id="modalSenderName" class="text-slate-800 font-semibold block mt-0.5">---</span>
         </div>
         <div>
-          <span class="text-xs text-slate-400 uppercase tracking-wider block">Sender Email</span>
+          <span class="text-xs text-slate-400 uppercase tracking-wider block">Leader Email</span>
           <span id="modalSenderEmail" class="text-slate-800 font-semibold block mt-0.5">---</span>
+        </div>
+        <div>
+          <span class="text-xs text-slate-400 uppercase tracking-wider block">Leader Phone</span>
+          <div class="flex items-center gap-3 mt-0.5">
+            <span id="modalSenderPhone" class="text-slate-800 font-semibold">---</span>
+            <a id="modalWaLink" href="#" target="_blank" class="hidden inline-flex items-center gap-1.5 px-3 py-1 bg-green-500 text-white rounded-full text-xs font-semibold hover:bg-green-600 transition-all">
+              <i class="bi bi-whatsapp"></i> WhatsApp
+            </a>
+          </div>
         </div>
         <div>
           <span class="text-xs text-slate-400 uppercase tracking-wider block mb-1">Message</span>
@@ -377,7 +386,7 @@
       const status = document.getElementById('statusFilter').value;
       
       const filtered = ticketsData.filter(t => {
-          const matchSearch = t.name.toLowerCase().includes(search) || t.email.toLowerCase().includes(search) || t.message.toLowerCase().includes(search);
+          const matchSearch = t.name.toLowerCase().includes(search) || (t.leader_email || '').toLowerCase().includes(search) || t.message.toLowerCase().includes(search);
           const matchStatus = status ? t.status === status : true;
           return matchSearch && matchStatus;
       });
@@ -399,13 +408,17 @@
         ` : '<span class="text-slate-400 text-xs">Closed</span>';
 
         const dateStr = new Date(t.created_at).toLocaleDateString([], {month: 'short', day: 'numeric', hour: '2-digit', minute:'2-digit'});
+        const phone = t.leader_phone || '';
+        const waMsg = encodeURIComponent(`Hi ${t.name}, regarding your support ticket #${t.id}: `);
+        const waLink = phone ? `<a href="https://wa.me/91${phone}?text=${waMsg}" target="_blank" class="inline-flex items-center gap-1 px-2 py-0.5 bg-green-50 text-green-600 border border-green-200 rounded-full text-[10px] font-semibold hover:bg-green-500 hover:text-white transition-all mt-1"><i class="bi bi-whatsapp"></i> ${phone}</a>` : '';
 
         return `
           <tr class="hover:bg-slate-50 transition-colors border-b border-slate-100">
             <td class="py-4 px-5 font-mono text-slate-400 font-bold">#${t.id}</td>
             <td class="py-4 px-5">
               <div class="font-bold text-slate-800 cursor-pointer hover:text-brand-600" onclick="openDetailModal(${t.id})">${t.name}</div>
-              <div class="text-xs text-slate-500">${t.email}</div>
+              <div class="text-xs text-slate-500">${t.leader_email || ''}</div>
+              ${waLink}
             </td>
             <td class="py-4 px-5">
               <div class="truncate max-w-xs text-sm text-slate-600" title="${t.message}">${t.message}</div>
@@ -423,7 +436,19 @@
       if (!t) return;
       document.getElementById('modalTeamId').textContent = `#${t.id}`;
       document.getElementById('modalSenderName').textContent = t.name;
-      document.getElementById('modalSenderEmail').textContent = t.email;
+      document.getElementById('modalSenderEmail').textContent = t.leader_email || 'N/A';
+      document.getElementById('modalSenderPhone').textContent = t.leader_phone || 'N/A';
+      
+      const phone = t.leader_phone || '';
+      const waMsg = encodeURIComponent(`Hi ${t.name}, regarding your support ticket #${t.id}: `);
+      const waLinkEl = document.getElementById('modalWaLink');
+      if (phone) {
+        waLinkEl.href = `https://wa.me/91${phone}?text=${waMsg}`;
+        waLinkEl.classList.remove('hidden');
+      } else {
+        waLinkEl.classList.add('hidden');
+      }
+      
       document.getElementById('modalMessage').textContent = t.message;
       document.getElementById('detailModal').classList.remove('hidden');
       document.getElementById('detailModal').classList.add('flex');
