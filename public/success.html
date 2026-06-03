@@ -55,7 +55,7 @@
   </nav>
 
   <!-- Mobile Menu Dropdown -->
-  <div id="mobileMenuOverlay" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-30 hidden opacity-0 transition-opacity duration-300"></div><div id="mobileMenu" class="fixed inset-y-0 left-0 w-64 bg-white shadow-2xl transform -translate-x-full transition-transform duration-300 ease-in-out z-40 flex flex-col pt-20 px-6 space-y-4">
+  <div id="mobileMenuOverlay" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-30 hidden opacity-0 transition-opacity duration-300"></div><div id="mobileMenu" class="fixed inset-y-0 left-0 w-64 bg-white shadow-2xl transform -translate-x-full transition-transform duration-300 ease-in-out z-40 flex flex-col pt-20 px-6 space-y-3">
     <a href="about-hackathon.html" class="text-slate-500 hover:text-brand-600 transition-all py-1"><i class="bi bi-info-circle mr-2"></i>About Hackathon</a>
     <a href="problems.html" class="text-slate-500 hover:text-brand-600 transition-all py-1"><i class="bi bi-lightbulb mr-2"></i>Problems Selection</a>
     <a href="prizes.html" class="text-slate-500 hover:text-brand-600 transition-all py-1"><i class="bi bi-trophy mr-2"></i>Prize Details</a>
@@ -65,31 +65,29 @@
   </div>
 
   <!-- Success Content -->
-  <main class="flex-grow flex items-center justify-center px-6 py-12">
+  <main class="flex-grow flex items-center justify-center px-6 py-8">
     <div class="max-w-2xl w-full glass-panel rounded-3xl p-8 md:p-10 shadow-lg relative overflow-hidden text-center bg-white" data-aos="zoom-in">
       <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(59,130,246,0.04)_0,transparent_50%)]"></div>
 
       <!-- Pure CSS Exploding Checkmark -->
-      <div class="flex items-center justify-center mx-auto mb-6">
+      <div class="flex items-center justify-center mx-auto mb-2">
         <div class="w-24 h-24 bg-green-50 rounded-full flex items-center justify-center border border-green-100 shadow-inner relative">
           <!-- Pulse rings -->
           <span class="absolute inset-0 rounded-full border-2 border-green-400 animate-ping opacity-25"></span>
           <span class="absolute inset-2 rounded-full border border-green-300 animate-pulse opacity-40"></span>
           <!-- Success Check SVG -->
-          <svg class="w-12 h-12 text-green-600 animate-bounce relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
-          </svg>
+          <i class="bi bi-check-lg text-green-600 animate-bounce relative z-10"></i>
         </div>
       </div>
 
       <h1 class="text-2xl sm:text-3xl font-extrabold text-brand-950 mb-2">Registration Submitted!</h1>
-      <p class="text-slate-500 text-sm mb-6 max-w-md mx-auto">
+      <p class="text-slate-500 text-sm mb-2 max-w-md mx-auto">
         Your team registration and problem statement selection has been recorded successfully.
       </p>
 
       <!-- Alert Box: Notification Policy -->
       <div class="bg-blue-50/50 border border-blue-200 rounded-xl p-4 mb-8 text-left flex items-start space-x-3">
-        <svg class="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        <i class="bi bi-info-circle text-blue-600 mt-0.5 flex-shrink-0 text-xl"></i>
         <div>
           <h4 class="text-sm font-semibold text-brand-950">Verification Processing</h4>
           <p class="text-xs text-slate-500 leading-relaxed mt-0.5">
@@ -99,12 +97,12 @@
       </div>
 
       <!-- Registration Summary Card -->
-      <div id="loading" class="py-12 flex flex-col items-center justify-center space-y-3">
+      <div id="loading" class="py-8 flex flex-col items-center justify-center space-y-3">
         <div class="w-8 h-8 border-4 border-brand-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
         <p class="text-xs text-slate-400 font-mono">Fetching registration summary...</p>
       </div>
 
-      <div id="summaryCard" class="hidden text-left bg-slate-50 border border-slate-200 rounded-2xl p-6 mb-8 space-y-4">
+      <div id="summaryCard" class="hidden text-left bg-slate-50 border border-slate-200 rounded-2xl p-4 mb-8 space-y-3">
         <h3 class="text-sm sm:text-base font-bold text-brand-950 border-b border-slate-200 pb-2.5 flex justify-between items-center font-bold">
           <span>Registration Receipt</span>
           <span class="text-xs font-mono font-normal text-slate-400">ID: #<span id="summaryId"></span></span>
@@ -140,7 +138,7 @@
           Register Another Team
         </a>
         <button onclick="window.print();" class="w-full sm:w-auto px-6 py-2.5 bg-gradient-to-r from-brand-600 to-brand-700 hover:from-brand-700 hover:to-brand-800 text-white rounded-lg font-bold text-sm transition-all shadow-md shadow-brand-500/10 flex items-center justify-center space-x-1.5">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+          <i class="bi bi-printer text-base"></i>
           <span>Print Receipt</span>
         </button>
       </div>
@@ -149,7 +147,7 @@
   </main>
 
   <!-- Footer -->
-  <footer class="glass-panel border-t border-slate-200 py-6 text-center text-xs text-slate-400 bg-white">
+  <footer class="glass-panel border-t border-slate-200 py-4 text-center text-xs text-slate-400 bg-white">
     <p>Aadhira Solutions © 2026. All rights reserved.</p>
   </footer>
 
