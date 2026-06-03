@@ -623,7 +623,7 @@
       
       img.onerror = function() {
         spinner.classList.add('hidden');
-        Swal.fire("Failed to load payment proof screenshot.");
+        // Removed Swal.fire alert for failed image load to prevent UI disruption
       };
 
       // Set image source
