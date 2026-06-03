@@ -914,48 +914,53 @@
     });
 
     // Floating Share Button Logic
-    const shareBtn = document.getElementById('floatingShareBtn');
-    const shareToast = document.getElementById('shareToast');
+    window.addEventListener('DOMContentLoaded', () => {
+      const shareBtn = document.getElementById('floatingShareBtn');
+      const shareToast = document.getElementById('shareToast');
+      
+      if (shareBtn) {
+        shareBtn.addEventListener('click', async () => {
+          const shareData = {
+            title: 'Aadhira Solutions Hackathon 2026',
+            text: 'Join the Aadhira Solutions Hackathon 2026! Register your team and choose your challenge statement.',
+            url: window.location.origin
+          };
 
-    shareBtn.addEventListener('click', async () => {
-      const shareData = {
-        title: 'Aadhira Solutions Hackathon 2026',
-        text: 'Join the Aadhira Solutions Hackathon 2026! Register your team and choose your challenge statement.',
-        url: window.location.origin
-      };
+          if (navigator.share) {
+            try {
+              await navigator.share(shareData);
+            } catch (err) {
+              console.log('Share canceled or failed', err);
+            }
+          } else {
+            // Fallback: Copy URL to clipboard
+            try {
+              await navigator.clipboard.writeText(window.location.origin);
+              showShareToast();
+            } catch (err) {
+              console.error('Failed to copy text', err);
+            }
+          }
+        });
+      }
 
-      if (navigator.share) {
-        try {
-          await navigator.share(shareData);
-        } catch (err) {
-          console.log('Share canceled or failed', err);
-        }
-      } else {
-        // Fallback: Copy URL to clipboard
-        try {
-          await navigator.clipboard.writeText(window.location.origin);
-          showShareToast();
-        } catch (err) {
-          console.error('Failed to copy text', err);
-        }
+      function showShareToast() {
+        if (!shareToast) return;
+        shareToast.classList.remove('hidden');
+        // Trigger animation
+        setTimeout(() => {
+          shareToast.classList.remove('translate-y-2', 'opacity-0');
+        }, 50);
+
+        // Hide after 3 seconds
+        setTimeout(() => {
+          shareToast.classList.add('translate-y-2', 'opacity-0');
+          setTimeout(() => {
+            shareToast.classList.add('hidden');
+          }, 300);
+        }, 3000);
       }
     });
-
-    function showShareToast() {
-      shareToast.classList.remove('hidden');
-      // Trigger animation
-      setTimeout(() => {
-        shareToast.classList.remove('translate-y-2', 'opacity-0');
-      }, 50);
-
-      // Hide after 3 seconds
-      setTimeout(() => {
-        shareToast.classList.add('translate-y-2', 'opacity-0');
-        setTimeout(() => {
-          shareToast.classList.add('hidden');
-        }, 300);
-      }, 3000);
-    }
   </script>
 
   <!-- Floating Share Button HTML -->
