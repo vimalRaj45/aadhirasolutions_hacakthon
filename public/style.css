@@ -24,20 +24,14 @@ body {
   background: #3b82f6;
 }
 
-/* Light animated gradient background */
+/* Light static tech background */
 .bg-gradient-animate {
-  background: linear-gradient(-45deg, rgba(248, 250, 252, 0.7), rgba(239, 246, 255, 0.7), rgba(224, 242, 254, 0.7), rgba(219, 234, 254, 0.7)), url('tech_bg.png');
-  background-size: 400% 400%, cover;
+  background-image: url('tech_bg.png');
+  background-size: cover;
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
-  animation: gradientBG 15s ease infinite;
-}
-
-@keyframes gradientBG {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  background-color: #f8fafc;
 }
 
 /* Premium Card Panels */
