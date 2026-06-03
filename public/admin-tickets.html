@@ -33,7 +33,7 @@
 
   <!-- Login Overlay (OTP Authorization Portal) -->
   <div id="loginOverlay" class="fixed inset-0 z-50 bg-slate-900/90 backdrop-blur-md flex items-center justify-center p-4">
-    <div class="bg-white max-w-md w-full p-8 shadow-2xl relative bg-white border border-slate-200">
+    <div class="bg-white max-w-md w-full p-8 shadow-2xl relative bg-white border border-slate-200 rounded-2xl shadow-sm">
       
       <!-- Logo and Title -->
       <div class="text-center mb-2">
@@ -79,7 +79,7 @@
   </div>
 
   <!-- Navigation Bar -->
-  <nav class="bg-white border-b border-slate-200/80 px-6 py-4 flex items-center justify-between bg-white">
+  <nav class="bg-white border-b border-slate-200/80 px-6 py-4 flex items-center justify-between bg-white rounded-2xl shadow-sm">
     <div class="flex items-center space-x-3">
       <img src="logo.png" alt="Aadhira Solutions Logo" class="h-10 w-auto object-contain">
       <div class="flex flex-col">
@@ -99,7 +99,7 @@
   </nav>
 
   <!-- Mobile Menu Dropdown -->
-  <div id="mobileMenuOverlay" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-30 hidden opacity-0 transition-opacity duration-300"></div><div id="mobileMenu" class="fixed inset-y-0 left-0 w-64 bg-white shadow-2xl transform -translate-x-full transition-transform duration-300 ease-in-out z-40 flex flex-col pt-20 px-6 space-y-3">
+  <div id="mobileMenuOverlay" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-30 hidden opacity-0 transition-opacity duration-300"></div><div id="mobileMenu" class="fixed inset-y-0 left-0 w-64 bg-white shadow-2xl transform -translate-x-full transition-transform duration-300 ease-in-out z-40 flex flex-col pt-20 px-6 space-y-3 rounded-2xl shadow-sm">
     <a href="index.html" class="text-slate-500 hover:text-brand-600 transition-all font-medium"><i class="bi bi-chevron-right mr-2"></i>Form Site</a>
     <a href="verify.html" class="text-slate-500 hover:text-brand-600 transition-all font-medium"><i class="bi bi-chevron-right mr-2"></i>Verification Desk</a>
     <a href="admin-tickets.html" class="text-slate-500 hover:text-brand-600 transition-all font-medium"><i class="bi bi-chevron-right mr-2"></i>Support Tickets</a>
@@ -107,7 +107,7 @@
   </div>
 
   <!-- Dashboard Container -->
-  <main class="w-full flex-grow space-y-8">
+  <main class="w-full flex-grow space-y-8 max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
     
     <!-- Header -->
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -172,7 +172,7 @@
     </section>
 
     <!-- Table -->
-    <section class="bg-white overflow-hidden shadow-sm border border-slate-200 bg-white">
+    <section class="bg-white overflow-hidden shadow-sm border border-slate-200 bg-white rounded-2xl shadow-sm">
       <div class="overflow-x-auto">
         <table class="w-full text-left border-collapse">
           <thead>
@@ -230,7 +230,7 @@
   </div>
 
   <!-- Footer -->
-  <footer class="bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-400 bg-white">
+  <footer class="bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-400 bg-white rounded-2xl shadow-sm">
     <p>Aadhira Solutions © 2026. All rights reserved.</p>
   </footer>
 

@@ -32,7 +32,7 @@
 <body class="bg-gradient-animate min-h-screen text-slate-700 antialiased selection:bg-brand-500 selection:text-white scroll-smooth flex flex-col justify-between">
 
   <!-- Navigation Bar -->
-  <nav class="sticky top-0 z-50 bg-white border-b border-slate-200/80 px-6 py-4 flex items-center justify-between bg-white">
+  <nav class="sticky top-0 z-50 bg-white border-b border-slate-200/80 px-6 py-4 flex items-center justify-between bg-white rounded-2xl shadow-sm">
     <div class="flex items-center space-x-3">
       <img src="logo.png" alt="Aadhira Solutions Logo" class="h-10 w-auto object-contain">
       <div class="flex flex-col">
@@ -56,7 +56,7 @@
   </nav>
 
   <!-- Mobile Menu Dropdown -->
-  <div id="mobileMenuOverlay" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-30 hidden opacity-0 transition-opacity duration-300"></div><div id="mobileMenu" class="fixed inset-y-0 left-0 w-64 bg-white shadow-2xl transform -translate-x-full transition-transform duration-300 ease-in-out z-40 flex flex-col pt-20 px-6 space-y-3">
+  <div id="mobileMenuOverlay" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-30 hidden opacity-0 transition-opacity duration-300"></div><div id="mobileMenu" class="fixed inset-y-0 left-0 w-64 bg-white shadow-2xl transform -translate-x-full transition-transform duration-300 ease-in-out z-40 flex flex-col pt-20 px-6 space-y-3 rounded-2xl shadow-sm">
     <a href="about-hackathon.html" class="text-slate-500 hover:text-brand-600 transition-all py-1"><i class="bi bi-info-circle mr-2"></i>About Hackathon</a>
     <a href="problems.html" class="text-slate-500 hover:text-brand-600 transition-all py-1"><i class="bi bi-lightbulb mr-2"></i>Problems Selection</a>
     <a href="prizes.html" class="text-slate-500 hover:text-brand-600 transition-all py-1"><i class="bi bi-trophy mr-2"></i>Prize Details</a>
@@ -66,11 +66,11 @@
   </div>
 
   <!-- Main Content -->
-  <main class="flex-grow w-full">
+  <main class="flex-grow w-full max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
       
       <!-- FAQ Column (7 cols) -->
-      <section class="lg:col-span-7 bg-white p-4 md:p-5 bg-white space-y-3" data-aos="fade-right">
+      <section class="lg:col-span-7 bg-white p-4 md:p-5 bg-white space-y-3 rounded-2xl shadow-sm" data-aos="fade-right">
         <h1 class="text-2xl font-extrabold text-brand-900 border-b border-slate-100 pb-3 mb-2">Frequently Asked Questions</h1>
         
         <div class="space-y-3">
@@ -123,7 +123,7 @@
       <!-- Contact Support Column (5 cols) -->
       <section class="lg:col-span-5 space-y-3" data-aos="fade-left">
         <!-- Direct contact details -->
-        <div class="bg-white p-4 bg-white border-l-4 border-brand-500">
+        <div class="bg-white p-4 bg-white border-l-4 border-brand-500 rounded-2xl shadow-sm">
           <h2 class="text-lg font-bold text-brand-800 mb-3">Direct Contact Help</h2>
           <div class="space-y-2 text-xs sm:text-sm text-slate-500">
             <p>📧 Email: <span class="font-semibold text-brand-700">vsgrpsemail@gmail.com</span></p>
@@ -133,7 +133,7 @@
         </div>
 
         <!-- Contact Support Form -->
-        <div class="bg-white p-4 bg-white space-y-3">
+        <div class="bg-white p-4 bg-white space-y-3 rounded-2xl shadow-sm">
           <h2 class="text-lg font-bold text-brand-800 border-b border-slate-100 pb-2">Support Ticket Desk</h2>
           <form id="supportForm" class="space-y-3 text-xs sm:text-sm">
             <div>
@@ -157,7 +157,7 @@
   </main>
 
   <!-- Footer -->
-  <footer class="bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-400 bg-white">
+  <footer class="bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-400 bg-white rounded-2xl shadow-sm">
     <p>Aadhira Solutions © 2026. All rights reserved.</p>
   </footer>
 

@@ -35,6 +35,7 @@ async function initDb() {
   const createText = `
     CREATE TABLE IF NOT EXISTS registrations (
       id SERIAL PRIMARY KEY,
+      team_name VARCHAR(100) NOT NULL,
       college_name VARCHAR(255) NOT NULL,
       leader_name VARCHAR(100) NOT NULL,
       leader_email VARCHAR(255) NOT NULL,
@@ -352,7 +353,7 @@ fastify.post('/api/register', async (request, reply) => {
 
   // Validation
   const required = [
-    'college_name', 'leader_name', 'leader_email', 'leader_phone',
+    'team_name', 'college_name', 'leader_name', 'leader_email', 'leader_phone',
     'member2_name', 'member2_phone', 'member3_name', 'member3_phone',
     'member4_name', 'member4_phone', 'problem_statement'
   ];
@@ -376,15 +377,15 @@ fastify.post('/api/register', async (request, reply) => {
   // Insert into DB (Blob BYTEA support)
   const queryText = `
     INSERT INTO registrations (
-      college_name, leader_name, leader_email, leader_phone,
+      team_name, college_name, leader_name, leader_email, leader_phone,
       member2_name, member2_phone, member3_name, member3_phone,
       member4_name, member4_phone, problem_statement, payment_proof_data, payment_proof_mime
     ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
-    RETURNING id, college_name, leader_name, leader_email, leader_phone, status, created_at;
+    RETURNING id, team_name, college_name, leader_name, leader_email, leader_phone, status, created_at;
   `;
 
   const values = [
-    fields.college_name, fields.leader_name, fields.leader_email, fields.leader_phone,
+    fields.team_name, fields.college_name, fields.leader_name, fields.leader_email, fields.leader_phone,
     fields.member2_name, fields.member2_phone, fields.member3_name, fields.member3_phone,
     fields.member4_name, fields.member4_phone, fields.problem_statement,
     fields.payment_proof_data, fields.payment_proof_mime
@@ -409,7 +410,7 @@ fastify.get('/api/registration/:id', async (request, reply) => {
   const { id } = request.params;
   try {
     const res = await pool.query(
-      'SELECT id, college_name, leader_name, leader_email, leader_phone, member2_name, member2_phone, member3_name, member3_phone, member4_name, member4_phone, problem_statement, status, attended, attended_at, created_at FROM registrations WHERE id = $1',
+      'SELECT id, team_name, college_name, leader_name, leader_email, leader_phone, member2_name, member2_phone, member3_name, member3_phone, member4_name, member4_phone, problem_statement, status, attended, attended_at, created_at FROM registrations WHERE id = $1',
       [id]
     );
     if (res.rows.length === 0) {
@@ -443,7 +444,7 @@ fastify.get('/api/registration/:id/proof', async (request, reply) => {
 fastify.get('/api/registrations', async (request, reply) => {
   await verifyAdminSession(request, reply);
   const { search, status } = request.query;
-  let queryText = 'SELECT id, college_name, leader_name, leader_email, leader_phone, member2_name, member2_phone, member3_name, member3_phone, member4_name, member4_phone, problem_statement, status, attended, attended_at, created_at FROM registrations';
+  let queryText = 'SELECT id, team_name, college_name, leader_name, leader_email, leader_phone, member2_name, member2_phone, member3_name, member3_phone, member4_name, member4_phone, problem_statement, status, attended, attended_at, created_at FROM registrations';
   const queryParams = [];
   const whereClauses = [];
 
@@ -456,7 +457,8 @@ fastify.get('/api/registrations', async (request, reply) => {
     queryParams.push(`%${search}%`);
     const searchIndex = queryParams.length;
     whereClauses.push(`(
-      college_name ILIKE $${searchIndex} OR
+      team_name ILIKE ${searchIndex} OR
+      college_name ILIKE ${searchIndex} OR
       leader_name ILIKE $${searchIndex} OR
       leader_email ILIKE $${searchIndex} OR
       leader_phone ILIKE $${searchIndex} OR
@@ -491,7 +493,7 @@ fastify.patch('/api/registration/:id/status', async (request, reply) => {
 
   try {
     // 1. Fetch details first
-    const findRes = await pool.query('SELECT id, college_name, leader_name, leader_email, leader_phone, member2_name, member2_phone, member3_name, member3_phone, member4_name, member4_phone, problem_statement FROM registrations WHERE id = $1', [id]);
+    const findRes = await pool.query('SELECT id, team_name, college_name, leader_name, leader_email, leader_phone, member2_name, member2_phone, member3_name, member3_phone, member4_name, member4_phone, problem_statement FROM registrations WHERE id = $1', [id]);
     if (findRes.rows.length === 0) {
       return reply.status(404).send({ success: false, error: 'Registration not found' });
     }
