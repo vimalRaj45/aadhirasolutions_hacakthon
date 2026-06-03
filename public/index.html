@@ -31,6 +31,27 @@
 </head>
 <body class="bg-gradient-animate min-h-screen text-slate-700 antialiased selection:bg-brand-500 selection:text-white scroll-smooth flex flex-col justify-between">
 
+  <!-- Welcome Splash Screen Overlay -->
+  <div id="welcomeSplash" class="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-slate-900 transition-all duration-700 ease-in-out cursor-pointer" title="Click to skip animation">
+    <div class="flex flex-col items-center space-y-4">
+      <!-- Animated Logo Wrapper -->
+      <div class="relative w-28 h-28 flex items-center justify-center bg-white rounded-full p-4 shadow-2xl border border-brand-500/20 animate-logo-pop">
+        <img src="logo.png" alt="Aadhira Solutions Logo" class="w-full h-auto object-contain">
+        <!-- Spinning orbital glow -->
+        <div class="absolute inset-0 rounded-full border-2 border-dashed border-brand-500 animate-spin-slow"></div>
+      </div>
+      <!-- Animated Text -->
+      <div class="text-center opacity-0 animate-text-fade-up">
+        <h1 class="text-2xl font-bold tracking-wider text-white">Aadhira Solutions</h1>
+        <p class="text-xs text-brand-400 uppercase tracking-widest font-semibold mt-1">Hackathon Portal</p>
+      </div>
+      <!-- Progress Bar -->
+      <div class="w-48 h-1 bg-slate-800 rounded-full overflow-hidden mt-6 opacity-0 animate-text-fade-up" style="animation-delay: 0.3s">
+        <div class="h-full bg-gradient-to-r from-brand-500 to-blue-400 rounded-full w-0 animate-progress-load"></div>
+      </div>
+    </div>
+  </div>
+
   <!-- Navigation Bar -->
   <nav class="sticky top-0 z-50 bg-white border-b border-slate-200/80 px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between bg-white rounded-2xl shadow-sm">
     <div class="flex items-center space-x-3">
@@ -361,5 +382,36 @@
             }
         });
     </script>
+
+<script>
+  // Welcome Splash Screen Logic
+  document.addEventListener('DOMContentLoaded', () => {
+    const splash = document.getElementById('welcomeSplash');
+    if (!splash) return;
+
+    // Check if splash was already shown in this session
+    if (sessionStorage.getItem('splashShown') === 'true') {
+      splash.style.display = 'none';
+      return;
+    }
+
+    const fadeOutSplash = () => {
+      splash.classList.add('opacity-0', 'scale-105', 'pointer-events-none');
+      setTimeout(() => {
+        splash.style.display = 'none';
+      }, 700);
+      sessionStorage.setItem('splashShown', 'true');
+    };
+
+    // Auto fade-out after 2.3 seconds
+    const timer = setTimeout(fadeOutSplash, 2300);
+
+    // Skip on click
+    splash.addEventListener('click', () => {
+      clearTimeout(timer);
+      fadeOutSplash();
+    });
+  });
+</script>
 
 </body></html>

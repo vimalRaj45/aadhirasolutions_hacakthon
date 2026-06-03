@@ -26,8 +26,11 @@ body {
 
 /* Light animated gradient background */
 .bg-gradient-animate {
-  background: linear-gradient(-45deg, #f8fafc, #eff6ff, #e0f2fe, #dbeafe);
-  background-size: 400% 400%;
+  background: linear-gradient(-45deg, rgba(248, 250, 252, 0.94), rgba(239, 246, 255, 0.94), rgba(224, 242, 254, 0.94), rgba(219, 234, 254, 0.94)), url('tech_bg.png');
+  background-size: 400% 400%, cover;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
   animation: gradientBG 15s ease infinite;
 }
 
@@ -151,4 +154,65 @@ input[type="radio"]:checked + .problem-card {
 
 .swal2-icon .swal2-icon-content {
   font-size: 1.6rem !important;
+}
+
+/* ── Welcome Splash Screen Animations ── */
+@keyframes logoPop {
+  0% {
+    transform: scale(0) rotate(-180deg);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.1) rotate(10deg);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+@keyframes progressLoad {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+@keyframes textFadeUp {
+  0% {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes orbitalSpin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-logo-pop {
+  animation: logoPop 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.animate-spin-slow {
+  animation: orbitalSpin 8s linear infinite;
+}
+
+.animate-text-fade-up {
+  animation: textFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
+}
+
+.animate-progress-load {
+  animation: progressLoad 1.8s cubic-bezier(0.22, 1, 0.36, 1) 0.4s forwards;
 }
