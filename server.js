@@ -126,6 +126,9 @@ function concatStream(stream) {
 // In-memory storage for OTPs and sessions
 const activeOtps = new Map(); // email -> { otp, expiresAt }
 const activeSessions = new Set(); // set of valid session tokens
+const registrationOtps = new Map(); // email -> { otp, expiresAt }
+const verifiedRegistrationEmails = new Set(); // set of verified leader emails
+
 
 // Authentication Helper: Verify Session Token
 async function verifyAdminSession(request, reply) {
@@ -232,6 +235,99 @@ fastify.post('/api/auth/verify-otp', async (request, reply) => {
   return reply.send({ success: true, token: sessionToken });
 });
 
+// Auth: Send OTP for Registration (Duplicate Check + OTP Gen)
+fastify.post('/api/register/send-otp', async (request, reply) => {
+  const { email } = request.body || {};
+  if (!email || email.trim() === '') {
+    return reply.status(400).send({ success: false, error: 'Email address is required.' });
+  }
+
+  const normalizedEmail = email.trim().toLowerCase();
+
+  try {
+    // 1. Check if email is already registered in the DB
+    const checkRes = await pool.query(
+      'SELECT id FROM registrations WHERE LOWER(leader_email) = $1',
+      [normalizedEmail]
+    );
+
+    if (checkRes.rows.length > 0) {
+      return reply.status(400).send({
+        success: false,
+        error: 'This email address is already registered. Duplicate registrations are not allowed.'
+      });
+    }
+
+    // 2. Generate 6-digit numeric OTP
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    const expiresAt = Date.now() + 5 * 60 * 1000; // expires in 5 minutes
+
+    // 3. Store OTP in memory
+    registrationOtps.set(normalizedEmail, { otp, expiresAt });
+
+    // 4. Send OTP email via Brevo
+    const emailHtml = `
+      <div style="font-family: Arial, sans-serif; max-width: 500px; margin: 0 auto; padding: 25px; border: 1px solid #e2e8f0; border-radius: 12px; background-color: #ffffff;">
+        <h2 style="color: #2563eb; margin: 0 0 15px 0;">Email Verification</h2>
+        <p>Hello,</p>
+        <p>Thank you for starting your team registration for the Aadhira Solutions Hackathon. Please use the following One-Time Password (OTP) to verify your email address:</p>
+        <div style="background-color: #eff6ff; border: 1px dashed #2563eb; padding: 15px; text-align: center; font-size: 24px; font-weight: bold; color: #1e40af; border-radius: 8px; letter-spacing: 5px; margin: 20px 0;">
+          ${otp}
+        </div>
+        <p style="color: #dc2626; font-size: 12px;">This OTP is valid for 5 minutes. If you did not request this, please ignore this email.</p>
+        <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 20px 0;" />
+        <p style="color: #94a3b8; font-size: 11px; text-align: center;">&copy; 2026 Aadhira Solutions. All rights reserved.</p>
+      </div>
+    `;
+
+    const emailRes = await sendBrevoEmail({
+      toEmail: normalizedEmail,
+      toName: 'Team Leader',
+      subject: 'Aadhira Solutions Hackathon Email Verification Code',
+      htmlContent: emailHtml
+    });
+
+    if (emailRes.mock || emailRes.success) {
+      return reply.send({ success: true, message: 'OTP has been successfully sent to your email.' });
+    } else {
+      return reply.status(500).send({ success: false, error: 'Failed to send verification email. Please try again.' });
+    }
+  } catch (err) {
+    fastify.log.error('Duplicate registration check error:', err);
+    return reply.status(500).send({ success: false, error: 'Internal database error.' });
+  }
+});
+
+// Auth: Verify Registration OTP
+fastify.post('/api/register/verify-otp', async (request, reply) => {
+  const { email, otp } = request.body || {};
+  if (!email || !otp) {
+    return reply.status(400).send({ success: false, error: 'Email and OTP are required.' });
+  }
+
+  const normalizedEmail = email.trim().toLowerCase();
+  const record = registrationOtps.get(normalizedEmail);
+
+  if (!record) {
+    return reply.status(400).send({ success: false, error: 'No OTP record found. Please request a new code.' });
+  }
+
+  if (Date.now() > record.expiresAt) {
+    registrationOtps.delete(normalizedEmail);
+    return reply.status(400).send({ success: false, error: 'OTP has expired. Please request a new code.' });
+  }
+
+  if (record.otp !== otp.trim()) {
+    return reply.status(400).send({ success: false, error: 'Invalid OTP code. Please try again.' });
+  }
+
+  // Clear OTP and save verification status
+  registrationOtps.delete(normalizedEmail);
+  verifiedRegistrationEmails.add(normalizedEmail);
+
+  return reply.send({ success: true, message: 'Email verified successfully.' });
+});
+
 // 1. Submit Registration Form (Public)
 fastify.post('/api/register', async (request, reply) => {
   const parts = request.parts();
@@ -267,6 +363,12 @@ fastify.post('/api/register', async (request, reply) => {
     }
   }
 
+  // Enforce that email is verified via OTP
+  const normalizedLeaderEmail = fields.leader_email ? fields.leader_email.trim().toLowerCase() : '';
+  if (!verifiedRegistrationEmails.has(normalizedLeaderEmail)) {
+    return reply.status(400).send({ success: false, error: 'Email verification is required. Please verify your email via the OTP code before submitting.' });
+  }
+
   if (!fields.payment_proof_data) {
     return reply.status(400).send({ success: false, error: 'Payment proof screenshot is required.' });
   }
@@ -291,6 +393,10 @@ fastify.post('/api/register', async (request, reply) => {
   try {
     const res = await pool.query(queryText, values);
     const newReg = res.rows[0];
+    
+    // Clear verification state on successful registration
+    verifiedRegistrationEmails.delete(normalizedLeaderEmail);
+    
     return reply.status(201).send({ success: true, registration: newReg });
   } catch (err) {
     fastify.log.error('DB Insert Error:', err);
