@@ -56,17 +56,27 @@
   </nav>
 
   <!-- Mobile Menu Dropdown -->
-  <div id="mobileMenuOverlay" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-30 hidden opacity-0 transition-opacity duration-300"></div><div id="mobileMenu" class="fixed inset-y-0 left-0 w-64 bg-white shadow-2xl transform -translate-x-full transition-transform duration-300 ease-in-out z-40 flex flex-col pt-20 px-6 space-y-3 rounded-2xl shadow-sm">
+  <div id="mobileMenuOverlay" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-30 hidden opacity-0 transition-opacity duration-300"></div><div id="mobileMenu" class="fixed inset-y-0 right-0 w-64 bg-white shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out z-40 flex flex-col pt-20 px-6 space-y-3 rounded-2xl shadow-sm">
     <a href="about-hackathon.html" class="text-slate-500 hover:text-brand-600 transition-all py-1"><i class="bi bi-info-circle mr-2"></i>About Hackathon</a>
     <a href="problems.html" class="text-brand-600 transition-all py-1"><i class="bi bi-lightbulb mr-2"></i>Problems Selection</a>
     <a href="prizes.html" class="text-slate-500 hover:text-brand-600 transition-all py-1"><i class="bi bi-trophy mr-2"></i>Prize Details</a>
     <a href="about-us.html" class="text-slate-500 hover:text-brand-600 transition-all py-1"><i class="bi bi-info-circle mr-2"></i>About Us</a>
     <a href="help.html" class="text-slate-500 hover:text-brand-600 transition-all py-1"><i class="bi bi-question-circle mr-2"></i>Help Desk</a>
     <a href="index.html" class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-lg transition-all text-xs font-bold shadow-sm shadow-brand-500/10 text-center"><i class="bi bi-person-plus mr-2"></i>Register Now</a>
+    <a href="https://www.linkedin.com/in/aadhira-atps/" target="_blank" rel="noopener noreferrer" class="flex items-center text-[#0A66C2] hover:text-[#004182] font-semibold transition-all py-1"><i class="bi bi-linkedin mr-2 text-lg"></i>LinkedIn</a>
   </div>
 
   <!-- Main Content -->
   <main class="flex-grow w-full max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
+    <!-- Breadcrumb Back -->
+    <nav class="flex items-center mb-4" aria-label="Breadcrumb">
+      <a href="index.html" class="inline-flex items-center gap-1.5 text-sm font-semibold text-brand-600 hover:text-brand-800 transition-all group">
+        <i class="bi bi-arrow-left-circle-fill text-xl group-hover:-translate-x-1 transition-transform duration-200"></i>
+        <span>Back to Home</span>
+      </a>
+      <span class="mx-2 text-slate-300">/</span>
+      <span class="text-sm text-slate-500 font-medium">Problem Statements</span>
+    </nav>
     <div class="bg-white p-8 md:p-12 bg-white space-y-10 relative overflow-hidden rounded-2xl shadow-sm" data-aos="fade-up">
       <div class="absolute top-0 right-0 w-48 h-48 bg-brand-500/5 rounded-full blur-3xl"></div>
 
@@ -207,14 +217,14 @@
                 const toggle = () => {
                     isOpen = !isOpen;
                     if(isOpen) {
-                        menu.classList.remove('-translate-x-full');
+                        menu.classList.remove('translate-x-full');
                         if(overlay) {
                             overlay.classList.remove('hidden');
                             setTimeout(() => overlay.classList.remove('opacity-0'), 10);
                         }
                         newBtn.innerHTML = '<i class="bi bi-x-lg text-2xl"></i>';
                     } else {
-                        menu.classList.add('-translate-x-full');
+                        menu.classList.add('translate-x-full');
                         if(overlay) {
                             overlay.classList.add('opacity-0');
                             setTimeout(() => overlay.classList.add('hidden'), 300);

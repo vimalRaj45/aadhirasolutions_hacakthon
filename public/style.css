@@ -110,3 +110,45 @@ input[type="radio"]:checked + .problem-card {
     backdrop-filter: none !important;
   }
 }
+
+/* ── SweetAlert2 font-size overrides ── */
+.swal2-popup {
+  font-family: 'Outfit', sans-serif !important;
+  font-size: 13px !important;
+  border-radius: 16px !important;
+  padding: 1.2rem 1.5rem !important;
+}
+
+.swal2-title {
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+  color: #1e3a8a !important;
+  padding-bottom: 0.25rem !important;
+}
+
+.swal2-html-container,
+.swal2-content {
+  font-size: 0.78rem !important;
+  color: #475569 !important;
+  line-height: 1.5 !important;
+}
+
+.swal2-confirm,
+.swal2-cancel,
+.swal2-deny {
+  font-size: 0.75rem !important;
+  font-weight: 700 !important;
+  padding: 0.45rem 1.2rem !important;
+  border-radius: 10px !important;
+}
+
+.swal2-icon {
+  width: 3rem !important;
+  height: 3rem !important;
+  margin: 0.6rem auto 0.8rem !important;
+  border-width: 2px !important;
+}
+
+.swal2-icon .swal2-icon-content {
+  font-size: 1.6rem !important;
+}

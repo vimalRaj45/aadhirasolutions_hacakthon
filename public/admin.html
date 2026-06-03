@@ -290,6 +290,75 @@
     </div>
   </div>
 
+  <!-- ═══ Reject with Reason Modal ═══ -->
+  <div id="rejectModal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl relative border border-slate-200">
+      <!-- Header -->
+      <div class="flex items-center justify-between mb-5">
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 bg-red-50 rounded-xl flex items-center justify-center border border-red-100">
+            <i class="bi bi-x-circle-fill text-red-500 text-xl"></i>
+          </div>
+          <div>
+            <h3 class="text-lg font-extrabold text-slate-800">Reject Registration</h3>
+            <p id="rejectModalSubtitle" class="text-xs text-slate-400">Select or type the rejection reason</p>
+          </div>
+        </div>
+        <button onclick="closeRejectModal()" class="text-slate-400 hover:text-slate-600 transition-all">
+          <i class="bi bi-x-lg text-xl"></i>
+        </button>
+      </div>
+
+      <!-- Quick Reason Chips -->
+      <div class="mb-4">
+        <p class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Quick Reasons</p>
+        <div class="flex flex-wrap gap-2">
+          <button type="button" onclick="selectReason('Payment screenshot is blurry or unreadable.')" class="reason-chip px-3 py-1.5 text-xs font-semibold bg-slate-50 hover:bg-red-50 border border-slate-200 hover:border-red-300 text-slate-600 hover:text-red-600 rounded-lg transition-all">
+            <i class="bi bi-image mr-1"></i>Blurry Screenshot
+          </button>
+          <button type="button" onclick="selectReason('Transaction ID / UTR number is not visible in the payment proof.')" class="reason-chip px-3 py-1.5 text-xs font-semibold bg-slate-50 hover:bg-red-50 border border-slate-200 hover:border-red-300 text-slate-600 hover:text-red-600 rounded-lg transition-all">
+            <i class="bi bi-hash mr-1"></i>UTR Not Visible
+          </button>
+          <button type="button" onclick="selectReason('Payment amount is incorrect. Required amount is ₹400 (₹100 per member).')" class="reason-chip px-3 py-1.5 text-xs font-semibold bg-slate-50 hover:bg-red-50 border border-slate-200 hover:border-red-300 text-slate-600 hover:text-red-600 rounded-lg transition-all">
+            <i class="bi bi-currency-rupee mr-1"></i>Wrong Amount
+          </button>
+          <button type="button" onclick="selectReason('Payment screenshot appears to be a duplicate or already used submission.')" class="reason-chip px-3 py-1.5 text-xs font-semibold bg-slate-50 hover:bg-red-50 border border-slate-200 hover:border-red-300 text-slate-600 hover:text-red-600 rounded-lg transition-all">
+            <i class="bi bi-copy mr-1"></i>Duplicate Proof
+          </button>
+          <button type="button" onclick="selectReason('Uploaded file is not a valid payment screenshot.')" class="reason-chip px-3 py-1.5 text-xs font-semibold bg-slate-50 hover:bg-red-50 border border-slate-200 hover:border-red-300 text-slate-600 hover:text-red-600 rounded-lg transition-all">
+            <i class="bi bi-file-earmark-x mr-1"></i>Invalid File
+          </button>
+        </div>
+      </div>
+
+      <!-- Custom Reason Textarea -->
+      <div class="mb-5">
+        <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Rejection Reason <span class="text-red-500">*</span></label>
+        <textarea id="rejectReasonInput" rows="3" placeholder="Enter rejection reason or click a quick reason above..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-red-400 focus:ring-2 focus:ring-red-400/10 transition-all resize-none"></textarea>
+      </div>
+
+      <!-- WhatsApp Preview -->
+      <div class="mb-5 bg-[#e7fce8] border border-[#c3e6cb] rounded-xl p-3">
+        <div class="flex items-center space-x-2 mb-2">
+          <i class="bi bi-whatsapp text-[#25D366] text-lg"></i>
+          <span class="text-xs font-bold text-slate-700 uppercase tracking-wider">WhatsApp Message Preview</span>
+        </div>
+        <p id="whatsappPreview" class="text-xs text-slate-700 leading-relaxed whitespace-pre-wrap font-mono">Fill in a reason above to see the preview...</p>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex items-center gap-3">
+        <button onclick="closeRejectModal()" class="flex-1 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-xl font-bold text-sm transition-all border border-slate-200">
+          Cancel
+        </button>
+        <button onclick="confirmReject()" class="flex-1 py-2.5 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white rounded-xl font-bold text-sm transition-all shadow-md flex items-center justify-center space-x-2">
+          <i class="bi bi-x-circle"></i>
+          <span>Reject &amp; Send WhatsApp</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- Footer -->
   <footer class="bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-400 bg-white rounded-2xl shadow-sm">
     <p>Aadhira Solutions © 2026. All rights reserved.</p>
@@ -525,13 +594,16 @@
         }
 
         // Action Buttons
+        const leaderPhoneEsc = (reg.leader_phone || '').replace(/'/g, "\\'");
+        const leaderNameEsc = (reg.leader_name || '').replace(/'/g, "\\'");
+        const teamNameEsc = (reg.team_name || '').replace(/'/g, "\\'");
         let actionButtons = `
           <div class="flex items-center justify-center space-x-2">
             <button onclick="updateStatus(${reg.id}, 'Approved')" title="Approve" class="p-1.5 bg-green-500/10 hover:bg-green-600 text-green-600 hover:text-white border border-green-500/20 rounded transition-all">
               <i class="bi bi-check-lg text-base"></i>
             </button>
-            <button onclick="updateStatus(${reg.id}, 'Rejected')" title="Reject" class="p-1.5 bg-red-500/10 hover:bg-red-600 text-red-600 hover:text-white border border-red-500/20 rounded transition-all">
-              <i class="bi bi-x-lg text-base"></i>
+            <button onclick="openRejectModal(${reg.id}, '${leaderPhoneEsc}', '${leaderNameEsc}', '${teamNameEsc}')" title="Reject with Reason" class="p-1.5 bg-red-500/10 hover:bg-red-600 text-red-600 hover:text-white border border-red-500/20 rounded transition-all">
+              <i class="bi bi-x-circle text-base"></i>
             </button>
           </div>
         `;
@@ -704,9 +776,11 @@
       document.body.removeChild(link);
     }
 
-    // Update Status API call
+    // Update Status API call (used for Approve only now)
     async function updateStatus(id, status) {
-      const confirmMsg = `Are you sure you want to mark Team #${id} as ${status}? This will trigger a notification email to their team leader.`;
+      const confirmMsg = status === 'Approved'
+        ? `Approve Team #${id}? An approval email with QR entry ticket will be sent to the team leader.`
+        : `Mark Team #${id} as ${status}?`;
       if (!confirm(confirmMsg)) return;
 
       try {
@@ -720,8 +794,8 @@
         if (handleApiError(res, data)) return;
 
         if (data.success) {
-          Swal.fire(`Team registration marked as ${status} successfully!`);
-          fetchDashboardData(); // Refresh UI
+          Swal.fire({ icon: 'success', title: `Team #${id} marked as ${status}!`, timer: 2000, showConfirmButton: false });
+          fetchDashboardData();
         } else {
           Swal.fire(`Error: ${data.error || 'Failed to update status.'}`);
         }
@@ -729,6 +803,112 @@
         console.error(err);
         Swal.fire("Server error occurred while updating status.");
       }
+    }
+
+    // ── Reject with Reason Modal Logic ──────────────────────────────────
+    let _rejectId = null;
+    let _rejectPhone = '';
+    let _rejectLeaderName = '';
+    let _rejectTeamName = '';
+
+    function buildWhatsAppMsg(leaderName, teamName, reason) {
+      return `Hi ${leaderName} 👋,
+
+This is Aadhira Solutions Hackathon Team.
+
+We regret to inform you that your team *"${teamName}"* registration has been *rejected* due to the following reason:
+
+❌ *Reason:* ${reason}
+
+Please re-register with the correct payment proof at our portal:
+🔗 https://aadhirasolutions.skopick.org/
+
+For any queries, contact us via the Help Desk on our portal.
+
+— Aadhira Solutions Team`;
+    }
+
+    function openRejectModal(id, phone, leaderName, teamName) {
+      _rejectId = id;
+      _rejectPhone = phone;
+      _rejectLeaderName = leaderName;
+      _rejectTeamName = teamName;
+
+      document.getElementById('rejectReasonInput').value = '';
+      document.getElementById('rejectModalSubtitle').textContent = `Team #${id} — ${teamName}`;
+      document.getElementById('whatsappPreview').textContent = 'Fill in a reason above to see the preview...';
+
+      document.getElementById('rejectModal').classList.remove('hidden');
+      document.getElementById('rejectModal').classList.add('flex');
+    }
+
+    function closeRejectModal() {
+      document.getElementById('rejectModal').classList.add('hidden');
+      document.getElementById('rejectModal').classList.remove('flex');
+      _rejectId = null;
+    }
+
+    function selectReason(reason) {
+      document.getElementById('rejectReasonInput').value = reason;
+      updateWhatsAppPreview();
+      // Highlight active chip
+      document.querySelectorAll('.reason-chip').forEach(c => c.classList.remove('bg-red-50','border-red-400','text-red-600'));
+      event.currentTarget.classList.add('bg-red-50','border-red-400','text-red-600');
+    }
+
+    function updateWhatsAppPreview() {
+      const reason = document.getElementById('rejectReasonInput').value.trim();
+      if (!reason) {
+        document.getElementById('whatsappPreview').textContent = 'Fill in a reason above to see the preview...';
+        return;
+      }
+      document.getElementById('whatsappPreview').textContent = buildWhatsAppMsg(_rejectLeaderName, _rejectTeamName, reason);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const textarea = document.getElementById('rejectReasonInput');
+      if (textarea) textarea.addEventListener('input', updateWhatsAppPreview);
+    });
+
+    async function confirmReject() {
+      const reason = document.getElementById('rejectReasonInput').value.trim();
+      if (!reason) {
+        Swal.fire({ icon: 'warning', title: 'Reason required', text: 'Please enter a rejection reason before confirming.' });
+        return;
+      }
+      if (!_rejectId) return;
+
+      // 1. Update status via API
+      try {
+        const res = await fetch(`/api/registration/${_rejectId}/status`, {
+          method: 'PATCH',
+          headers: getAuthHeaders(),
+          body: JSON.stringify({ status: 'Rejected' })
+        });
+        const data = await res.json();
+        if (handleApiError(res, data)) return;
+
+        if (!data.success) {
+          Swal.fire(`Error: ${data.error || 'Failed to update status.'}`);
+          return;
+        }
+      } catch (err) {
+        console.error(err);
+        Swal.fire("Server error occurred while rejecting.");
+        return;
+      }
+
+      // 2. Open WhatsApp with auto-filled message
+      const msg = buildWhatsAppMsg(_rejectLeaderName, _rejectTeamName, reason);
+      // Format phone: strip non-digits, add India code if not present
+      let phone = (_rejectPhone || '').replace(/\D/g, '');
+      if (phone.length === 10) phone = '91' + phone;
+      const waUrl = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+      window.open(waUrl, '_blank');
+
+      closeRejectModal();
+      Swal.fire({ icon: 'success', title: `Team #${_rejectId} Rejected`, text: 'WhatsApp message has been opened. Send it to notify the team leader.', timer: 3000, showConfirmButton: false });
+      fetchDashboardData();
     }
 
     // Mobile menu toggle
