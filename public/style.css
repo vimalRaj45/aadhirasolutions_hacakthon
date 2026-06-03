@@ -216,3 +216,17 @@ input[type="radio"]:checked + .problem-card {
     padding-bottom: 5rem !important;
   }
 }
+
+/* Typewriter Cursor styling */
+.typewriter-cursor {
+  display: inline-block;
+  margin-left: 2px;
+  animation: typewriter-blink 0.75s step-end infinite;
+  font-weight: 300;
+  user-select: none;
+}
+
+@keyframes typewriter-blink {
+  from, to { opacity: 1; }
+  50% { opacity: 0; }
+}

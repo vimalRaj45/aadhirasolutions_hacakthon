@@ -107,9 +107,9 @@
     </div>
 
     <!-- Main headline -->
-    <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-brand-900 mb-4 leading-tight" data-aos="fade-up">
-      Aadhira Solutions<br>
-      <span class="bg-gradient-to-r from-brand-600 via-blue-500 to-brand-700 bg-clip-text text-transparent">Hackathon 2026</span>
+    <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-brand-900 mb-4 leading-tight">
+      <span id="typewriter-line1">Aadhira Solutions</span><span id="cursor-line1" class="typewriter-cursor text-brand-600">|</span><br>
+      <span id="typewriter-line2" class="bg-gradient-to-r from-brand-600 via-blue-500 to-brand-700 bg-clip-text text-transparent">Hackathon 2026</span><span id="cursor-line2" class="typewriter-cursor text-blue-500 hidden">|</span>
     </h1>
 
     <p class="text-slate-500 max-w-2xl text-base sm:text-lg mb-10" data-aos="fade-up" data-aos-delay="100">
@@ -384,14 +384,69 @@
     </script>
 
 <script>
-  // Welcome Splash Screen Logic
+  // Welcome Splash Screen & Typewriter Logic
   document.addEventListener('DOMContentLoaded', () => {
     const splash = document.getElementById('welcomeSplash');
-    if (!splash) return;
+    
+    // Typewriter effect function
+    function startTypewriter() {
+      const line1Text = "Aadhira Solutions";
+      const line2Text = "Hackathon 2026";
+      const el1 = document.getElementById('typewriter-line1');
+      const el2 = document.getElementById('typewriter-line2');
+      const cursor1 = document.getElementById('cursor-line1');
+      const cursor2 = document.getElementById('cursor-line2');
+
+      if (!el1 || !el2) return;
+
+      // Clear static text to prepare for typing
+      el1.textContent = "";
+      el2.textContent = "";
+
+      let i = 0;
+      function typeLine1() {
+        if (i < line1Text.length) {
+          el1.textContent += line1Text.charAt(i);
+          i++;
+          setTimeout(typeLine1, 70); // speed of typing
+        } else {
+          if (cursor1) cursor1.classList.add('hidden');
+          if (cursor2) cursor2.classList.remove('hidden');
+          i = 0;
+          setTimeout(typeLine2, 200); // delay before starting line 2
+        }
+      }
+
+      function typeLine2() {
+        if (i < line2Text.length) {
+          el2.textContent += line2Text.charAt(i);
+          i++;
+          setTimeout(typeLine2, 70);
+        } else {
+          // Fade out the second cursor after typing finishes
+          setTimeout(() => {
+            if (cursor2) {
+              cursor2.style.transition = 'opacity 0.5s ease';
+              cursor2.style.opacity = '0';
+              setTimeout(() => cursor2.classList.add('hidden'), 500);
+            }
+          }, 1000);
+        }
+      }
+
+      typeLine1();
+    }
+
+    if (!splash) {
+      // In case splash screen is not present on the page, start immediately
+      setTimeout(startTypewriter, 300);
+      return;
+    }
 
     // Check if splash was already shown in this session
     if (sessionStorage.getItem('splashShown') === 'true') {
       splash.style.display = 'none';
+      setTimeout(startTypewriter, 300); // small delay to allow page elements to render smoothly
       return;
     }
 
@@ -399,6 +454,7 @@
       splash.classList.add('opacity-0', 'scale-105', 'pointer-events-none');
       setTimeout(() => {
         splash.style.display = 'none';
+        startTypewriter(); // Start typing when splash is fully gone
       }, 700);
       sessionStorage.setItem('splashShown', 'true');
     };
