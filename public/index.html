@@ -1012,4 +1012,39 @@
                 if(overlay) overlay.addEventListener('click', toggle);
             }
         });
-    </script></body></html>
+    </script>
+<script>
+// Prevent accidental refresh or navigation
+let isFormDirty = false;
+
+document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('registrationForm');
+    if (form) {
+        // Mark form as dirty on any input change
+        form.addEventListener('input', () => {
+            isFormDirty = true;
+        });
+
+        // Also mark as dirty if they select a problem radio button
+        form.addEventListener('change', () => {
+            isFormDirty = true;
+        });
+
+        // Allow successful submission to bypass the warning
+        form.addEventListener('submit', () => {
+            // We set it to false so the redirect to success page doesn't show warning
+            isFormDirty = false;
+        });
+    }
+
+    // Modern browsers require preventDefault and returnValue
+    window.addEventListener('beforeunload', (e) => {
+        if (isFormDirty) {
+            e.preventDefault();
+            e.returnValue = 'You have unsaved registration progress. Are you sure you want to leave this page?';
+            return e.returnValue;
+        }
+    });
+});
+</script>
+</body></html>
