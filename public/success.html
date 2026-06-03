@@ -218,16 +218,19 @@
     }
 
     function downloadPdf() {
+      // Force scroll to top to prevent html2canvas blank render bug
+      window.scrollTo(0, 0);
+      
       const element = document.getElementById('summaryCard');
       // Hide border/shadows for a clean PDF
       element.classList.remove('border-slate-200', 'bg-slate-50');
       element.classList.add('bg-white');
 
       var opt = {
-        margin:       1,
+        margin:       0.5,
         filename:     'Registration_Receipt_' + regId + '.pdf',
         image:        { type: 'jpeg', quality: 0.98 },
-        html2canvas:  { scale: 2 },
+        html2canvas:  { scale: 2, useCORS: true, scrollY: 0, scrollX: 0 },
         jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
       };
 
