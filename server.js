@@ -65,6 +65,18 @@ async function initDb() {
       ADD COLUMN IF NOT EXISTS team_name VARCHAR(100) DEFAULT 'Unnamed Team';
     `);
 
+    // Create tickets table
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS tickets (
+        id SERIAL PRIMARY KEY,
+        name VARCHAR(255) NOT NULL,
+        leader_email VARCHAR(255) NOT NULL,
+        message TEXT NOT NULL,
+        status VARCHAR(20) DEFAULT 'Open',
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      );
+    `);
+
     client.release();
     fastify.log.info('Database table "registrations" checked/initialized with BLOB support successfully.');
   } catch (err) {
@@ -712,6 +724,63 @@ fastify.get('/api/stats', async (request, reply) => {
   } catch (err) {
     fastify.log.error(err);
     return reply.status(500).send({ success: false, error: 'Failed to retrieve stats' });
+  }
+});
+
+// 8. Public: Submit Support Ticket
+fastify.post('/api/tickets', async (request, reply) => {
+  const { name, email, message } = request.body || {};
+  if (!name || !email || !message) {
+    return reply.status(400).send({ success: false, error: 'Name, email, and message are required.' });
+  }
+
+  const normalizedEmail = email.trim().toLowerCase();
+
+  try {
+    const checkRes = await pool.query('SELECT id FROM registrations WHERE LOWER(leader_email) = $1', [normalizedEmail]);
+    if (checkRes.rows.length === 0) {
+      return reply.status(400).send({ success: false, error: 'Email not found in registered teams.' });
+    }
+
+    await pool.query(
+      'INSERT INTO tickets (name, leader_email, message) VALUES ($1, $2, $3)',
+      [name.trim(), normalizedEmail, message.trim()]
+    );
+    return reply.status(201).send({ success: true, message: 'Ticket submitted successfully.' });
+  } catch (err) {
+    fastify.log.error('Ticket Insert Error:', err);
+    return reply.status(500).send({ success: false, error: 'Database error occurred while submitting ticket.' });
+  }
+});
+
+// 9. Admin: Get all tickets
+fastify.get('/api/admin/tickets', async (request, reply) => {
+  await verifyAdminSession(request, reply);
+  try {
+    const res = await pool.query('SELECT * FROM tickets ORDER BY created_at DESC');
+    return reply.send({ success: true, tickets: res.rows });
+  } catch (err) {
+    fastify.log.error('Ticket Fetch Error:', err);
+    return reply.status(500).send({ success: false, error: 'Database search error' });
+  }
+});
+
+// 10. Admin: Update ticket status
+fastify.put('/api/admin/tickets/:id/status', async (request, reply) => {
+  await verifyAdminSession(request, reply);
+  const { id } = request.params;
+  const { status } = request.body;
+  if (!status) return reply.status(400).send({ success: false, error: 'Status is required' });
+
+  try {
+    const res = await pool.query('UPDATE tickets SET status = $1 WHERE id = $2 RETURNING *', [status, id]);
+    if (res.rows.length === 0) {
+      return reply.status(404).send({ success: false, error: 'Ticket not found' });
+    }
+    return reply.send({ success: true, ticket: res.rows[0] });
+  } catch (err) {
+    fastify.log.error('Ticket Update Error:', err);
+    return reply.status(500).send({ success: false, error: 'Database update error' });
   }
 });
 

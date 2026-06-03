@@ -189,10 +189,51 @@
     }
 
     // Support Form Handler
-    document.getElementById('supportForm').addEventListener('submit', (e) => {
+    document.getElementById('supportForm').addEventListener('submit', async (e) => {
       e.preventDefault();
-      Swal.fire("Your support request has been submitted successfully! Our help desk team will review it and follow up via email within 4 hours.");
-      document.getElementById('supportForm').reset();
+      
+      const name = document.getElementById('supName').value;
+      const email = document.getElementById('supEmail').value;
+      const message = document.getElementById('supMsg').value;
+      const btn = e.target.querySelector('button[type="submit"]');
+      
+      const originalText = btn.textContent;
+      btn.textContent = 'Submitting...';
+      btn.disabled = true;
+
+      try {
+        const response = await fetch('/api/tickets', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, message })
+        });
+        const data = await response.json();
+        
+        if (data.success) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Ticket Submitted',
+            text: 'Your support request has been submitted successfully! Our help desk team will follow up via email.'
+          });
+          document.getElementById('supportForm').reset();
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Submission Failed',
+            text: data.error || 'Something went wrong.'
+          });
+        }
+      } catch (err) {
+        console.error(err);
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Server communication error. Please try again later.'
+        });
+      } finally {
+        btn.textContent = originalText;
+        btn.disabled = false;
+      }
     });
   </script>
 

@@ -236,10 +236,7 @@
 
   <script>
     
-    let ticketsData = [
-      { id: 1, name: "John Doe", email: "john@example.com", message: "I paid the fee but haven't received confirmation yet. Attached is the transaction ID.", status: "Open", created_at: new Date().toISOString() },
-      { id: 2, name: "Jane Smith", email: "jane@college.edu", message: "Can I still change my problem statement?", status: "Resolved", created_at: new Date().toISOString() }
-    ];
+    let ticketsData = [];
     let savedEmail = '';
 
     window.addEventListener('DOMContentLoaded', () => {
@@ -349,14 +346,30 @@
     }
 
     async function fetchDashboardData() {
-      // MOCK DATA for tickets
-      const total = ticketsData.length;
-      const open = ticketsData.filter(t => t.status === 'Open').length;
-      const resolved = total - open;
-      document.getElementById('statTotalTickets').textContent = total;
-      document.getElementById('statOpenTickets').textContent = open;
-      document.getElementById('statResolvedTickets').textContent = resolved;
-      renderTable(ticketsData);
+      try {
+        const response = await fetch('/api/admin/tickets', {
+          headers: getAuthHeaders()
+        });
+        const data = await response.json();
+        
+        if (handleApiError(response, data)) return;
+
+        if (data.success) {
+          ticketsData = data.tickets;
+          const total = ticketsData.length;
+          const open = ticketsData.filter(t => t.status === 'Open').length;
+          const resolved = total - open;
+          document.getElementById('statTotalTickets').textContent = total;
+          document.getElementById('statOpenTickets').textContent = open;
+          document.getElementById('statResolvedTickets').textContent = resolved;
+          renderTable(ticketsData);
+        } else {
+          Swal.fire(data.error || "Failed to load tickets.");
+        }
+      } catch (error) {
+        console.error(error);
+        Swal.fire("Network error while loading tickets.");
+      }
     }
 
     function filterSearch() {
@@ -425,11 +438,25 @@
       Swal.fire("Tickets exported to CSV!");
     }
 
-    function updateStatus(id, status) {
-        const ticket = ticketsData.find(t => t.id === id);
-        if (ticket) {
-            ticket.status = status;
+    async function updateStatus(id, status) {
+        try {
+          const res = await fetch(`/api/admin/tickets/${id}/status`, {
+            method: 'PUT',
+            headers: getAuthHeaders(),
+            body: JSON.stringify({ status })
+          });
+          const data = await res.json();
+          if (handleApiError(res, data)) return;
+          
+          if (data.success) {
+            Swal.fire({ toast: true, position: 'top-end', showConfirmButton: false, timer: 3000, icon: 'success', title: 'Status updated' });
             fetchDashboardData();
+          } else {
+            Swal.fire(data.error || 'Failed to update ticket status.');
+          }
+        } catch (err) {
+          console.error(err);
+          Swal.fire('Network error updating ticket status.');
         }
     }
 
