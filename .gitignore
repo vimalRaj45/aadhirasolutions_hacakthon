@@ -28,3 +28,4 @@ Thumbs.db
 
 # Project-specific uploads
 public/uploads/
+.history/
