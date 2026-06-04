@@ -42,35 +42,19 @@
         <p class="text-slate-500 text-xs mt-1">Allowed administrator email addresses only</p>
       </div>
 
-      <!-- State 1: Send Email form -->
-      <form id="otpEmailForm" class="space-y-3">
+      <!-- Admin Login Form -->
+      <form id="adminLoginForm" class="space-y-3">
         <div>
           <label for="adminEmail" class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1.5 font-bold">Administrator Email</label>
           <input type="email" id="adminEmail" required="" placeholder="e.g. admin@aadhirasolutions.skopick.org" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-2.5 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/10 transition-all">
         </div>
-        <button type="submit" id="sendOtpBtn" class="w-full py-2.5 bg-gradient-to-r from-brand-600 to-brand-700 hover:from-brand-700 hover:to-brand-800 text-white font-bold rounded-2xl text-xs uppercase tracking-wider transition-all shadow-md">
-          Request OTP Code
-        </button>
-      </form>
-
-      <!-- State 2: Verify Code form (hidden initially) -->
-      <form id="otpCodeForm" class="space-y-3 hidden">
-        <div class="bg-blue-50 border border-blue-200 rounded-xl p-3 text-xs text-brand-800 flex items-start space-x-2">
-          <i class="bi bi-info-circle text-brand-600 mt-0.5 flex-shrink-0 text-base"></i>
-          <span>OTP has been sent to your email. Please enter the 6-digit verification code below.</span>
-        </div>
         <div>
-          <label for="adminOtp" class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1.5 font-bold">Verification OTP Code</label>
-          <input type="text" id="adminOtp" required="" placeholder="e.g. 123456" pattern="\d{6}" maxlength="6" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-2.5 text-center text-lg font-mono tracking-[8px] font-bold text-slate-800 focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/10 transition-all">
+          <label for="adminPassword" class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1.5 font-bold">Password</label>
+          <input type="password" id="adminPassword" required="" placeholder="Enter password" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-2.5 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/10 transition-all">
         </div>
-        <div class="flex items-center justify-between gap-4">
-          <button type="button" onclick="showEmailForm()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-2xl text-xs font-bold transition-all border border-slate-200 shadow-sm">
-            Back
-          </button>
-          <button type="submit" id="verifyOtpBtn" class="flex-grow py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-2xl text-xs uppercase tracking-wider transition-all shadow-md">
-            Verify &amp; Authorize
-          </button>
-        </div>
+        <button type="submit" id="loginBtn" class="w-full py-2.5 bg-gradient-to-r from-brand-600 to-brand-700 hover:from-brand-700 hover:to-brand-800 text-white font-bold rounded-2xl text-xs uppercase tracking-wider transition-all shadow-md">
+          Authorize Login
+        </button>
       </form>
 
       <div id="authError" class="text-xs text-red-500 text-center mt-2 hidden font-semibold"></div>
@@ -367,8 +351,6 @@
 
   <script>
     let registrationsData = [];
-    let savedEmail = '';
-
     // Check auth on startup
     window.addEventListener('DOMContentLoaded', () => {
       checkAuth();
@@ -377,9 +359,8 @@
       document.getElementById('searchInput').addEventListener('input', debounce(filterSearch, 300));
       document.getElementById('statusFilter').addEventListener('change', filterSearch);
 
-      // Hook OTP Forms
-      document.getElementById('otpEmailForm').addEventListener('submit', sendOtpHandler);
-      document.getElementById('otpCodeForm').addEventListener('submit', verifyOtpHandler);
+      // Hook Login Form
+      document.getElementById('adminLoginForm').addEventListener('submit', loginHandler);
     });
 
     // Check Authorization State
@@ -394,80 +375,37 @@
       }
     }
 
-    // Toggle overlay view state
-    function showEmailForm() {
-      document.getElementById('otpEmailForm').classList.remove('hidden');
-      document.getElementById('otpCodeForm').classList.add('hidden');
-      document.getElementById('authError').classList.add('hidden');
-    }
-
     // Logout Helper
     function logoutAdmin() {
       localStorage.removeItem('adminToken');
       checkAuth();
     }
 
-    // Handle Send OTP API Request
-    async function sendOtpHandler(e) {
+    // Handle Login API Request
+    async function loginHandler(e) {
       e.preventDefault();
       const email = document.getElementById('adminEmail').value.trim();
-      const sendBtn = document.getElementById('sendOtpBtn');
+      const password = document.getElementById('adminPassword').value;
+      const loginBtn = document.getElementById('loginBtn');
       const errorDiv = document.getElementById('authError');
 
       errorDiv.classList.add('hidden');
-      sendBtn.disabled = true;
-      sendBtn.textContent = 'Sending...';
+      loginBtn.disabled = true;
+      loginBtn.textContent = 'Authorizing...';
 
       try {
-        const res = await fetch('/api/auth/send-otp', {
+        const res = await fetch('/api/auth/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email })
+          body: JSON.stringify({ email, password })
         });
         const data = await res.json();
         
         if (res.ok && data.success) {
-          savedEmail = email;
-          document.getElementById('otpEmailForm').classList.add('hidden');
-          document.getElementById('otpCodeForm').classList.remove('hidden');
-        } else {
-          errorDiv.textContent = data.error || 'Failed to request OTP code.';
-          errorDiv.classList.remove('hidden');
-        }
-      } catch (err) {
-        console.error(err);
-        errorDiv.textContent = 'Connection error occurred.';
-        errorDiv.classList.remove('hidden');
-      } finally {
-        sendBtn.disabled = false;
-        sendBtn.textContent = 'Request OTP Code';
-      }
-    }
-
-    // Handle Verify OTP API Request
-    async function verifyOtpHandler(e) {
-      e.preventDefault();
-      const otp = document.getElementById('adminOtp').value.trim();
-      const verifyBtn = document.getElementById('verifyOtpBtn');
-      const errorDiv = document.getElementById('authError');
-
-      errorDiv.classList.add('hidden');
-      verifyBtn.disabled = true;
-      verifyBtn.textContent = 'Verifying...';
-
-      try {
-        const res = await fetch('/api/auth/verify-otp', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email: savedEmail, otp })
-        });
-        const data = await res.json();
-
-        if (res.ok && data.success) {
           localStorage.setItem('adminToken', data.token);
           checkAuth(); // Hide modal and fetch
         } else {
-          errorDiv.textContent = data.error || 'Invalid OTP code.';
+          errorDiv.textContent = data.error || 'Failed to login.';
           errorDiv.classList.remove('hidden');
         }
       } catch (err) {
@@ -475,8 +413,8 @@
         errorDiv.textContent = 'Connection error occurred.';
         errorDiv.classList.remove('hidden');
       } finally {
-        verifyBtn.disabled = false;
-        verifyBtn.textContent = 'Verify & Authorize';
+        loginBtn.disabled = false;
+        loginBtn.textContent = 'Authorize Login';
       }
     }
 
@@ -501,7 +439,7 @@
     function handleApiError(res, data) {
       if (res.status === 401) {
         logoutAdmin();
-        Swal.fire('Your administrator session has expired or is unauthorized. Please verify via OTP again.');
+        Swal.fire('Your administrator session has expired or is unauthorized. Please login again.');
         return true;
       }
       return false;

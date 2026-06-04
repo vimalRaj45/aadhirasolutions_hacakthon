@@ -270,11 +270,11 @@ async function verifyAdminSession(request, reply) {
 
 // API Routes
 
-// 0. Auth: Send OTP (One-Time Password)
-fastify.post('/api/auth/send-otp', async (request, reply) => {
-  const { email } = request.body || {};
-  if (!email || email.trim() === '') {
-    return reply.status(400).send({ success: false, error: 'Email address is required.' });
+// 0. Auth: Login (Email & Password)
+fastify.post('/api/auth/login', async (request, reply) => {
+  const { email, password } = request.body || {};
+  if (!email || !password) {
+    return reply.status(400).send({ success: false, error: 'Email and password are required.' });
   }
 
   const normalizedEmail = email.trim().toLowerCase();
@@ -288,67 +288,14 @@ fastify.post('/api/auth/send-otp', async (request, reply) => {
     return reply.status(401).send({ success: false, error: 'This email is not authorized to access the Admin Panel.' });
   }
 
-  // Generate 6-digit numeric OTP
-  const otp = Math.floor(100000 + Math.random() * 900000).toString();
-  const expiresAt = Date.now() + 5 * 60 * 1000; // expires in 5 minutes
-
-  // Store in memory
-  activeOtps.set(normalizedEmail, { otp, expiresAt });
-
-  // Send OTP via Brevo
-  const emailHtml = `
-    <div style="font-family: Arial, sans-serif; max-width: 500px; margin: 0 auto; padding: 25px; border: 1px solid #e2e8f0; border-radius: 12px; background-color: #ffffff;">
-      <h2 style="color: #2563eb; margin: 0 0 15px 0;">Admin Portal Verification</h2>
-      <p>Hello,</p>
-      <p>You requested access to the Aadhira Solutions Hackathon Admin Panel. Please use the following One-Time Password (OTP) to complete your login:</p>
-      <div style="background-color: #eff6ff; border: 1px dashed #2563eb; padding: 15px; text-align: center; font-size: 24px; font-weight: bold; color: #1e40af; border-radius: 8px; letter-spacing: 5px; margin: 20px 0;">
-        ${otp}
-      </div>
-      <p style="color: #dc2626; font-size: 12px;">This OTP is valid for 5 minutes. If you did not request this code, please ignore this email.</p>
-      <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 20px 0;" />
-      <p style="color: #94a3b8; font-size: 11px; text-align: center;">&copy; 2026 Aadhira Solutions. All rights reserved.</p>
-    </div>
-  `;
-
-  const emailRes = await sendBrevoEmail({
-    toEmail: normalizedEmail,
-    toName: 'Hackathon Admin',
-    subject: 'Hackathon Admin Portal OTP Code',
-    htmlContent: emailHtml
-  });
-
-  if (emailRes.mock || emailRes.success) {
-    return reply.send({ success: true, message: 'OTP has been successfully sent to your email.' });
-  } else {
-    return reply.status(500).send({ success: false, error: 'Failed to send OTP email via Brevo.' });
-  }
-});
-
-// 0.5. Auth: Verify OTP
-fastify.post('/api/auth/verify-otp', async (request, reply) => {
-  const { email, otp } = request.body || {};
-  if (!email || !otp) {
-    return reply.status(400).send({ success: false, error: 'Email and OTP are required.' });
+  const envPassword = process.env.ADMIN_PASSWORD;
+  if (!envPassword) {
+    return reply.status(500).send({ success: false, error: 'Admin password is not configured on the server.' });
   }
 
-  const normalizedEmail = email.trim().toLowerCase();
-  const record = activeOtps.get(normalizedEmail);
-
-  if (!record) {
-    return reply.status(400).send({ success: false, error: 'No OTP record found. Please request a new code.' });
+  if (password !== envPassword) {
+    return reply.status(401).send({ success: false, error: 'Invalid password. Please try again.' });
   }
-
-  if (Date.now() > record.expiresAt) {
-    activeOtps.delete(normalizedEmail);
-    return reply.status(400).send({ success: false, error: 'OTP has expired. Please request a new code.' });
-  }
-
-  if (record.otp !== otp.trim()) {
-    return reply.status(400).send({ success: false, error: 'Invalid OTP code. Please try again.' });
-  }
-
-  // Clear OTP on successful verify
-  activeOtps.delete(normalizedEmail);
 
   // Generate Session Token
   const crypto = require('crypto');
