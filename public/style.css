@@ -138,17 +138,6 @@ input[type="radio"]:checked + .problem-card {
   border-radius: 10px !important;
 }
 
-.swal2-icon {
-  width: 3rem !important;
-  height: 3rem !important;
-  margin: 0.6rem auto 0.8rem !important;
-  border-width: 2px !important;
-}
-
-.swal2-icon .swal2-icon-content {
-  font-size: 1.6rem !important;
-}
-
 /* ── Welcome Splash Screen Animations ── */
 @keyframes logoPop {
   0% {
