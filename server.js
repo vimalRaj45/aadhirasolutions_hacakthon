@@ -608,7 +608,6 @@ fastify.patch('/api/registration/:id/status', async (request, reply) => {
             <p style="margin-top: 0; font-size: 15px; font-weight: bold; color: #f1f5f9;">Your Official Entry QR Code</p>
             <p style="font-size: 13px; color: #94a3b8; margin-bottom: 15px;">Please show this QR code at the venue registration desk for attendance verification.</p>
             <img src="${qrImageUrl}" alt="Verification QR Code" style="border: 4px solid #ffffff; border-radius: 8px; margin: 0 auto; display: block;" width="170" height="170" />
-            <p style="margin-top: 15px; margin-bottom: 0;"><a href="${verifyUrl}" style="color: #10b981; text-decoration: none; font-size: 14px; font-weight: 500;">Link to Verification Details &rarr;</a></p>
           </div>
 
           <div style="margin-bottom: 25px;">
