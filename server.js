@@ -622,12 +622,9 @@ fastify.patch('/api/registration/:id/status', async (request, reply) => {
     const verifyUrl = `${protocol}://${host}/verify.html?id=${team.id}`;
     const qrImageUrl = `https://api.qrserver.com/v1/create-qr-code/?size=170x170&color=0b0f19&bgcolor=ffffff&data=${encodeURIComponent(verifyUrl)}`;
 
-    let emailSubject = '';
-    let emailHtmlContent = '';
-
     if (status === 'Approved') {
-      emailSubject = `Hackathon Registration Approved! Team ID: ${team.id} - Aadhira Solutions`;
-      emailHtmlContent = `
+      const emailSubject = `Hackathon Registration Approved! Team ID: ${team.id} - Aadhira Solutions`;
+      const emailHtmlContent = `
         <div style="font-family: 'Outfit', sans-serif, Arial; max-width: 600px; margin: 0 auto; padding: 25px; border-radius: 12px; background-color: #0b0f19; color: #f8fafc; border: 1px solid #1e293b;">
           <div style="text-align: center; margin-bottom: 25px;">
             <h1 style="color: #10b981; font-size: 24px; margin-top: 10px;">Aadhira Solutions Hackathon</h1>
@@ -668,41 +665,9 @@ fastify.patch('/api/registration/:id/status', async (request, reply) => {
           </div>
         </div>
       `;
-    } else {
-      emailSubject = `Hackathon Registration Update - Action Required - Aadhira Solutions`;
-      emailHtmlContent = `
-        <div style="font-family: 'Outfit', sans-serif, Arial; max-width: 600px; margin: 0 auto; padding: 25px; border-radius: 12px; background-color: #0b0f19; color: #f8fafc; border: 1px solid #1e293b;">
-          <div style="text-align: center; margin-bottom: 25px;">
-            <h1 style="color: #ef4444; font-size: 24px; margin-top: 10px;">Aadhira Solutions Hackathon</h1>
-            <p style="color: #94a3b8; font-size: 14px;">Project Team Registration & Problem Selection</p>
-          </div>
-          
-          <div style="background-color: #1e293b; padding: 20px; border-radius: 8px; margin-bottom: 25px; border-left: 4px solid #ef4444;">
-            <h2 style="margin-top: 0; color: #ef4444; font-size: 18px;">Registration Rejected / Needs Verification</h2>
-            <p style="font-size: 15px; line-height: 1.6; color: #e2e8f0;">
-              Hello <strong>${team.leader_name}</strong>,
-            </p>
-            <p style="font-size: 15px; line-height: 1.6; color: #e2e8f0;">
-              We reviewed your registration and could not verify your payment screenshot. It might be blurry, incorrect, or incomplete.
-            </p>
-            <p style="font-size: 15px; line-height: 1.6; color: #e2e8f0;">
-              Please send a clear screenshot of your payment receipt or transaction details via WhatsApp to: <strong>+91 70103 47672</strong> to verify and approve your registration.
-            </p>
-          </div>
-          
-          <hr style="border: 0; border-top: 1px solid #1e293b; margin: 25px 0;" />
-          
-          <div style="text-align: center; color: #64748b; font-size: 12px; line-height: 1.5;">
-            <p>If you believe this is a mistake, please reach out to the hackathon coordinator.</p>
-            <p>&copy; 2026 Aadhira Solutions. All rights reserved.</p>
-          </div>
-        </div>
-      `;
-    }
 
-    // Call Brevo API with QR code attachment if approved
-    let attachment;
-    if (status === 'Approved') {
+      // Call Brevo API with QR code attachment if approved
+      let attachment;
       try {
         const qrRes = await fetch(qrImageUrl);
         const qrBuffer = await qrRes.arrayBuffer();
@@ -715,15 +680,15 @@ fastify.patch('/api/registration/:id/status', async (request, reply) => {
       } catch (err) {
         fastify.log.error('Failed to fetch QR code for attachment:', err);
       }
-    }
 
-    await sendBrevoEmail({
-      toEmail: team.leader_email,
-      toName: team.leader_name,
-      subject: emailSubject,
-      htmlContent: emailHtmlContent,
-      attachment
-    });
+      await sendBrevoEmail({
+        toEmail: team.leader_email,
+        toName: team.leader_name,
+        subject: emailSubject,
+        htmlContent: emailHtmlContent,
+        attachment
+      });
+    }
 
     return reply.send({ success: true, registration: updatedTeam });
   } catch (err) {
