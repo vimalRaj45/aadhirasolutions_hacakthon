@@ -598,9 +598,21 @@
           otpMessage.textContent = "OTP sent successfully! Please check your email inbox.";
           regOtpInput.focus();
         } else {
-          Swal.fire(`Error: ${data.error || 'Failed to send OTP.'}`);
+          let errorMsg = data.error || 'Failed to send OTP.';
+          if (response.status === 429 || data.code === 'LIMIT_EXCEEDED' || errorMsg.toLowerCase().includes('limit') || errorMsg.toLowerCase().includes('quota') || errorMsg.toLowerCase().includes('suspend')) {
+            errorMsg = "Today's registration is completed. Please come back tomorrow.";
+            Swal.fire({
+              icon: 'warning',
+              title: 'Registration Limit Reached',
+              text: "Today's registration is completed. Please come back tomorrow.",
+              confirmButtonText: 'OK',
+              confirmButtonColor: '#2563eb'
+            });
+          } else {
+            Swal.fire(`Error: ${errorMsg}`);
+          }
           otpMessage.className = "text-[11px] text-red-500 font-semibold";
-          otpMessage.textContent = data.error || 'Failed to send OTP.';
+          otpMessage.textContent = errorMsg;
         }
       } catch (err) {
         console.error(err);

@@ -392,6 +392,15 @@ fastify.post('/api/register/send-otp', async (request, reply) => {
     if (emailRes.mock || emailRes.success) {
       return reply.send({ success: true, message: 'OTP has been successfully sent to your email.' });
     } else {
+      // Check if error indicates daily email limit exceeded
+      const errStr = JSON.stringify(emailRes.error || '').toLowerCase();
+      if (errStr.includes('limit') || errStr.includes('quota') || errStr.includes('exceed') || errStr.includes('susp')) {
+        return reply.status(429).send({ 
+          success: false, 
+          code: 'LIMIT_EXCEEDED', 
+          error: "Today's registration limit has been completed. Please come back tomorrow!" 
+        });
+      }
       return reply.status(500).send({ success: false, error: 'Failed to send verification email. Please try again.' });
     }
   } catch (err) {
