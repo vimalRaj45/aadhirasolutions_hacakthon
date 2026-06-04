@@ -686,7 +686,7 @@ fastify.patch('/api/registration/:id/status', async (request, reply) => {
               We reviewed your registration and could not verify your payment screenshot. It might be blurry, incorrect, or incomplete.
             </p>
             <p style="font-size: 15px; line-height: 1.6; color: #e2e8f0;">
-              Please send a clear screenshot of your payment receipt or transaction details directly to our support number: <strong>+91 70103 47672</strong> to verify and approve your registration.
+              Please send a clear screenshot of your payment receipt or transaction details via WhatsApp to: <strong>+91 70103 47672</strong> to verify and approve your registration.
             </p>
           </div>
           
