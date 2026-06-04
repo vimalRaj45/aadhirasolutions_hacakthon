@@ -156,9 +156,40 @@ const verifiedRegistrationEmails = new Set(); // set of verified leader emails
 const rateLimitStore = new Map(); // IP -> { count, windowStart, blockedUntil }
 
 fastify.addHook('onRequest', async (request, reply) => {
-  // Only rate-limit API routes (exempt static assets)
+  // Only process API routes
   if (!request.url.startsWith('/api/')) {
     return;
+  }
+
+  // Same-origin checks to block CSRF and unauthorized cross-origin calls
+  const host = request.headers.host;
+  const origin = request.headers.origin;
+  const referer = request.headers.referer;
+
+  if (origin) {
+    try {
+      const originHost = new URL(origin).host;
+      if (originHost !== host) {
+        reply.status(403).send({ success: false, error: 'Forbidden: Cross-Origin request blocked.' });
+        return;
+      }
+    } catch (err) {
+      reply.status(400).send({ success: false, error: 'Bad Request: Invalid Origin header.' });
+      return;
+    }
+  }
+
+  if (referer) {
+    try {
+      const refererHost = new URL(referer).host;
+      if (refererHost !== host) {
+        reply.status(403).send({ success: false, error: 'Forbidden: Cross-Origin request blocked.' });
+        return;
+      }
+    } catch (err) {
+      reply.status(400).send({ success: false, error: 'Bad Request: Invalid Referer header.' });
+      return;
+    }
   }
 
   const ip = request.ip || 'unknown';
