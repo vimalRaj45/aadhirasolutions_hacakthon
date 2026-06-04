@@ -68,6 +68,12 @@ async function initDb() {
       ADD COLUMN IF NOT EXISTS team_name VARCHAR(100) DEFAULT 'Unnamed Team';
     `);
 
+    // Create indexes for faster statistics and filtering lookups
+    await client.query(`
+      CREATE INDEX IF NOT EXISTS idx_registrations_status ON registrations(status);
+      CREATE INDEX IF NOT EXISTS idx_registrations_attended ON registrations(attended);
+    `);
+
     // Create tickets table
     await client.query(`
       CREATE TABLE IF NOT EXISTS tickets (
@@ -730,45 +736,42 @@ fastify.post('/api/registration/:id/attend', async (request, reply) => {
 fastify.get('/api/stats', async (request, reply) => {
   await verifyAdminSession(request, reply);
   try {
-    // Run multiple stats queries in parallel
-    const [totalRes, pendingRes, approvedRes, rejectedRes, attendedRes, problemStats] = await Promise.all([
-      pool.query('SELECT COUNT(*) FROM registrations'),
-      pool.query("SELECT COUNT(*) FROM registrations WHERE status = 'Pending'"),
-      pool.query("SELECT COUNT(*) FROM registrations WHERE status = 'Approved'"),
-      pool.query("SELECT COUNT(*) FROM registrations WHERE status = 'Rejected'"),
-      pool.query('SELECT COUNT(*) FROM registrations WHERE attended = TRUE'),
-      pool.query('SELECT problem_statement, COUNT(*) FROM registrations GROUP BY problem_statement')
+    // Consolidate counts and revenue calculation in a single query to minimize DB round trips,
+    // running alongside the problem statements breakdown in parallel.
+    const [statsRes, problemStats] = await Promise.all([
+      pool.query(`
+        SELECT 
+          COUNT(*)::INTEGER as total,
+          COUNT(CASE WHEN status = 'Pending' THEN 1 END)::INTEGER as pending,
+          COUNT(CASE WHEN status = 'Approved' THEN 1 END)::INTEGER as approved,
+          COUNT(CASE WHEN status = 'Rejected' THEN 1 END)::INTEGER as rejected,
+          COUNT(CASE WHEN attended = TRUE THEN 1 END)::INTEGER as attended,
+          COALESCE(
+            SUM(
+              CASE WHEN status = 'Approved' THEN (
+                1 + 
+                CASE WHEN TRIM(member2_name) <> '' THEN 1 ELSE 0 END +
+                CASE WHEN TRIM(member3_name) <> '' THEN 1 ELSE 0 END +
+                CASE WHEN TRIM(member4_name) <> '' THEN 1 ELSE 0 END
+              ) * 100 ELSE 0 END
+            ), 0
+          )::INTEGER as revenue
+        FROM registrations
+      `),
+      pool.query('SELECT problem_statement, COUNT(*)::INTEGER FROM registrations GROUP BY problem_statement')
     ]);
 
-    const totalCount = parseInt(totalRes.rows[0].count);
-    const pendingCount = parseInt(pendingRes.rows[0].count);
-    const approvedCount = parseInt(approvedRes.rows[0].count);
-    const rejectedCount = parseInt(rejectedRes.rows[0].count);
-    const attendedCount = parseInt(attendedRes.rows[0].count);
-
-    // Calculate revenue: 100 rupees per person.
-    const revenueRes = await pool.query(`
-      SELECT SUM(
-        1 + 
-        CASE WHEN TRIM(member2_name) <> '' THEN 1 ELSE 0 END +
-        CASE WHEN TRIM(member3_name) <> '' THEN 1 ELSE 0 END +
-        CASE WHEN TRIM(member4_name) <> '' THEN 1 ELSE 0 END
-      ) * 100 AS revenue
-      FROM registrations
-      WHERE status = 'Approved'
-    `);
-    
-    const revenue = parseInt(revenueRes.rows[0].revenue || 0);
+    const stats = statsRes.rows[0];
 
     return reply.send({
       success: true,
       stats: {
-        total: totalCount,
-        pending: pendingCount,
-        approved: approvedCount,
-        rejected: rejectedCount,
-        attended: attendedCount,
-        revenue: revenue,
+        total: stats.total || 0,
+        pending: stats.pending || 0,
+        approved: stats.approved || 0,
+        rejected: stats.rejected || 0,
+        attended: stats.attended || 0,
+        revenue: stats.revenue || 0,
         problemDistribution: problemStats.rows
       }
     });
