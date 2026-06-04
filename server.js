@@ -167,6 +167,21 @@ fastify.addHook('onRequest', async (request, reply) => {
     return;
   }
 
+  // Bypass rate limiting for authorized admin sessions
+  const authHeader = request.headers.authorization;
+  if (authHeader && authHeader.startsWith('Bearer ')) {
+    const token = authHeader.substring(7);
+    if (activeSessions.has(token)) {
+      return;
+    }
+  }
+
+  // Only apply IP rate limiting to public registration and support ticket submission endpoints
+  const isPublicFlow = request.url.startsWith('/api/register') || request.url === '/api/tickets';
+  if (!isPublicFlow) {
+    return;
+  }
+
   // Same-origin checks to block CSRF and unauthorized cross-origin calls
   const host = request.headers.host;
   const origin = request.headers.origin;
