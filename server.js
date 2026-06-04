@@ -555,7 +555,7 @@ fastify.get('/api/registrations', async (request, reply) => {
 fastify.patch('/api/registration/:id/status', async (request, reply) => {
   await verifyAdminSession(request, reply);
   const { id } = request.params;
-  const { status } = request.body; // 'Approved' or 'Rejected'
+  const { status } = request.body || {}; // 'Approved' or 'Rejected'
 
   if (!['Approved', 'Rejected'].includes(status)) {
     return reply.status(400).send({ success: false, error: 'Invalid status. Must be Approved or Rejected.' });
@@ -824,7 +824,7 @@ fastify.get('/api/admin/tickets', async (request, reply) => {
 fastify.put('/api/admin/tickets/:id/status', async (request, reply) => {
   await verifyAdminSession(request, reply);
   const { id } = request.params;
-  const { status } = request.body;
+  const { status } = request.body || {};
   if (!status) return reply.status(400).send({ success: false, error: 'Status is required' });
 
   try {
