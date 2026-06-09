@@ -69,17 +69,18 @@ body {
   50% { transform: scale(1.02); opacity: 0.97; }
 }
 
-/* Problem statement radio card (Light Theme) */
-.problem-card {
+/* Problem statement & location radio cards (Light Theme) */
+.problem-card, .location-card {
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.problem-card:hover {
+.problem-card:hover, .location-card:hover {
   transform: translateY(-1px);
   border-color: rgba(37, 99, 235, 0.4);
 }
 
-input[type="radio"]:checked + .problem-card {
+input[type="radio"]:checked + .problem-card,
+input[type="radio"]:checked + .location-card {
   background: rgba(239, 246, 255, 0.8);
   border-color: #2563eb;
   box-shadow: 0 0 12px rgba(37, 99, 235, 0.1);

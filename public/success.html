@@ -143,6 +143,10 @@
             <span class="text-slate-400 block text-xs">Team Leader</span>
             <span id="summaryLeader" class="text-slate-700 font-semibold"></span>
           </div>
+          <div>
+            <span class="text-slate-400 block text-xs">Preferred Location</span>
+            <span id="summaryLocation" class="text-slate-700 font-semibold"></span>
+          </div>
           <div class="md:col-span-2">
             <span class="text-slate-400 block text-xs">Selected Problem Statement</span>
             <span id="summaryProblem" class="text-slate-700 font-semibold text-xs leading-relaxed block mt-0.5"></span>
@@ -212,6 +216,7 @@
             document.getElementById('summaryTeamName').textContent = reg.team_name;
             document.getElementById('summaryCollege').textContent = reg.college_name;
             document.getElementById('summaryLeader').textContent = reg.leader_name;
+            document.getElementById('summaryLocation').textContent = reg.preferred_location || 'Salem';
             document.getElementById('summaryProblem').textContent = reg.problem_statement;
             
             const timeObj = new Date(reg.created_at);

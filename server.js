@@ -36,37 +36,44 @@ fastify.register(require('@fastify/multipart'), {
 // Create registrations table if not exists (preserves data across restarts)
 async function initDb() {
   const createText = `
-    CREATE TABLE IF NOT EXISTS registrations (
-      id SERIAL PRIMARY KEY,
-      team_name VARCHAR(100) NOT NULL,
-      college_name VARCHAR(255) NOT NULL,
-      leader_name VARCHAR(100) NOT NULL,
-      leader_email VARCHAR(255) NOT NULL,
-      leader_phone VARCHAR(20) NOT NULL,
-      member2_name VARCHAR(100) NOT NULL,
-      member2_phone VARCHAR(20) NOT NULL,
-      member3_name VARCHAR(100) NOT NULL,
-      member3_phone VARCHAR(20) NOT NULL,
-      member4_name VARCHAR(100) NOT NULL,
-      member4_phone VARCHAR(20) NOT NULL,
-      problem_statement TEXT NOT NULL,
-      payment_proof_data BYTEA NOT NULL,
-      payment_proof_mime VARCHAR(100) NOT NULL,
-      status VARCHAR(20) DEFAULT 'Pending',
-      attended BOOLEAN DEFAULT FALSE,
-      attended_at TIMESTAMP NULL,
-      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    );
-  `;
-  try {
-    const client = await pool.connect();
-    await client.query(createText);
-    
-    // Auto-migrate to add team_name if it doesn't exist
-    await client.query(`
-      ALTER TABLE registrations 
-      ADD COLUMN IF NOT EXISTS team_name VARCHAR(100) DEFAULT 'Unnamed Team';
-    `);
+      CREATE TABLE IF NOT EXISTS registrations (
+        id SERIAL PRIMARY KEY,
+        team_name VARCHAR(100) NOT NULL,
+        college_name VARCHAR(255) NOT NULL,
+        leader_name VARCHAR(100) NOT NULL,
+        leader_email VARCHAR(255) NOT NULL,
+        leader_phone VARCHAR(20) NOT NULL,
+        member2_name VARCHAR(100) NOT NULL,
+        member2_phone VARCHAR(20) NOT NULL,
+        member3_name VARCHAR(100) NOT NULL,
+        member3_phone VARCHAR(20) NOT NULL,
+        member4_name VARCHAR(100) NOT NULL,
+        member4_phone VARCHAR(20) NOT NULL,
+        preferred_location VARCHAR(100) DEFAULT 'Salem',
+        problem_statement TEXT NOT NULL,
+        payment_proof_data BYTEA NOT NULL,
+        payment_proof_mime VARCHAR(100) NOT NULL,
+        status VARCHAR(20) DEFAULT 'Pending',
+        attended BOOLEAN DEFAULT FALSE,
+        attended_at TIMESTAMP NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      );
+    `;
+    try {
+      const client = await pool.connect();
+      await client.query(createText);
+      
+      // Auto-migrate to add team_name if it doesn't exist
+      await client.query(`
+        ALTER TABLE registrations 
+        ADD COLUMN IF NOT EXISTS team_name VARCHAR(100) DEFAULT 'Unnamed Team';
+      `);
+
+      // Auto-migrate to add preferred_location if it doesn't exist
+      await client.query(`
+        ALTER TABLE registrations 
+        ADD COLUMN IF NOT EXISTS preferred_location VARCHAR(100) DEFAULT 'Salem';
+      `);
 
     // Create indexes for faster statistics and filtering lookups
     await client.query(`
@@ -433,7 +440,7 @@ fastify.post('/api/register', async (request, reply) => {
   const required = [
     'team_name', 'college_name', 'leader_name', 'leader_email', 'leader_phone',
     'member2_name', 'member2_phone', 'member3_name', 'member3_phone',
-    'member4_name', 'member4_phone', 'problem_statement'
+    'member4_name', 'member4_phone', 'preferred_location', 'problem_statement'
   ];
 
   for (const req of required) {
@@ -457,15 +464,15 @@ fastify.post('/api/register', async (request, reply) => {
     INSERT INTO registrations (
       team_name, college_name, leader_name, leader_email, leader_phone,
       member2_name, member2_phone, member3_name, member3_phone,
-      member4_name, member4_phone, problem_statement, payment_proof_data, payment_proof_mime
-    ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
-    RETURNING id, team_name, college_name, leader_name, leader_email, leader_phone, status, created_at;
+      member4_name, member4_phone, preferred_location, problem_statement, payment_proof_data, payment_proof_mime
+    ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)
+    RETURNING id, team_name, college_name, leader_name, leader_email, leader_phone, preferred_location, status, created_at;
   `;
 
   const values = [
     fields.team_name, fields.college_name, fields.leader_name, fields.leader_email, fields.leader_phone,
     fields.member2_name, fields.member2_phone, fields.member3_name, fields.member3_phone,
-    fields.member4_name, fields.member4_phone, fields.problem_statement,
+    fields.member4_name, fields.member4_phone, fields.preferred_location, fields.problem_statement,
     fields.payment_proof_data, fields.payment_proof_mime
   ];
 
@@ -488,7 +495,7 @@ fastify.get('/api/registration/:id', async (request, reply) => {
   const { id } = request.params;
   try {
     const res = await pool.query(
-      'SELECT id, team_name, college_name, leader_name, leader_email, leader_phone, member2_name, member2_phone, member3_name, member3_phone, member4_name, member4_phone, problem_statement, status, attended, attended_at, created_at FROM registrations WHERE id = $1',
+      'SELECT id, team_name, college_name, leader_name, leader_email, leader_phone, member2_name, member2_phone, member3_name, member3_phone, member4_name, member4_phone, preferred_location, problem_statement, status, attended, attended_at, created_at FROM registrations WHERE id = $1',
       [id]
     );
     if (res.rows.length === 0) {
@@ -522,7 +529,7 @@ fastify.get('/api/registration/:id/proof', async (request, reply) => {
 fastify.get('/api/registrations', async (request, reply) => {
   await verifyAdminSession(request, reply);
   const { search, status } = request.query;
-  let queryText = 'SELECT id, team_name, college_name, leader_name, leader_email, leader_phone, member2_name, member2_phone, member3_name, member3_phone, member4_name, member4_phone, problem_statement, status, attended, attended_at, created_at FROM registrations';
+  let queryText = 'SELECT id, team_name, college_name, leader_name, leader_email, leader_phone, member2_name, member2_phone, member3_name, member3_phone, member4_name, member4_phone, preferred_location, problem_statement, status, attended, attended_at, created_at FROM registrations';
   const queryParams = [];
   const whereClauses = [];
 
@@ -571,7 +578,7 @@ fastify.patch('/api/registration/:id/status', async (request, reply) => {
 
   try {
     // 1. Fetch details first
-    const findRes = await pool.query('SELECT id, team_name, college_name, leader_name, leader_email, leader_phone, member2_name, member2_phone, member3_name, member3_phone, member4_name, member4_phone, problem_statement FROM registrations WHERE id = $1', [id]);
+    const findRes = await pool.query('SELECT id, team_name, college_name, leader_name, leader_email, leader_phone, member2_name, member2_phone, member3_name, member3_phone, member4_name, member4_phone, preferred_location, problem_statement FROM registrations WHERE id = $1', [id]);
     if (findRes.rows.length === 0) {
       return reply.status(404).send({ success: false, error: 'Registration not found' });
     }
@@ -606,6 +613,7 @@ fastify.patch('/api/registration/:id/status', async (request, reply) => {
             </p>
             <p style="font-size: 16px; margin-bottom: 5px; color: #f1f5f9;"><strong>Assigned Team ID:</strong> <span style="background-color: #0f172a; padding: 3px 8px; border-radius: 4px; color: #10b981; font-weight: bold; border: 1px solid #10b981;">${team.id}</span></p>
             <p style="font-size: 14px; color: #cbd5e1; margin-top: 5px;"><strong>College:</strong> ${team.college_name}</p>
+            <p style="font-size: 14px; color: #cbd5e1; margin-top: 5px;"><strong>Preferred Location:</strong> ${team.preferred_location}</p>
             <p style="font-size: 14px; color: #cbd5e1; margin-top: 5px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;"><strong>Problem:</strong> ${team.problem_statement}</p>
           </div>
           

@@ -191,6 +191,25 @@
                 <input type="text" id="college_name" name="college_name" required="" placeholder="Enter your full college name" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-2.5 text-slate-800 placeholder-slate-400 focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/10 focus:bg-white transition-all text-sm">
               </div>
 
+              <!-- Preferred Location -->
+              <div class="md:col-span-2">
+                <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">Preferred Hackathon Location <span class="text-red-500">*</span></label>
+                <div class="grid grid-cols-2 gap-4">
+                  <label class="block cursor-pointer">
+                    <input type="radio" name="preferred_location" value="Salem" required="" class="sr-only">
+                    <div class="location-card border border-slate-200 rounded-xl p-3 bg-slate-50/50 text-center hover:border-brand-500 transition-all">
+                      <span class="text-slate-800 font-semibold text-sm block">Salem</span>
+                    </div>
+                  </label>
+                  <label class="block cursor-pointer">
+                    <input type="radio" name="preferred_location" value="Chennai" class="sr-only">
+                    <div class="location-card border border-slate-200 rounded-xl p-3 bg-slate-50/50 text-center hover:border-brand-500 transition-all">
+                      <span class="text-slate-800 font-semibold text-sm block">Chennai</span>
+                    </div>
+                  </label>
+                </div>
+              </div>
+
               <!-- Leader Name -->
               <div>
                 <label for="leader_name" class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">Team Leader Name <span class="text-red-500">*</span></label>
@@ -496,9 +515,15 @@
                 </div>
               </div>
 
-              <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
-                <span class="text-slate-400 block text-[10px] font-bold uppercase tracking-wider mb-1">Selected Problem Statement</span>
-                <span id="revProblem" class="text-slate-800 font-bold leading-relaxed text-xs"></span>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                  <span class="text-slate-400 block text-[10px] font-bold uppercase tracking-wider mb-1">Selected Problem Statement</span>
+                  <span id="revProblem" class="text-slate-800 font-bold leading-relaxed text-xs"></span>
+                </div>
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                  <span class="text-slate-400 block text-[10px] font-bold uppercase tracking-wider mb-1">Preferred Location</span>
+                  <span id="revLocation" class="text-slate-800 font-bold text-sm"></span>
+                </div>
               </div>
 
               <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex items-center justify-between flex-wrap gap-4">
@@ -747,6 +772,9 @@
       document.getElementById('revM4').textContent = document.getElementById('member4_name').value;
       document.getElementById('revM4Phone').textContent = document.getElementById('member4_phone').value;
 
+      const selectedLocationRadio = document.querySelector('input[name="preferred_location"]:checked');
+      document.getElementById('revLocation').textContent = selectedLocationRadio ? selectedLocationRadio.value : 'No location selected';
+
       const selectedProblemRadio = document.querySelector('input[name="problem_statement"]:checked');
       document.getElementById('revProblem').textContent = selectedProblemRadio ? selectedProblemRadio.value : 'No statement selected';
 
@@ -763,6 +791,12 @@
         const lEmail = document.getElementById('leader_email');
 
         if (!teamName.reportValidity() || !college.reportValidity() || !lName.reportValidity() || !lPhone.reportValidity() || !lEmail.reportValidity()) {
+          return false;
+        }
+
+        const selectedLocation = document.querySelector('input[name="preferred_location"]:checked');
+        if (!selectedLocation) {
+          Swal.fire('Please select a preferred hackathon location to continue.');
           return false;
         }
 

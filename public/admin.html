@@ -212,10 +212,14 @@
         <span id="modalTeamId" class="text-sm font-mono text-slate-400">#---</span>
       </h2>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-2">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-2">
         <div>
           <span class="text-xs text-slate-400 uppercase tracking-wider block">College/Institution</span>
           <span id="modalCollege" class="text-slate-800 font-semibold block mt-0.5">---</span>
+        </div>
+        <div>
+          <span class="text-xs text-slate-400 uppercase tracking-wider block">Preferred Location</span>
+          <span id="modalLocation" class="text-slate-800 font-semibold block mt-0.5">---</span>
         </div>
         <div>
           <span class="text-xs text-slate-400 uppercase tracking-wider block">Problem Statement</span>
@@ -571,7 +575,10 @@
                 <span>${reg.team_name}</span>
                 <i class="bi bi-box-arrow-up-right text-slate-400 text-sm"></i>
               </div>
-              <div class="text-xs text-slate-400 mt-0.5 truncate max-w-[220px]">${reg.leader_name} • ${reg.college_name}</div>
+              <div class="text-xs text-slate-400 mt-0.5 truncate max-w-[220px]">
+                ${reg.leader_name} • ${reg.college_name}
+                <span class="ml-1 px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-slate-100 text-slate-500 border border-slate-200">${reg.preferred_location || 'Salem'}</span>
+              </div>
             </td>
             <td class="py-4 px-5 max-w-[250px]">
               <div class="truncate font-medium text-slate-600 text-xs" title="${reg.problem_statement}">
@@ -601,6 +608,7 @@
       document.getElementById('modalTeamId').textContent = `#${reg.id}`;
       document.getElementById('modalTeamName').textContent = reg.team_name;
       document.getElementById('modalCollege').textContent = reg.college_name;
+      document.getElementById('modalLocation').textContent = reg.preferred_location || 'Salem';
       document.getElementById('modalProblem').textContent = reg.problem_statement;
       
       document.getElementById('modalLName').textContent = reg.leader_name;
@@ -685,7 +693,7 @@
       }
 
       const headers = [
-        'Team ID', 'College/Institution', 'Leader Name', 'Leader Email', 'Leader Phone',
+        'Team ID', 'College/Institution', 'Preferred Location', 'Leader Name', 'Leader Email', 'Leader Phone',
         'Member 2 Name', 'Member 2 Phone', 'Member 3 Name', 'Member 3 Phone',
         'Member 4 Name', 'Member 4 Phone', 'Problem Statement', 'Status', 'Attended', 'Check-In Time', 'Registration Date'
       ];
@@ -695,6 +703,7 @@
         const row = [
           reg.id,
           `"${(reg.college_name || '').replace(/"/g, '""')}"`,
+          `"${(reg.preferred_location || 'Salem').replace(/"/g, '""')}"`,
           `"${(reg.leader_name || '').replace(/"/g, '""')}"`,
           `"${(reg.leader_email || '').replace(/"/g, '""')}"`,
           `"${(reg.leader_phone || '').replace(/"/g, '""')}"`,
